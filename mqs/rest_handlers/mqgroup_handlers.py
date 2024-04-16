@@ -65,3 +65,6 @@ class MQGroupIDHandler(BaseMQSHandler):  # pylint: disable=W0223
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def get(self, mqgroup_id: str) -> None:
         """Handle GET requests."""
+        mqgroup = await self.mqgroup_client.find_one(dict(mqgroup=mqgroup_id))
+
+        self.write(mqgroup)
