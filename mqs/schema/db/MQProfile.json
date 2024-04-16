@@ -1,10 +1,10 @@
 {
     "type": "object",
     "properties": {
-        "qid": {
+        "mqid": {
             "type": "string"
         },
-        "qgroup_id": {
+        "mqgroup_id": {
             "type": "string"
         },
         "timestamp": {
@@ -15,8 +15,8 @@
         }
     },
     "required": [
-        "qid",
-        "qgroup_id",
+        "mqid",
+        "mqgroup_id",
         "timestamp",
         "nickname"
     ],

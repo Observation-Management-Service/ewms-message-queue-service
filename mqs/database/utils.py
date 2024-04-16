@@ -53,12 +53,12 @@ async def ensure_indexes(mongo_client: AsyncIOMotorClient) -> None:  # type: ign
         )
 
     # TASK_DIRECTIVES
-    await make_index(MQPROFILE_COLL_NAME, "qid", unique=True)
-    await make_index(MQPROFILE_COLL_NAME, "qgroup_id")
+    await make_index(MQPROFILE_COLL_NAME, "mqid", unique=True)
+    await make_index(MQPROFILE_COLL_NAME, "mqgroup_id")
     await make_index(MQPROFILE_COLL_NAME, "timestamp")
 
     # TASKFORCES
-    await make_index(MQGROUP_COLL_NAME, "qgroup_id", unique=True)
+    await make_index(MQGROUP_COLL_NAME, "mqgroup_id", unique=True)
     await make_index(MQGROUP_COLL_NAME, "timestamp")
 
     LOGGER.info("Ensured indexes (may continue in background).")

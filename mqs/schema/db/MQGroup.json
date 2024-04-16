@@ -1,7 +1,7 @@
 {
     "type": "object",
     "properties": {
-        "qgroup_id": {
+        "mqgroup_id": {
             "type": "string"
         },
         "timestamp": {
@@ -21,7 +21,7 @@
         }
     },
     "required": [
-        "qgroup_id",
+        "mqgroup_id",
         "timestamp",
         "criteria"
     ],

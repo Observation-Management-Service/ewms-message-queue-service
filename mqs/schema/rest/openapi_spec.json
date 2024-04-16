@@ -20,7 +20,7 @@
             "MQGroupObject": {
                 "type": "object",
                 "properties": {
-                    "qgroup_id": {
+                    "mqgroup_id": {
                         "type": "string"
                     },
                     "timestamp": {
@@ -45,10 +45,10 @@
             "MQProfileObject": {
                 "type": "object",
                 "properties": {
-                    "qid": {
+                    "mqid": {
                         "type": "string"
                     },
-                    "qgroup_id": {
+                    "mqgroup_id": {
                         "type": "string"
                     },
                     "timestamp": {
