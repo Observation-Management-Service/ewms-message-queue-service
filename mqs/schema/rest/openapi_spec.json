@@ -17,30 +17,45 @@
     "components": {
         "parameters": {},
         "schemas": {
-            "TaskDirectiveObject": {
+            "QGroupObject": {
                 "type": "object",
                 "properties": {
-                    "task_id": {
-                        "type": "string"
-                    },
-                    "cluster_locations": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "minItems": 1
-                    },
-                    "task_image": {
-                        "type": "string"
-                    },
-                    "task_args": {
+                    "qgroup_id": {
                         "type": "string"
                     },
                     "timestamp": {
                         "type": "integer"
                     },
-                    "aborted": {
-                        "type": "boolean"
+                    "criteria": {
+                        "type": "object",
+                        "properties": {
+                            "priority": {
+                                "type": "integer"
+                            }
+                        },
+                        "required": [
+                            "priority"
+                        ],
+                        "additionalProperties": false
+                    }
+                },
+                "required": [],
+                "additionalProperties": false
+            },
+            "QueueObject": {
+                "type": "object",
+                "properties": {
+                    "qid": {
+                        "type": "string"
+                    },
+                    "qgroup_id": {
+                        "type": "string"
+                    },
+                    "timestamp": {
+                        "type": "integer"
+                    },
+                    "nickname": {
+                        "type": "string"
                     }
                 },
                 "required": [],
