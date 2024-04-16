@@ -28,11 +28,11 @@ class BaseMQSHandler(RestHandler):  # pylint: disable=W0223
         # pylint: disable=W0201
         self.task_directives_client = db.client.MQSMongoClient(
             mongo_client,
-            db.utils.QUEUE_COLL_NAME,
+            db.utils.MQPROFILE_COLL_NAME,
         )
         self.taskforces_client = db.client.MQSMongoClient(
             mongo_client,
-            db.utils.QGROUP_COLL_NAME,
+            db.utils.MQGROUP_COLL_NAME,
         )
 
 

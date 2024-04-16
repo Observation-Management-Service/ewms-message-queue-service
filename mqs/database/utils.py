@@ -13,8 +13,8 @@ from ..config import ENV
 LOGGER = logging.getLogger(__name__)
 
 _DB_NAME = "MQS_DB"
-QUEUE_COLL_NAME = "QueueColl"
-QGROUP_COLL_NAME = "QGroupColl"
+MQPROFILE_COLL_NAME = "MQProfileColl"
+MQGROUP_COLL_NAME = "MQGroupColl"
 
 
 def get_jsonschema_spec_name(collection_name: str) -> str:
@@ -53,13 +53,13 @@ async def ensure_indexes(mongo_client: AsyncIOMotorClient) -> None:  # type: ign
         )
 
     # TASK_DIRECTIVES
-    await make_index(QUEUE_COLL_NAME, "qid", unique=True)
-    await make_index(QUEUE_COLL_NAME, "qgroup_id")
-    await make_index(QUEUE_COLL_NAME, "timestamp")
+    await make_index(MQPROFILE_COLL_NAME, "qid", unique=True)
+    await make_index(MQPROFILE_COLL_NAME, "qgroup_id")
+    await make_index(MQPROFILE_COLL_NAME, "timestamp")
 
     # TASKFORCES
-    await make_index(QGROUP_COLL_NAME, "qgroup_id", unique=True)
-    await make_index(QGROUP_COLL_NAME, "timestamp")
+    await make_index(MQGROUP_COLL_NAME, "qgroup_id", unique=True)
+    await make_index(MQGROUP_COLL_NAME, "timestamp")
 
     LOGGER.info("Ensured indexes (may continue in background).")
 

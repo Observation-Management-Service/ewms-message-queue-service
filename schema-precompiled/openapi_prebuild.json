@@ -18,8 +18,8 @@
         "parameters": {
         },
         "schemas": {
-            "QGroupObject": "GHA_CI_INGEST_FILE_CONTENTS ../mqs/schema/db/QGroup.json required=[]",
-            "QueueObject": "GHA_CI_INGEST_FILE_CONTENTS ../mqs/schema/db/Queue.json required=[]"
+            "MQGroupObject": "GHA_CI_INGEST_FILE_CONTENTS ../mqs/schema/db/MQGroup.json required=[]",
+            "MQProfileObject": "GHA_CI_INGEST_FILE_CONTENTS ../mqs/schema/db/MQProfile.json required=[]"
         }
     },
     "paths": "GHA_CI_MAKE_PATHS_FROM_DIR ./paths/"
