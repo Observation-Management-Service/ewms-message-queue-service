@@ -141,6 +141,7 @@ jobs:
         if: env.IS_GIT_BEHIND != 'true'
         run: |
           outdir=Docs
+          git rm -r $outdir || true
           # generate
           docker run --rm \
               -v $PWD:/local \
