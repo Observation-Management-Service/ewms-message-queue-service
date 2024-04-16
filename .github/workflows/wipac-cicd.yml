@@ -150,7 +150,7 @@ jobs:
               -i /local/mqs/$REST_OPENAPI_SPEC_FPATH \
               -g markdown \
               -o /local/$outdir
-          chmod -R +w $outdir  # needed since the 'rm' above wiped previous ownership & now container owns it all
+          sudo chmod -R +w $outdir  # needed since the 'rm' above wiped previous ownership & now container owns it all
           set -ex
           # tweak auto-generated contents -- miscellaneous
           # remove "no auth" mentions
