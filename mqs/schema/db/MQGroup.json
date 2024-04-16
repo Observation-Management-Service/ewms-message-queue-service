@@ -18,7 +18,8 @@
                 }
             },
             "required": [
-                "priority"
+                "priority",
+                "n_queues"
             ],
             "additionalProperties": false
         }

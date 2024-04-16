@@ -31,10 +31,14 @@
                         "properties": {
                             "priority": {
                                 "type": "integer"
+                            },
+                            "n_queues": {
+                                "type": "integer"
                             }
                         },
                         "required": [
-                            "priority"
+                            "priority",
+                            "n_queues"
                         ],
                         "additionalProperties": false
                     }
