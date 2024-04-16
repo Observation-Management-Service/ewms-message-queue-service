@@ -20,3 +20,6 @@ class MQProfileIDHandler(BaseMQSHandler):  # pylint: disable=W0223
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def get(self, mqid: str) -> None:
         """Handle GET requests."""
+        mqprofile = await self.mqprofile_client.find_one(dict(mqid=mqid))
+
+        self.write(mqprofile)
