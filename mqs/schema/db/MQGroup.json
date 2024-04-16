@@ -12,6 +12,9 @@
             "properties": {
                 "priority": {
                     "type": "integer"
+                },
+                "n_queues": {
+                    "type": "integer"
                 }
             },
             "required": [

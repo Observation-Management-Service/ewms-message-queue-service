@@ -26,11 +26,11 @@ class BaseMQSHandler(RestHandler):  # pylint: disable=W0223
         """Initialize a BaseMQSHandler object."""
         super().initialize(*args, **kwargs)  # type: ignore[no-untyped-call]
         # pylint: disable=W0201
-        self.mqprofile_client = db.client.MQSMongoClient(
+        self.mqprofile_client = db.client.JSONSchemaMongoClient(
             mongo_client,
             db.utils.MQPROFILE_COLL_NAME,
         )
-        self.mqgroup_client = db.client.MQSMongoClient(
+        self.mqgroup_client = db.client.JSONSchemaMongoClient(
             mongo_client,
             db.utils.MQGROUP_COLL_NAME,
         )

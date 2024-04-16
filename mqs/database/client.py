@@ -15,13 +15,13 @@ class DocumentNotFoundException(Exception):
     """Raised when document is not found for a particular query."""
 
 
-class MQSMongoClient:
-    """A generic client for interacting with mongo collections."""
+class JSONSchemaMongoClient:
+    """A generic client for interacting with mongo collections with jsonschema validation."""
 
     def __init__(
-            self,
-            mongo_client: AsyncIOMotorClient,  # type: ignore[valid-type]
-            collection_name: str,
+        self,
+        mongo_client: AsyncIOMotorClient,  # type: ignore[valid-type]
+        collection_name: str,
     ) -> None:
         self._collection = AsyncIOMotorCollection(
             mongo_client[_DB_NAME],  # type: ignore[arg-type]
@@ -53,11 +53,26 @@ class MQSMongoClient:
         self.logger.debug(f"inserted one: {doc}")
         return doc
 
+    async def insert_many(self, docs: list[dict]) -> list[dict]:
+        """Insert the docs (dicts)."""
+        self.logger.debug(f"inserting many: {docs}")
+
+        for doc in docs:
+            web_jsonschema_validate(doc, self._schema)
+
+        await self._collection.insert_many(docs)
+        # https://pymongo.readthedocs.io/en/stable/faq.html#writes-and-ids
+        for doc in docs:
+            doc.pop("_id")
+
+        self.logger.debug(f"inserted many: {docs}")
+        return docs
+
     async def find_one_and_update(
-            self,
-            query: dict,
-            set_update: dict,
-            **kwargs: Any,
+        self,
+        query: dict,
+        set_update: dict,
+        **kwargs: Any,
     ) -> dict:
         """Update the doc and return updated doc."""
         self.logger.debug(f"update one with query: {query}")

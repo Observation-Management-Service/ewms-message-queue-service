@@ -1,7 +1,10 @@
 """REST handlers for actions on MQ groups."""
 
 import logging
+import time
+import uuid
 
+import mqclient
 from rest_tools.server import validate_request
 
 from . import auth
@@ -20,6 +23,37 @@ class MQGroupHandler(BaseMQSHandler):  # pylint: disable=W0223
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def post(self) -> None:
         """Handle POST requests."""
+        criteria: dict[str, int] = self.get_argument("criteria")
+
+        mqgroup_id = uuid.uuid4().hex
+        now = int(time.time())
+
+        # insert mq group
+        mqgroup = dict(
+            mqgroup_id=mqgroup_id,
+            timestamp=now,
+            criteria=criteria,
+        )
+        await self.mqgroup_client.insert_one(mqgroup)
+
+        # insert mq profiles
+        mqprofiles = [
+            dict(
+                mqid=mqclient.Queue.make_name(),
+                mqgroup_id=mqgroup_id,
+                timestamp=now,
+                nickname=f"mq-{mqgroup_id}-{i}",  # TODO: use user's values, like "input-queue"
+            )
+            for i in range(criteria["n_queues"])
+        ]
+        await self.mqprofile_client.insert_many(mqprofiles)
+
+        self.write(
+            dict(
+                mqgroup=mqgroup,
+                mqprofiles=mqprofiles,
+            )
+        )
 
 
 class MQGroupIDHandler(BaseMQSHandler):  # pylint: disable=W0223
