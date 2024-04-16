@@ -1,6 +1,5 @@
 """Config settings."""
 
-
 import dataclasses as dc
 import json
 import logging
@@ -15,9 +14,6 @@ from openapi_spec_validator.readers import read_from_filename
 from wipac_dev_tools import from_environment_as_dataclass, logging_tools
 
 LOGGER = logging.getLogger(__name__)
-
-DB_JSONSCHEMA_DIR = Path(__file__).parent / "schema/db"
-REST_OPENAPI_SPEC_FPATH = Path(__file__).parent / "schema/rest/openapi_compiled.json"
 
 
 # --------------------------------------------------------------------------------------
@@ -46,6 +42,9 @@ class EnvConfig:
     BACKLOG_RUNNER_SHORT_DELAY: int = 15
     BACKLOG_RUNNER_DELAY: int = 5 * 60
 
+    DB_JSONSCHEMA_DIR: str = "schema/db"
+    REST_OPENAPI_SPEC_FPATH: str = "schema/rest/openapi_spec.json"
+
 
 ENV = from_environment_as_dataclass(EnvConfig)
 
@@ -64,7 +63,9 @@ def _get_jsonschema_specs(dpath: Path) -> dict[str, dict[str, Any]]:
 
 
 # keyed by the mongo collection name
-MONGO_COLLECTION_JSONSCHEMA_SPECS = _get_jsonschema_specs(DB_JSONSCHEMA_DIR)
+MONGO_COLLECTION_JSONSCHEMA_SPECS = _get_jsonschema_specs(
+    Path(__file__).parent / ENV.DB_JSONSCHEMA_DIR
+)
 
 
 # --------------------------------------------------------------------------------------
@@ -77,8 +78,9 @@ def _get_openapi_spec(fpath: Path) -> openapi_core.OpenAPI:
     return openapi_core.OpenAPI(SchemaPath.from_file_path(str(fpath)))
 
 
-REST_OPENAPI_SPEC: openapi_core.OpenAPI = _get_openapi_spec(REST_OPENAPI_SPEC_FPATH)
-
+REST_OPENAPI_SPEC: openapi_core.OpenAPI = _get_openapi_spec(
+    Path(__file__).parent / ENV.REST_OPENAPI_SPEC_FPATH
+)
 
 # --------------------------------------------------------------------------------------
 
