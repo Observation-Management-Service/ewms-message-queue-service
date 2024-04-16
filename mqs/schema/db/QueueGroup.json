@@ -1,0 +1,28 @@
+{
+    "type": "object",
+    "properties": {
+        "qgroup_id": {
+            "type": "string"
+        },
+        "timestamp": {
+            "type": "integer"
+        },
+        "criteria": {
+            "type": "object",
+            "properties": {
+                "priority": {
+                    "type": "integer"
+                }
+            }
+        }
+    },
+    "required": [
+        "task_id",
+        "cluster_locations",
+        "task_image",
+        "task_args",
+        "timestamp",
+        "aborted"
+    ],
+    "additionalProperties": false
+}
