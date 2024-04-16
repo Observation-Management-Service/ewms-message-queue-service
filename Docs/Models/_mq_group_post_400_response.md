@@ -1,11 +1,10 @@
-# MQGroupObject
+# _mq_group_post_400_response
 ## Properties
 
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
-| **mqgroup\_id** | **String** |  | [optional] [default to null] |
-| **timestamp** | **Integer** |  | [optional] [default to null] |
-| **criteria** | [**MQGroupObject_criteria**](MQGroupObject_criteria.md) |  | [optional] [default to null] |
+| **code** | **Integer** | http error code | [default to null] |
+| **error** | **String** | http error reason | [default to null] |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

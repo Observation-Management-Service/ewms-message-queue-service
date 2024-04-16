@@ -6,7 +6,10 @@
 
 | Class | Method | HTTP request | Description |
 |------------ | ------------- | ------------- | -------------|
-| *DefaultApi* | [**rootGet**](Apis/DefaultApi.md#rootget) | **GET** / |  |
+| *DefaultApi* | [**mqGroupMqgroupIdGet**](Apis/DefaultApi.md#mqgroupmqgroupidget) | **GET** /mq-group/{mqgroup_id} |  |
+*DefaultApi* | [**mqGroupPost**](Apis/DefaultApi.md#mqgrouppost) | **POST** /mq-group |  |
+*DefaultApi* | [**mqMqidGet**](Apis/DefaultApi.md#mqmqidget) | **GET** /mq/{mqid} |  |
+*DefaultApi* | [**rootGet**](Apis/DefaultApi.md#rootget) | **GET** / |  |
 *DefaultApi* | [**schemaOpenapiGet**](Apis/DefaultApi.md#schemaopenapiget) | **GET** /schema/openapi |  |
 
 
@@ -17,7 +20,9 @@
  - [MQGroupObject_criteria](./Models/MQGroupObject_criteria.md)
  - [MQProfileObject](./Models/MQProfileObject.md)
  - [__get_400_response](./Models/__get_400_response.md)
- - [_schema_openapi_get_400_response](./Models/_schema_openapi_get_400_response.md)
+ - [_mq_group_post_200_response](./Models/_mq_group_post_200_response.md)
+ - [_mq_group_post_400_response](./Models/_mq_group_post_400_response.md)
+ - [criteria](./Models/criteria.md)
 
 
 <a name="documentation-for-authorization"></a>
