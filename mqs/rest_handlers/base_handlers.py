@@ -18,10 +18,10 @@ class BaseMQSHandler(RestHandler):  # pylint: disable=W0223
     """BaseMQSHandler is a RestHandler for all MQS routes."""
 
     def initialize(  # type: ignore  # pylint: disable=W0221
-            self,
-            mongo_client: AsyncIOMotorClient,  # type: ignore[valid-type]
-            *args: Any,
-            **kwargs: Any,
+        self,
+        mongo_client: AsyncIOMotorClient,  # type: ignore[valid-type]
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         """Initialize a BaseMQSHandler object."""
         super().initialize(*args, **kwargs)  # type: ignore[no-untyped-call]
@@ -44,11 +44,12 @@ class MainHandler(BaseMQSHandler):  # pylint: disable=W0223
 
     ROUTE = r"/$"
 
-    @auth.service_account_auth(roles=[auth.AuthAccounts.USER])  # type: ignore
+    @auth.service_account_auth(roles=[auth.ALL_AUTH_ACCOUNTS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def get(self) -> None:
         """Handle GET."""
         self.write({})
+
 
 # -----------------------------------------------------------------------------
 
