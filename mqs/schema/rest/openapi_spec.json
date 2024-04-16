@@ -1,0 +1,135 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "EWMS - Workflow Management Service",
+        "summary": "The external interface for EWMS",
+        "description": "The external interface for starting, tracking, and retrieving results from tasks within EWMS",
+        "contact": {
+            "name": "WIPAC Developers",
+            "url": "icecube.wisc.edu",
+            "email": "developers@icecube.wisc.edu"
+        },
+        "license": {
+            "name": "MIT License"
+        },
+        "version": "0.0.0"
+    },
+    "components": {
+        "parameters": {},
+        "schemas": {
+            "TaskDirectiveObject": {
+                "type": "object",
+                "properties": {
+                    "task_id": {
+                        "type": "string"
+                    },
+                    "cluster_locations": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "minItems": 1
+                    },
+                    "task_image": {
+                        "type": "string"
+                    },
+                    "task_args": {
+                        "type": "string"
+                    },
+                    "timestamp": {
+                        "type": "integer"
+                    },
+                    "aborted": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [],
+                "additionalProperties": false
+            }
+        }
+    },
+    "paths": {
+        "/": {
+            "parameters": [],
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "an empty response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "invalid request arguments",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "description": "http error code",
+                                            "type": "integer"
+                                        },
+                                        "error": {
+                                            "description": "http error reason",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "code",
+                                        "error"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/schema/openapi": {
+            "parameters": [],
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "the openapi schema",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {},
+                                    "additionalProperties": true
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "invalid request arguments",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "description": "http error code",
+                                            "type": "integer"
+                                        },
+                                        "error": {
+                                            "description": "http error reason",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "code",
+                                        "error"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
