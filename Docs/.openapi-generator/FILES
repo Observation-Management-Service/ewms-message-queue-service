@@ -1,8 +1,8 @@
 .openapi-generator-ignore
 Apis/DefaultApi.md
-Models/QGroupObject.md
-Models/QGroupObject_criteria.md
-Models/QueueObject.md
+Models/MQGroupObject.md
+Models/MQGroupObject_criteria.md
+Models/MQProfileObject.md
 Models/__get_400_response.md
 Models/_schema_openapi_get_400_response.md
 README.md

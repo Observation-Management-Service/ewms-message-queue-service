@@ -1,4 +1,4 @@
-# QueueObject
+# MQProfileObject
 ## Properties
 
 | Name | Type | Description | Notes |

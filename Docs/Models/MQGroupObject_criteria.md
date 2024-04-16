@@ -1,4 +1,4 @@
-# QGroupObject_criteria
+# MQGroupObject_criteria
 ## Properties
 
 | Name | Type | Description | Notes |
