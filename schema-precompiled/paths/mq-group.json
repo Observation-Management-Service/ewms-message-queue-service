@@ -32,7 +32,8 @@
                                 }
                             },
                             "required": [
-                                "task_directives"
+                                "mq_group",
+                                "mq_profiles"
                             ],
                             "additionalProperties": false
                         }

@@ -52,12 +52,12 @@ async def ensure_indexes(mongo_client: AsyncIOMotorClient) -> None:  # type: ign
             background=True,
         )
 
-    # TASK_DIRECTIVES
+    # MQPROFILE
     await make_index(MQPROFILE_COLL_NAME, "mqid", unique=True)
     await make_index(MQPROFILE_COLL_NAME, "mqgroup_id")
     await make_index(MQPROFILE_COLL_NAME, "timestamp")
 
-    # TASKFORCES
+    # MQGROUP
     await make_index(MQGROUP_COLL_NAME, "mqgroup_id", unique=True)
     await make_index(MQGROUP_COLL_NAME, "timestamp")
 
