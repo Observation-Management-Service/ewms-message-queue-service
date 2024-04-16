@@ -143,6 +143,7 @@ jobs:
           outdir=Docs
           git rm -r $outdir || true
           mkdir $outdir
+          chmod +w $outdir
           # generate
           docker run --rm \
               -v $PWD:/local \
