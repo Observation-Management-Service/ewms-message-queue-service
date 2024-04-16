@@ -13,7 +13,9 @@
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
- - [TaskDirectiveObject](./Models/TaskDirectiveObject.md)
+ - [QGroupObject](./Models/QGroupObject.md)
+ - [QGroupObject_criteria](./Models/QGroupObject_criteria.md)
+ - [QueueObject](./Models/QueueObject.md)
  - [__get_400_response](./Models/__get_400_response.md)
  - [_schema_openapi_get_400_response](./Models/_schema_openapi_get_400_response.md)
 
