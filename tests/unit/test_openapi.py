@@ -9,8 +9,9 @@ from pathlib import Path
 import openapi_core
 import tornado
 from jsonschema_path import SchemaPath
-from mqs import server
 from openapi_core.templating.paths.finders import APICallPathFinder
+
+from mqs import server
 
 LOGGER = logging.getLogger(__name__)
 
@@ -38,7 +39,7 @@ def test_census_routes() -> None:
             # vars() only gets attrs defined explicitly by child class
             for name, attr in vars(handler).items()
             if inspect.isfunction(attr)
-               and name.upper() in tornado.web.RequestHandler.SUPPORTED_METHODS
+            and name.upper() in tornado.web.RequestHandler.SUPPORTED_METHODS
         ]
         for method in implemented_rest_methods:
             LOGGER.info(f"-> method: {method}")
