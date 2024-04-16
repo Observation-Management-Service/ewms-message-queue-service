@@ -17,7 +17,7 @@
     "components": {
         "parameters": {},
         "schemas": {
-            "QGroupObject": {
+            "MQGroupObject": {
                 "type": "object",
                 "properties": {
                     "qgroup_id": {
@@ -42,7 +42,7 @@
                 "required": [],
                 "additionalProperties": false
             },
-            "QueueObject": {
+            "MQProfileObject": {
                 "type": "object",
                 "properties": {
                     "qid": {
