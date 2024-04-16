@@ -16,71 +16,9 @@
   },
   "components": {
     "parameters": {
-      "TaskforceUUIDParam": {
-        "name": "taskforce_uuid",
-        "in": "path",
-        "required": true,
-        "description": "the taskforce object's uuid",
-        "schema": {
-          "type": "string"
-        }
-      },
-      "CondorCollector": {
-        "name": "collector",
-        "in": "query",
-        "required": true,
-        "description": "name of the condor collector",
-        "schema": {
-          "type": "string"
-        }
-      },
-      "CondorSchedd": {
-        "name": "schedd",
-        "in": "query",
-        "required": true,
-        "description": "name of the condor schedd",
-        "schema": {
-          "type": "string"
-        }
-      }
     },
     "schemas": {
-      "TaskDirectiveObject": "GHA_CI_INGEST_FILE_CONTENTS ../mqs/schema/db/TaskDirective.json required=[]",
-      "TaskforceObject": "GHA_CI_INGEST_FILE_CONTENTS ../mqs/schema/db/Taskforce.json required=[]",
-      "FindObject": {
-        "type": "object",
-        "properties": {
-          "query": {
-            "description": "the search criteria (MongoDB-filter syntax)",
-            "type": "object"
-          },
-          "projection": {
-            "description": "the fields to include in the response",
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "minItems": 1
-          }
-        },
-        "required": [
-          "query"
-        ],
-        "additionalProperties": false
-      },
-      "TaskforceUUIDObject": {
-        "type": "object",
-        "properties": {
-          "taskforce_uuid": {
-            "description": "the uuid of the updated taskforce object",
-            "type": "string"
-          }
-        },
-        "required": [
-          "taskforce_uuid"
-        ],
-        "additionalProperties": false
-      }
+      "TaskDirectiveObject": "GHA_CI_INGEST_FILE_CONTENTS ../mqs/schema/db/TaskDirective.json required=[]"
     }
   },
   "paths": "GHA_CI_MAKE_PATHS_FROM_DIR ./paths/"
