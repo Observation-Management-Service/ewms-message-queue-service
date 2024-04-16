@@ -1,0 +1,27 @@
+{
+    "parameters": [
+        {
+            "name": "mqid",
+            "in": "path",
+            "required": true,
+            "description": "the id of the message queue (found in mq profile)",
+            "schema": {
+                "type": "string"
+            }
+        }
+    ],
+    "get": {
+        "responses": {
+            "200": {
+                "description": "the matching mq profile",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/MQProfileObject"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "parameters": [
+        {
+            "name": "mqgroup_id",
+            "in": "path",
+            "required": true,
+            "description": "the id of the mq group",
+            "schema": {
+                "type": "string"
+            }
+        }
+    ],
+    "get": {
+        "responses": {
+            "200": {
+                "description": "the matching mq group object",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/MQGroupObject"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

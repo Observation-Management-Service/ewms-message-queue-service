@@ -1,0 +1,44 @@
+{
+    "parameters": [],
+    "post": {
+        "requestBody": {
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "#/components/schemas/MQGroupObject/properties/criteria"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "a successfully created group of queues",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "mq_group": {
+                                    "description": "the created mq group object",
+                                    "$ref": "#/components/schemas/MQGroupObject"
+                                },
+                                "mq_profiles": {
+                                    "description": "a list of mq profiles",
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MQProfileObject"
+                                    },
+                                    "minItems": 0
+                                }
+                            },
+                            "required": [
+                                "task_directives"
+                            ],
+                            "additionalProperties": false
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
