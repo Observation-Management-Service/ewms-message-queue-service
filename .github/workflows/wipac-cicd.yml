@@ -206,7 +206,7 @@ jobs:
             --env DB_JSONSCHEMA_DIR="${{ env.DB_JSONSCHEMA_DIR }}" \
             --env CI="true" \
             ${{ env.CI_DOCKER_IMAGE_W_TAG }} &> ./rest.out &
-          sleep 10
+          sleep 1  # hopefully not needed, but jic 
 
           pytest -vvv --exitfirst tests/integration/
       #
