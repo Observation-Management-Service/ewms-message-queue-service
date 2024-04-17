@@ -5,11 +5,13 @@ import time
 import uuid
 
 import mqclient
+import tornado
 from rest_tools.server import validate_request
 
 from . import auth
 from .base_handlers import BaseMQSHandler
 from .. import config
+from ..database.client import DocumentNotFoundException
 
 LOGGER = logging.getLogger(__name__)
 
@@ -65,6 +67,9 @@ class MQGroupIDHandler(BaseMQSHandler):  # pylint: disable=W0223
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def get(self, mqgroup_id: str) -> None:
         """Handle GET requests."""
-        mqgroup = await self.mqgroup_client.find_one(dict(mqgroup_id=mqgroup_id))
+        try:
+            mqgroup = await self.mqgroup_client.find_one(dict(mqgroup_id=mqgroup_id))
+        except DocumentNotFoundException:
+            raise tornado.web.HTTPError(404, reason="MQGroup not found")
 
         self.write(mqgroup)
