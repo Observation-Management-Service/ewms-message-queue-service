@@ -68,6 +68,9 @@ jobs:
 
   py-dependencies:
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}-${{ github.job }}
+      cancel-in-progress: true
     steps:
       - if: github.ref_type == 'branch' && github.actor != 'dependabot[bot]'
         name: checkout (only for non-dependabot non-default branches)
