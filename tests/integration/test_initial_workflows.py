@@ -2,7 +2,6 @@
 
 import json
 import os
-import pathlib
 
 import openapi_core
 from jsonschema_path import SchemaPath
@@ -13,7 +12,8 @@ async def query_for_schema(rc: RestClient) -> openapi_core.OpenAPI:
     """Grab the openapi schema from the rest server and check that it matches the json file."""
     resp = await rc.request("GET", "/schema/openapi")
     with open(
-        pathlib.Path("../../mqs") / os.environ["REST_OPENAPI_SPEC_FPATH"], "rb"
+        f'{os.environ["GITHUB_WORKSPACE"]}/mqs/{os.environ["REST_OPENAPI_SPEC_FPATH"]}',
+        "rb",
     ) as f:
         assert json.load(f) == resp
     openapi_spec = openapi_core.OpenAPI(SchemaPath.from_dict(resp))
