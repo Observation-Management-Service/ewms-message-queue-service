@@ -5,7 +5,9 @@
             "content": {
                 "application/json": {
                     "schema": {
-                        "$ref": "#/components/schemas/MQGroupObject/properties/criteria"
+                        "criteria": {
+                            "$ref": "#/components/schemas/MQGroupObject/properties/criteria"
+                        }
                     }
                 }
             }
