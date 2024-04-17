@@ -1,0 +1,381 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "ewms-message-queue-service",
+        "summary": "EWMS's Message Queue Service (MQS): The Interface to the DDS's Message Queue Broker",
+        "description": "https://github.com/Observation-Management-Service/ewms-message-queue-service",
+        "contact": {
+            "name": "WIPAC Developers",
+            "url": "icecube.wisc.edu",
+            "email": "developers@icecube.wisc.edu"
+        },
+        "license": {
+            "name": "MIT License"
+        },
+        "version": "0.0.0"
+    },
+    "components": {
+        "parameters": {},
+        "schemas": {
+            "MQGroupObject": {
+                "type": "object",
+                "properties": {
+                    "mqgroup_id": {
+                        "type": "string"
+                    },
+                    "timestamp": {
+                        "type": "integer"
+                    },
+                    "criteria": {
+                        "type": "object",
+                        "properties": {
+                            "priority": {
+                                "type": "integer"
+                            },
+                            "n_queues": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        },
+                        "required": [
+                            "priority",
+                            "n_queues"
+                        ],
+                        "additionalProperties": false
+                    }
+                },
+                "required": [],
+                "additionalProperties": false
+            },
+            "MQProfileObject": {
+                "type": "object",
+                "properties": {
+                    "mqid": {
+                        "type": "string"
+                    },
+                    "mqgroup_id": {
+                        "type": "string"
+                    },
+                    "timestamp": {
+                        "type": "integer"
+                    },
+                    "nickname": {
+                        "type": "string"
+                    }
+                },
+                "required": [],
+                "additionalProperties": false
+            }
+        }
+    },
+    "paths": {
+        "/": {
+            "parameters": [],
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "an empty response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "invalid request arguments",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "description": "http error code",
+                                            "type": "integer"
+                                        },
+                                        "error": {
+                                            "description": "http error reason",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "code",
+                                        "error"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/mq-group": {
+            "parameters": [],
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "criteria": {
+                                    "$ref": "#/components/schemas/MQGroupObject/properties/criteria"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "a successfully created group of queues",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "mqgroup": {
+                                            "description": "the created mq group object",
+                                            "$ref": "#/components/schemas/MQGroupObject"
+                                        },
+                                        "mqprofiles": {
+                                            "description": "a list of mq profiles",
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/MQProfileObject"
+                                            },
+                                            "minItems": 0
+                                        }
+                                    },
+                                    "required": [
+                                        "mqgroup",
+                                        "mqprofiles"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "invalid request arguments",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "description": "http error code",
+                                            "type": "integer"
+                                        },
+                                        "error": {
+                                            "description": "http error reason",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "code",
+                                        "error"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/mq-group/{mqgroup_id}": {
+            "parameters": [
+                {
+                    "name": "mqgroup_id",
+                    "in": "path",
+                    "required": true,
+                    "description": "the id of the mq group",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "the matching mq group object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MQGroupObject"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "invalid request arguments",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "description": "http error code",
+                                            "type": "integer"
+                                        },
+                                        "error": {
+                                            "description": "http error reason",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "code",
+                                        "error"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "description": "http error code",
+                                            "type": "integer"
+                                        },
+                                        "error": {
+                                            "description": "http error reason",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "code",
+                                        "error"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/mq/{mqid}": {
+            "parameters": [
+                {
+                    "name": "mqid",
+                    "in": "path",
+                    "required": true,
+                    "description": "the id of the message queue (found in mq profile)",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "the matching mq profile",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MQProfileObject"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "invalid request arguments",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "description": "http error code",
+                                            "type": "integer"
+                                        },
+                                        "error": {
+                                            "description": "http error reason",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "code",
+                                        "error"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "description": "http error code",
+                                            "type": "integer"
+                                        },
+                                        "error": {
+                                            "description": "http error reason",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "code",
+                                        "error"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/schema/openapi": {
+            "parameters": [],
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "the openapi schema",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {},
+                                    "additionalProperties": true
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "invalid request arguments",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "description": "http error code",
+                                            "type": "integer"
+                                        },
+                                        "error": {
+                                            "description": "http error reason",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "code",
+                                        "error"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

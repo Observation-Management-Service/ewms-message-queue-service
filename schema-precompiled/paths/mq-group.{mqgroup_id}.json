@@ -1,0 +1,77 @@
+{
+    "parameters": [
+        {
+            "name": "mqgroup_id",
+            "in": "path",
+            "required": true,
+            "description": "the id of the mq group",
+            "schema": {
+                "type": "string"
+            }
+        }
+    ],
+    "get": {
+        "responses": {
+            "200": {
+                "description": "the matching mq group object",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/MQGroupObject"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "invalid request arguments",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "description": "http error code",
+                                    "type": "integer"
+                                },
+                                "error": {
+                                    "description": "http error reason",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "error"
+                            ],
+                            "additionalProperties": false
+                        }
+                    }
+                }
+            },
+            "404": {
+                "description": "not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "description": "http error code",
+                                    "type": "integer"
+                                },
+                                "error": {
+                                    "description": "http error reason",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "error"
+                            ],
+                            "additionalProperties": false
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

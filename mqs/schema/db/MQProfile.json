@@ -1,0 +1,24 @@
+{
+    "type": "object",
+    "properties": {
+        "mqid": {
+            "type": "string"
+        },
+        "mqgroup_id": {
+            "type": "string"
+        },
+        "timestamp": {
+            "type": "integer"
+        },
+        "nickname": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "mqid",
+        "mqgroup_id",
+        "timestamp",
+        "nickname"
+    ],
+    "additionalProperties": false
+}

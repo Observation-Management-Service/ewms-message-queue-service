@@ -1,0 +1,26 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "ewms-message-queue-service",
+        "summary": "EWMS's Message Queue Service (MQS): The Interface to the DDS's Message Queue Broker",
+        "description": "https://github.com/Observation-Management-Service/ewms-message-queue-service",
+        "contact": {
+            "name": "WIPAC Developers",
+            "url": "icecube.wisc.edu",
+            "email": "developers@icecube.wisc.edu"
+        },
+        "license": {
+            "name": "MIT License"
+        },
+        "version": "0.0.0"
+    },
+    "components": {
+        "parameters": {
+        },
+        "schemas": {
+            "MQGroupObject": "GHA_CI_INGEST_FILE_CONTENTS ../mqs/schema/db/MQGroup.json required=[]",
+            "MQProfileObject": "GHA_CI_INGEST_FILE_CONTENTS ../mqs/schema/db/MQProfile.json required=[]"
+        }
+    },
+    "paths": "GHA_CI_MAKE_PATHS_FROM_DIR ./paths/"
+}
