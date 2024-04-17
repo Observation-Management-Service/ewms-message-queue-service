@@ -4,6 +4,6 @@ Models/MQGroupObject.md
 Models/MQGroupObject_criteria.md
 Models/MQProfileObject.md
 Models/__get_400_response.md
-Models/_mqgroup_post_200_response.md
-Models/_mqgroup_post_400_response.md
+Models/_mq_group_post_200_response.md
+Models/_mq_group_post_400_response.md
 README.md
