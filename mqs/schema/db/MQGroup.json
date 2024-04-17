@@ -14,7 +14,8 @@
                     "type": "integer"
                 },
                 "n_queues": {
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 1
                 }
             },
             "required": [
