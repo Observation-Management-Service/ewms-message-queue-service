@@ -22,7 +22,6 @@
  - [__get_400_response](./Models/__get_400_response.md)
  - [_mq_group_post_200_response](./Models/_mq_group_post_200_response.md)
  - [_mq_group_post_400_response](./Models/_mq_group_post_400_response.md)
- - [criteria](./Models/criteria.md)
 
 
 <a name="documentation-for-authorization"></a>

@@ -45,7 +45,7 @@ All URIs are relative to *http://localhost*
 
 |Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **body** | **MQGroupObject_criteria**|  | [optional] |
+| **body** | **oas_any_type_not_mapped**|  | [optional] |
 
 ### Return type
 
