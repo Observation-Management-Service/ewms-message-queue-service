@@ -2,8 +2,11 @@
 
 import json
 import os
+import re
 
 import openapi_core
+import pytest
+import requests
 from jsonschema_path import SchemaPath
 from rest_tools.client import RestClient, utils
 
@@ -46,3 +49,33 @@ async def test_000(rc: RestClient) -> None:
             rc, openapi_spec, "GET", f"/mq/{mqprofile['mqid']}"
         )
         assert resp == mqprofile
+
+
+async def test_100__get_mqgroup__error_404(rc: RestClient) -> None:
+    """Test erroneous calls--logical errors (type-checking done by openapi)."""
+    openapi_spec = await query_for_schema(rc)
+
+    mqgroup_id = "foobarbaz"
+    with pytest.raises(
+        requests.HTTPError,
+        match=re.escape(
+            f"MQGroup not found for url: {rc.address}/mq-group/{mqgroup_id}"
+        ),
+    ) as e:
+        await utils.request_and_validate(
+            rc, openapi_spec, "GET", f"/mq-group/{mqgroup_id}"
+        )
+    assert e.value.response.status_code == 404
+
+
+async def test_110__get_mq__error_404(rc: RestClient) -> None:
+    """Test erroneous calls--logical errors (type-checking done by openapi)."""
+    openapi_spec = await query_for_schema(rc)
+
+    mqid = "foobarbaz"
+    with pytest.raises(
+        requests.HTTPError,
+        match=re.escape(f"MQProfile not found for url: {rc.address}/mq/{mqid}"),
+    ) as e:
+        await utils.request_and_validate(rc, openapi_spec, "GET", f"/mq/{mqid}")
+    assert e.value.response.status_code == 404
