@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.0.2 (2024-04-22)
+
+### Other
+
+* Publish Image ([`525f373`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/525f373c85b4c291c4f7f13eb62847cd1a90b45f))
+
 ## v0.0.1 (2024-04-17)
 
 ### Other
