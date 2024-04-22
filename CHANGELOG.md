@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.0.3 (2024-04-22)
+
+### Other
+
+* <bot> update dependencies*.log files(s) ([`3406924`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/3406924c9ad5783b2687483e309128be810e2b14))
+* CI: Fix `needs` ([`52b79b4`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/52b79b4f4ab993a79faac7cee6177af1ddb5d96b))
+
 ## v0.0.2 (2024-04-22)
 
 ### Other
