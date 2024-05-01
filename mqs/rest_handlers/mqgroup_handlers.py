@@ -21,7 +21,7 @@ class MQGroupHandler(BaseMQSHandler):  # pylint: disable=W0223
 
     ROUTE = r"/mq-group$"
 
-    @auth.service_account_auth(roles=auth.AuthAccounts.WMS)  # type: ignore
+    @auth.service_account_auth(roles=[auth.AuthAccounts.WMS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def post(self) -> None:
         """Handle POST requests."""
@@ -63,7 +63,7 @@ class MQGroupIDHandler(BaseMQSHandler):  # pylint: disable=W0223
 
     ROUTE = r"/mq-group/(?P<mqgroup_id>\w+)$"
 
-    @auth.service_account_auth(roles=auth.AuthAccounts.WMS)  # type: ignore
+    @auth.service_account_auth(roles=[auth.AuthAccounts.WMS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def get(self, mqgroup_id: str) -> None:
         """Handle GET requests."""

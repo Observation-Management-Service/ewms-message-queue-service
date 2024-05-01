@@ -18,7 +18,7 @@ class MQProfileIDHandler(BaseMQSHandler):  # pylint: disable=W0223
 
     ROUTE = r"/mq/(?P<mqid>\w+)$"
 
-    @auth.service_account_auth(roles=auth.AuthAccounts.WMS)  # type: ignore
+    @auth.service_account_auth(roles=[auth.AuthAccounts.WMS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def get(self, mqid: str) -> None:
         """Handle GET requests."""
