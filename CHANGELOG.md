@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v0.0.5 (2024-05-01)
+
+### Other
+
+* <bot> update setup.cfg ([`1e96b9a`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/1e96b9aa0dc6a30635bd22fade53f59ac6da0f82))
+* Merge remote-tracking branch 'origin/main' ([`c1111b1`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/c1111b1375afd08224055dba2f308f09036a9fcb))
+* Add `LOG_LEVEL_REST_TOOLS` ([`1387c6a`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/1387c6a6efe4718bc79c2f508003c39d28ffeb31))
+
 ## v0.0.4 (2024-05-01)
 
 ### Other
