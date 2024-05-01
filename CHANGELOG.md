@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.0.6 (2024-05-01)
+
+### Other
+
+* Merge remote-tracking branch 'origin/main' ([`b66a14b`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/b66a14b50bb1dc29eafd03862feb2b5b5d3aef6f))
+* Fix Auth Roles Handling ([`5f371cc`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/5f371ccfb10991f2cef24ad91455a506ff0540bb))
+
 ## v0.0.5 (2024-05-01)
 
 ### Other
