@@ -21,6 +21,7 @@
  - [MQProfileObject](./Models/MQProfileObject.md)
  - [__get_400_response](./Models/__get_400_response.md)
  - [_mq_group_post_200_response](./Models/_mq_group_post_200_response.md)
+ - [_mq_group_post_202_response](./Models/_mq_group_post_202_response.md)
  - [_mq_group_post_400_response](./Models/_mq_group_post_400_response.md)
 
 
