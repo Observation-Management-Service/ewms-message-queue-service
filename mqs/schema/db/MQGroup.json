@@ -30,6 +30,7 @@
     },
     "required": [
         "mqgroup_id",
+        "task_id",
         "timestamp",
         "criteria"
     ],

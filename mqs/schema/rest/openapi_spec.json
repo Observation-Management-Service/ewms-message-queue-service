@@ -23,6 +23,9 @@
                     "mqgroup_id": {
                         "type": "string"
                     },
+                    "task_id": {
+                        "type": "string"
+                    },
                     "timestamp": {
                         "type": "integer"
                     },
@@ -114,6 +117,9 @@
                     "content": {
                         "application/json": {
                             "schema": {
+                                "task_id": {
+                                    "$ref": "#/components/schemas/MQGroupObject/properties/task_id"
+                                },
                                 "criteria": {
                                     "$ref": "#/components/schemas/MQGroupObject/properties/criteria"
                                 }
