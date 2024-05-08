@@ -33,6 +33,7 @@ class MQGroupHandler(BaseMQSHandler):  # pylint: disable=W0223
         # insert mq group
         mqgroup = dict(
             mqgroup_id=mqgroup_id,
+            task_id=self.get_argument("task_id"),
             timestamp=now,
             criteria=criteria,
         )
