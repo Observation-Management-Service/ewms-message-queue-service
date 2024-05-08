@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.0.7 (2024-05-08)
+
+### Other
+
+* Add `task_id` to MQ Group Object ([#6](https://github.com/Observation-Management-Service/ewms-message-queue-service/issues/6)) ([`cc72124`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/cc72124d8ac74bd2dbba835c50801be847689a0e))
+
 ## v0.0.6 (2024-05-01)
 
 ### Other
