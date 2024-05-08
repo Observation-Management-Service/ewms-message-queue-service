@@ -4,6 +4,9 @@
         "mqgroup_id": {
             "type": "string"
         },
+        "task_id": {
+            "type": "string"
+        },
         "timestamp": {
             "type": "integer"
         },
