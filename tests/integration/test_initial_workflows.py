@@ -31,7 +31,7 @@ async def test_000(rc: RestClient) -> None:
     # get queues
     criteria = dict(priority=99, n_queues=5)
     resp = await utils.request_and_validate(
-        rc, openapi_spec, "POST", "/mq-group", dict(criteria=criteria)
+        rc, openapi_spec, "POST", "/mq-group", dict(task_id="a123", criteria=criteria)
     )
     mqgroup = resp["mqgroup"]
     assert mqgroup["criteria"] == criteria
