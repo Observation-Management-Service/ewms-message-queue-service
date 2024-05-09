@@ -10,7 +10,7 @@ from rest_tools.server import validate_request
 
 from . import auth
 from .base_handlers import BaseMQSHandler
-from .. import config
+from .. import config, scheduling
 from ..database.client import DocumentNotFoundException
 
 LOGGER = logging.getLogger(__name__)
@@ -26,6 +26,12 @@ class MQGroupHandler(BaseMQSHandler):  # pylint: disable=W0223
     async def post(self) -> None:
         """Handle POST requests."""
         criteria: dict[str, int] = self.get_argument("criteria")
+
+        # check criteria
+        if not scheduling.criteria_is_acceptable(criteria):
+            self.set_status(202)
+            self.write(dict(try_again_later=True))
+            return
 
         mqgroup_id = uuid.uuid4().hex
         now = int(time.time())

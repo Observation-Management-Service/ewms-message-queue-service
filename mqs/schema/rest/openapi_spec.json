@@ -157,6 +157,25 @@
                             }
                         }
                     },
+                    "202": {
+                        "description": "sent when client should try again later",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "try_again_later": {
+                                            "type": "bool"
+                                        }
+                                    },
+                                    "required": [
+                                        "try_again_later"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    },
                     "400": {
                         "description": "invalid request arguments",
                         "content": {
