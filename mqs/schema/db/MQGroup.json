@@ -25,7 +25,7 @@
     },
     "required": [
         "mqgroup_id",
-        "task_id",
+        "workflow_id",
         "timestamp",
         "criteria"
     ],

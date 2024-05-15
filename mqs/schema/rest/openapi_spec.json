@@ -23,7 +23,7 @@
                     "mqgroup_id": {
                         "type": "string"
                     },
-                    "task_id": {
+                    "workflow_id": {
                         "type": "string"
                     },
                     "timestamp": {
@@ -34,15 +34,10 @@
                         "properties": {
                             "priority": {
                                 "type": "integer"
-                            },
-                            "n_queues": {
-                                "type": "integer",
-                                "minimum": 1
                             }
                         },
                         "required": [
-                            "priority",
-                            "n_queues"
+                            "priority"
                         ],
                         "additionalProperties": false
                     }
@@ -64,6 +59,12 @@
                     },
                     "alias": {
                         "type": "string"
+                    },
+                    "is_public": {
+                        "type": "boolean"
+                    },
+                    "is_activated": {
+                        "type": "boolean"
                     }
                 },
                 "required": [],

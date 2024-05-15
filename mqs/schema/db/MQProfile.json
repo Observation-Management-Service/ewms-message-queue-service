@@ -24,7 +24,9 @@
         "mqid",
         "mqgroup_id",
         "timestamp",
-        "alias"
+        "alias",
+        "is_public",
+        "is_activated"
     ],
     "additionalProperties": false
 }
