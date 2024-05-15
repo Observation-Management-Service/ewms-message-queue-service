@@ -10,15 +10,21 @@
         "timestamp": {
             "type": "integer"
         },
-        "nickname": {
+        "alias": {
             "type": "string"
+        },
+        "is_public": {
+            "type": "boolean"
+        },
+        "is_activated": {
+            "type": "boolean"
         }
     },
     "required": [
         "mqid",
         "mqgroup_id",
         "timestamp",
-        "nickname"
+        "alias"
     ],
     "additionalProperties": false
 }

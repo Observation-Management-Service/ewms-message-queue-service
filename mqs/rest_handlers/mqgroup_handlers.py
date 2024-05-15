@@ -45,7 +45,7 @@ class MQGroupHandler(BaseMQSHandler):  # pylint: disable=W0223
                 mqid=mqclient.Queue.make_name(),
                 mqgroup_id=mqgroup_id,
                 timestamp=now,
-                nickname=f"mq-{mqgroup_id}-{i}",  # TODO: use user's values, like "input-queue"
+                alias=f"mq-{mqgroup_id}-{i}",  # TODO: use user's values, like "input-queue"
             )
             for i in range(criteria["n_queues"])
         ]

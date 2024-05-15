@@ -62,7 +62,7 @@
                     "timestamp": {
                         "type": "integer"
                     },
-                    "nickname": {
+                    "alias": {
                         "type": "string"
                     }
                 },
