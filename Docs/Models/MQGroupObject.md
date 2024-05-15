@@ -4,7 +4,7 @@
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
 | **mqgroup\_id** | **String** |  | [optional] [default to null] |
-| **task\_id** | **String** |  | [optional] [default to null] |
+| **workflow\_id** | **String** |  | [optional] [default to null] |
 | **timestamp** | **Integer** |  | [optional] [default to null] |
 | **criteria** | [**MQGroupObject_criteria**](MQGroupObject_criteria.md) |  | [optional] [default to null] |
 
