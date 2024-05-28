@@ -24,7 +24,7 @@ class MQGroupReservationHandler(BaseMQSHandler):  # pylint: disable=W0223
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def post(self, workflow_id: str) -> None:
         """Handle POST requests."""
-        now = int(time.time())
+        now = time.time()
 
         # insert mq group
         mqgroup = {

@@ -8,7 +8,7 @@
             "type": "string"
         },
         "timestamp": {
-            "type": "integer"
+            "type": "number"
         },
         "alias": {
             "type": "string"
