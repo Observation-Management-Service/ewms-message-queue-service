@@ -5,10 +5,11 @@ All URIs are relative to *http://localhost*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**v0Get**](DefaultApi.md#v0Get) | **GET** /v0/ |  |
-| [**v0MqGroupMqgroupIdGet**](DefaultApi.md#v0MqGroupMqgroupIdGet) | **GET** /v0/mq-group/{mqgroup_id} |  |
-| [**v0MqGroupPost**](DefaultApi.md#v0MqGroupPost) | **POST** /v0/mq-group |  |
-| [**v0MqMqidGet**](DefaultApi.md#v0MqMqidGet) | **GET** /v0/mq/{mqid} |  |
+| [**v0MqProfileMqidGet**](DefaultApi.md#v0MqProfileMqidGet) | **GET** /v0/mq-profile/{mqid} |  |
 | [**v0SchemaOpenapiGet**](DefaultApi.md#v0SchemaOpenapiGet) | **GET** /v0/schema/openapi |  |
+| [**v0WorkflowsWorkflowIdMqGroupActivationPost**](DefaultApi.md#v0WorkflowsWorkflowIdMqGroupActivationPost) | **POST** /v0/workflows/{workflow_id}/mq-group/activation |  |
+| [**v0WorkflowsWorkflowIdMqGroupGet**](DefaultApi.md#v0WorkflowsWorkflowIdMqGroupGet) | **GET** /v0/workflows/{workflow_id}/mq-group |  |
+| [**v0WorkflowsWorkflowIdMqGroupReservationPost**](DefaultApi.md#v0WorkflowsWorkflowIdMqGroupReservationPost) | **POST** /v0/workflows/{workflow_id}/mq-group/reservation |  |
 
 
 <a name="v0Get"></a>
@@ -32,57 +33,9 @@ null (empty response body)
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-<a name="v0MqGroupMqgroupIdGet"></a>
-# **v0MqGroupMqgroupIdGet**
-> MQGroupObject v0MqGroupMqgroupIdGet(mqgroup\_id)
-
-
-
-### Parameters
-
-|Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **mqgroup\_id** | **String**| the id of the mq group | [default to null] |
-
-### Return type
-
-[**MQGroupObject**](../Models/MQGroupObject.md)
-
-### Authorization
-
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-<a name="v0MqGroupPost"></a>
-# **v0MqGroupPost**
-> _v0_mq_group_post_200_response v0MqGroupPost(body)
-
-
-
-### Parameters
-
-|Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **body** | **oas_any_type_not_mapped**|  | [optional] |
-
-### Return type
-
-[**_v0_mq_group_post_200_response**](../Models/_v0_mq_group_post_200_response.md)
-
-### Authorization
-
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-<a name="v0MqMqidGet"></a>
-# **v0MqMqidGet**
-> MQProfileObject v0MqMqidGet(mqid)
+<a name="v0MqProfileMqidGet"></a>
+# **v0MqProfileMqidGet**
+> MQProfileObject v0MqProfileMqidGet(mqid)
 
 
 
@@ -123,5 +76,77 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+<a name="v0WorkflowsWorkflowIdMqGroupActivationPost"></a>
+# **v0WorkflowsWorkflowIdMqGroupActivationPost**
+> _v0_workflows__workflow_id__mq_group_activation_post_200_response v0WorkflowsWorkflowIdMqGroupActivationPost(body)
+
+
+
+### Parameters
+
+|Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **body** | **oas_any_type_not_mapped**|  | [optional] |
+
+### Return type
+
+[**_v0_workflows__workflow_id__mq_group_activation_post_200_response**](../Models/_v0_workflows__workflow_id__mq_group_activation_post_200_response.md)
+
+### Authorization
+
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+<a name="v0WorkflowsWorkflowIdMqGroupGet"></a>
+# **v0WorkflowsWorkflowIdMqGroupGet**
+> MQGroupObject v0WorkflowsWorkflowIdMqGroupGet(mqgroup\_id)
+
+
+
+### Parameters
+
+|Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **mqgroup\_id** | **String**| the id of the mq group | [default to null] |
+
+### Return type
+
+[**MQGroupObject**](../Models/MQGroupObject.md)
+
+### Authorization
+
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+<a name="v0WorkflowsWorkflowIdMqGroupReservationPost"></a>
+# **v0WorkflowsWorkflowIdMqGroupReservationPost**
+> _v0_workflows__workflow_id__mq_group_activation_post_200_response v0WorkflowsWorkflowIdMqGroupReservationPost(body)
+
+
+
+### Parameters
+
+|Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **body** | **oas_any_type_not_mapped**|  | [optional] |
+
+### Return type
+
+[**_v0_workflows__workflow_id__mq_group_activation_post_200_response**](../Models/_v0_workflows__workflow_id__mq_group_activation_post_200_response.md)
+
+### Authorization
+
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
