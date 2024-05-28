@@ -3,7 +3,7 @@ Apis/DefaultApi.md
 Models/MQGroupObject.md
 Models/MQGroupObject_criteria.md
 Models/MQProfileObject.md
-Models/__get_400_response.md
-Models/_mq_group_post_200_response.md
-Models/_mq_group_post_400_response.md
+Models/_v0__get_400_response.md
+Models/_v0_mq_group_post_200_response.md
+Models/_v0_mq_group_post_400_response.md
 README.md

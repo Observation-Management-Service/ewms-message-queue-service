@@ -6,11 +6,11 @@
 
 | Class | Method | HTTP request | Description |
 |------------ | ------------- | ------------- | -------------|
-| *DefaultApi* | [**mqGroupMqgroupIdGet**](Apis/DefaultApi.md#mqgroupmqgroupidget) | **GET** /mq-group/{mqgroup_id} |  |
-*DefaultApi* | [**mqGroupPost**](Apis/DefaultApi.md#mqgrouppost) | **POST** /mq-group |  |
-*DefaultApi* | [**mqMqidGet**](Apis/DefaultApi.md#mqmqidget) | **GET** /mq/{mqid} |  |
-*DefaultApi* | [**rootGet**](Apis/DefaultApi.md#rootget) | **GET** / |  |
-*DefaultApi* | [**schemaOpenapiGet**](Apis/DefaultApi.md#schemaopenapiget) | **GET** /schema/openapi |  |
+| *DefaultApi* | [**v0Get**](Apis/DefaultApi.md#v0get) | **GET** /v0/ |  |
+*DefaultApi* | [**v0MqGroupMqgroupIdGet**](Apis/DefaultApi.md#v0mqgroupmqgroupidget) | **GET** /v0/mq-group/{mqgroup_id} |  |
+*DefaultApi* | [**v0MqGroupPost**](Apis/DefaultApi.md#v0mqgrouppost) | **POST** /v0/mq-group |  |
+*DefaultApi* | [**v0MqMqidGet**](Apis/DefaultApi.md#v0mqmqidget) | **GET** /v0/mq/{mqid} |  |
+*DefaultApi* | [**v0SchemaOpenapiGet**](Apis/DefaultApi.md#v0schemaopenapiget) | **GET** /v0/schema/openapi |  |
 
 
 <a name="documentation-for-models"></a>
@@ -19,9 +19,9 @@
  - [MQGroupObject](./Models/MQGroupObject.md)
  - [MQGroupObject_criteria](./Models/MQGroupObject_criteria.md)
  - [MQProfileObject](./Models/MQProfileObject.md)
- - [__get_400_response](./Models/__get_400_response.md)
- - [_mq_group_post_200_response](./Models/_mq_group_post_200_response.md)
- - [_mq_group_post_400_response](./Models/_mq_group_post_400_response.md)
+ - [_v0__get_400_response](./Models/_v0__get_400_response.md)
+ - [_v0_mq_group_post_200_response](./Models/_v0_mq_group_post_200_response.md)
+ - [_v0_mq_group_post_400_response](./Models/_v0_mq_group_post_400_response.md)
 
 
 <a name="documentation-for-authorization"></a>
