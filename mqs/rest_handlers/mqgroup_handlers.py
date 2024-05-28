@@ -2,7 +2,6 @@
 
 import logging
 import time
-import uuid
 
 import mqclient
 import tornado
@@ -16,40 +15,40 @@ from ..database.client import DocumentNotFoundException
 LOGGER = logging.getLogger(__name__)
 
 
-class MQGroupHandler(BaseMQSHandler):  # pylint: disable=W0223
-    """The handler for creating MQ groups."""
+class MQGroupReservationHandler(BaseMQSHandler):  # pylint: disable=W0223
+    """The handler for reserving MQ groups."""
 
-    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mq-group$"
+    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/workflows/(?P<workflow_id>\w+)/mq-group/reservation$"
 
     @auth.service_account_auth(roles=[auth.AuthAccounts.WMS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
-    async def post(self) -> None:
+    async def post(self, workflow_id: str) -> None:
         """Handle POST requests."""
-        criteria: dict[str, int] = self.get_argument("criteria")
-
-        mqgroup_id = uuid.uuid4().hex
         now = int(time.time())
 
         # insert mq group
         mqgroup = {
-            "mqgroup_id": mqgroup_id,
-            "task_id": self.get_argument("task_id"),
+            "workflow_id": workflow_id,
             "timestamp": now,
-            "criteria": criteria,
+            "criteria": {},  # updated by /workflows/<workflow_id>/mq-group/activation
         }
-        await self.mqgroup_client.insert_one(mqgroup)
 
         # insert mq profiles
         mqprofiles = [
             {
                 "mqid": mqclient.Queue.make_name(),
-                "mqgroup_id": mqgroup_id,
+                "workflow_id": workflow_id,
                 "timestamp": now,
-                "alias": f"mq-{mqgroup_id}-{i}",  # TODO: use user's values, like "input-queue"
+                "alias": alias,
+                "is_public": bool(alias in self.get_argument("public")),
+                "is_activated": False,
             }
-            for i in range(criteria["n_queues"])
+            for alias in range(self.get_argument("queue_aliases"))
         ]
-        await self.mqprofile_client.insert_many(mqprofiles)
+
+        # put in db -- do last in case any exceptions above
+        mqgroup = await self.mqgroup_client.insert_one(mqgroup)
+        mqprofiles = await self.mqprofile_client.insert_many(mqprofiles)
 
         self.write(
             {
@@ -59,10 +58,41 @@ class MQGroupHandler(BaseMQSHandler):  # pylint: disable=W0223
         )
 
 
-class MQGroupIDHandler(BaseMQSHandler):  # pylint: disable=W0223
+class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
+    """The handler for activating MQ groups."""
+
+    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/workflows/(?P<workflow_id>\w+)/mq-group/activation$"
+
+    @auth.service_account_auth(roles=[auth.AuthAccounts.WMS])  # type: ignore
+    @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
+    async def post(self, workflow_id: str) -> None:
+        """Handle POST requests."""
+        criteria: dict[str, int] = self.get_argument("criteria")
+
+        # TODO: use criteria to determine if group can be activated
+
+        # update db
+        mqgroup = await self.mqgroup_client.find_one_and_update(
+            {"workflow_id": workflow_id},
+            {"criteria": criteria},
+        )
+        mqprofiles = await self.mqprofile_client.update_set_many(
+            {"workflow_id": workflow_id},
+            {"is_activated": True},
+        )
+
+        self.write(
+            {
+                "mqgroup": mqgroup,
+                "mqprofiles": mqprofiles,
+            }
+        )
+
+
+class MQGroupGetHandler(BaseMQSHandler):  # pylint: disable=W0223
     """The handler for interacting with MQ groups."""
 
-    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mq-group/(?P<mqgroup_id>\w+)$"
+    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/workflows/(?P<workflow_id>\w+)/mq-group$"
 
     @auth.service_account_auth(roles=[auth.AuthAccounts.WMS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
