@@ -23,7 +23,7 @@ class MQProfileIDHandler(BaseMQSHandler):  # pylint: disable=W0223
     async def get(self, mqid: str) -> None:
         """Handle GET requests."""
         try:
-            mqprofile = await self.mqprofile_client.find_one(dict(mqid=mqid))
+            mqprofile = await self.mqprofile_client.find_one({"mqid": mqid})
         except DocumentNotFoundException:
             raise tornado.web.HTTPError(404, reason="MQProfile not found")
 

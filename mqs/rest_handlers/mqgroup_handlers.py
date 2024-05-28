@@ -31,31 +31,31 @@ class MQGroupHandler(BaseMQSHandler):  # pylint: disable=W0223
         now = int(time.time())
 
         # insert mq group
-        mqgroup = dict(
-            mqgroup_id=mqgroup_id,
-            task_id=self.get_argument("task_id"),
-            timestamp=now,
-            criteria=criteria,
-        )
+        mqgroup = {
+            "mqgroup_id": mqgroup_id,
+            "task_id": self.get_argument("task_id"),
+            "timestamp": now,
+            "criteria": criteria,
+        }
         await self.mqgroup_client.insert_one(mqgroup)
 
         # insert mq profiles
         mqprofiles = [
-            dict(
-                mqid=mqclient.Queue.make_name(),
-                mqgroup_id=mqgroup_id,
-                timestamp=now,
-                alias=f"mq-{mqgroup_id}-{i}",  # TODO: use user's values, like "input-queue"
-            )
+            {
+                "mqid": mqclient.Queue.make_name(),
+                "mqgroup_id": mqgroup_id,
+                "timestamp": now,
+                "alias": f"mq-{mqgroup_id}-{i}",  # TODO: use user's values, like "input-queue"
+            }
             for i in range(criteria["n_queues"])
         ]
         await self.mqprofile_client.insert_many(mqprofiles)
 
         self.write(
-            dict(
-                mqgroup=mqgroup,
-                mqprofiles=mqprofiles,
-            )
+            {
+                "mqgroup": mqgroup,
+                "mqprofiles": mqprofiles,
+            }
         )
 
 
@@ -69,7 +69,7 @@ class MQGroupIDHandler(BaseMQSHandler):  # pylint: disable=W0223
     async def get(self, mqgroup_id: str) -> None:
         """Handle GET requests."""
         try:
-            mqgroup = await self.mqgroup_client.find_one(dict(mqgroup_id=mqgroup_id))
+            mqgroup = await self.mqgroup_client.find_one({"mqgroup_id": mqgroup_id})
         except DocumentNotFoundException:
             raise tornado.web.HTTPError(404, reason="MQGroup not found")
 
