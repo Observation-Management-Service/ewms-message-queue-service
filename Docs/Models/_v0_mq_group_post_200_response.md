@@ -1,10 +1,10 @@
-# _mq_group_post_400_response
+# _v0_mq_group_post_200_response
 ## Properties
 
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
-| **code** | **Integer** | http error code | [default to null] |
-| **error** | **String** | http error reason | [default to null] |
+| **mqgroup** | [**MQGroupObject**](MQGroupObject.md) | the created mq group object | [default to null] |
+| **mqprofiles** | [**List**](MQProfileObject.md) | a list of mq profiles | [default to null] |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

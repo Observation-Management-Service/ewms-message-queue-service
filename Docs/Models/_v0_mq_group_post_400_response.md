@@ -1,4 +1,4 @@
-# __get_400_response
+# _v0_mq_group_post_400_response
 ## Properties
 
 | Name | Type | Description | Notes |
