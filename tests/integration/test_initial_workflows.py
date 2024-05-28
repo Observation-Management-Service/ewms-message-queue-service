@@ -29,9 +29,9 @@ async def test_000(rc: RestClient) -> None:
     openapi_spec = await query_for_schema(rc)
 
     # get queues
-    criteria = dict(priority=99, n_queues=5)
+    criteria = {"priority": 99, "n_queues": 5}
     resp = await utils.request_and_validate(
-        rc, openapi_spec, "POST", "/mq-group", dict(task_id="a123", criteria=criteria)
+        rc, openapi_spec, "POST", "/mq-group", {"task_id": "a123", "criteria": criteria}
     )
     mqgroup = resp["mqgroup"]
     assert mqgroup["criteria"] == criteria
