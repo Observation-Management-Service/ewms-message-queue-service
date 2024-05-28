@@ -73,7 +73,7 @@
         }
     },
     "paths": {
-        "/": {
+        "/v0/": {
             "parameters": [],
             "get": {
                 "responses": {
@@ -111,7 +111,7 @@
                 }
             }
         },
-        "/mq-group": {
+        "/v0/mq-group": {
             "parameters": [],
             "post": {
                 "requestBody": {
@@ -186,7 +186,7 @@
                 }
             }
         },
-        "/mq-group/{mqgroup_id}": {
+        "/v0/mq-group/{mqgroup_id}": {
             "parameters": [
                 {
                     "name": "mqgroup_id",
@@ -263,7 +263,7 @@
                 }
             }
         },
-        "/mq/{mqid}": {
+        "/v0/mq/{mqid}": {
             "parameters": [
                 {
                     "name": "mqid",
@@ -340,7 +340,7 @@
                 }
             }
         },
-        "/schema/openapi": {
+        "/v0/schema/openapi": {
             "parameters": [],
             "get": {
                 "responses": {
