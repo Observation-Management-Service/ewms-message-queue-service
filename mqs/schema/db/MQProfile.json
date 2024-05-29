@@ -4,7 +4,7 @@
         "mqid": {
             "type": "string"
         },
-        "mqgroup_id": {
+        "workflow_id": {
             "type": "string"
         },
         "timestamp": {

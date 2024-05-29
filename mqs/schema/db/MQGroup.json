@@ -1,9 +1,6 @@
 {
     "type": "object",
     "properties": {
-        "mqgroup_id": {
-            "type": "string"
-        },
         "workflow_id": {
             "type": "string"
         },
