@@ -76,10 +76,16 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
             {"workflow_id": workflow_id},
             {"criteria": criteria},
         )
-        mqprofiles = await self.mqprofile_client.update_set_many(
+        await self.mqprofile_client.update_set_many(
             {"workflow_id": workflow_id},
             {"is_activated": True},
         )
+        mqprofiles = [
+            p
+            async for p in self.mqprofile_client.find_all(
+                {"workflow_id": workflow_id}, []
+            )
+        ]
 
         self.write(
             {

@@ -86,6 +86,7 @@ class JSONSchemaMongoClient:
         )
         if not doc:
             raise DocumentNotFoundException()
+        doc.pop("_id")
 
         self.logger.debug(f"updated one ({query}): {doc}")
         return doc  # type: ignore[no-any-return]
