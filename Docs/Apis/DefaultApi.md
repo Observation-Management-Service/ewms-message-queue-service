@@ -80,7 +80,7 @@ This endpoint does not need any parameter.
 
 <a name="v0WorkflowsWorkflowIdMqGroupActivationPost"></a>
 # **v0WorkflowsWorkflowIdMqGroupActivationPost**
-> _v0_workflows__workflow_id__mq_group_activation_post_200_response v0WorkflowsWorkflowIdMqGroupActivationPost(body)
+> MQGroupObjectAndProfiles v0WorkflowsWorkflowIdMqGroupActivationPost(workflow\_id, body)
 
 
 
@@ -88,11 +88,12 @@ This endpoint does not need any parameter.
 
 |Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
+| **workflow\_id** | **String**| the id of the ewms workflow that maps to an mq group | [default to null] |
 | **body** | **oas_any_type_not_mapped**|  | [optional] |
 
 ### Return type
 
-[**_v0_workflows__workflow_id__mq_group_activation_post_200_response**](../Models/_v0_workflows__workflow_id__mq_group_activation_post_200_response.md)
+[**MQGroupObjectAndProfiles**](../Models/MQGroupObjectAndProfiles.md)
 
 ### Authorization
 
@@ -104,7 +105,7 @@ This endpoint does not need any parameter.
 
 <a name="v0WorkflowsWorkflowIdMqGroupGet"></a>
 # **v0WorkflowsWorkflowIdMqGroupGet**
-> MQGroupObject v0WorkflowsWorkflowIdMqGroupGet(mqgroup\_id)
+> MQGroupObject v0WorkflowsWorkflowIdMqGroupGet(workflow\_id)
 
 
 
@@ -112,7 +113,7 @@ This endpoint does not need any parameter.
 
 |Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **mqgroup\_id** | **String**| the id of the mq group | [default to null] |
+| **workflow\_id** | **String**| the id of the ewms workflow that maps to an mq group | [default to null] |
 
 ### Return type
 
@@ -128,7 +129,7 @@ This endpoint does not need any parameter.
 
 <a name="v0WorkflowsWorkflowIdMqGroupReservationPost"></a>
 # **v0WorkflowsWorkflowIdMqGroupReservationPost**
-> _v0_workflows__workflow_id__mq_group_activation_post_200_response v0WorkflowsWorkflowIdMqGroupReservationPost(body)
+> MQGroupObjectAndProfiles v0WorkflowsWorkflowIdMqGroupReservationPost(workflow\_id, body)
 
 
 
@@ -136,11 +137,12 @@ This endpoint does not need any parameter.
 
 |Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
+| **workflow\_id** | **String**| the id of the ewms workflow that maps to an mq group | [default to null] |
 | **body** | **oas_any_type_not_mapped**|  | [optional] |
 
 ### Return type
 
-[**_v0_workflows__workflow_id__mq_group_activation_post_200_response**](../Models/_v0_workflows__workflow_id__mq_group_activation_post_200_response.md)
+[**MQGroupObjectAndProfiles**](../Models/MQGroupObjectAndProfiles.md)
 
 ### Authorization
 
