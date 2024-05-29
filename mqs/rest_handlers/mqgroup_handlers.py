@@ -96,10 +96,10 @@ class MQGroupGetHandler(BaseMQSHandler):  # pylint: disable=W0223
 
     @auth.service_account_auth(roles=[auth.AuthAccounts.WMS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
-    async def get(self, mqgroup_id: str) -> None:
+    async def get(self, workflow_id: str) -> None:
         """Handle GET requests."""
         try:
-            mqgroup = await self.mqgroup_client.find_one({"mqgroup_id": mqgroup_id})
+            mqgroup = await self.mqgroup_client.find_one({"workflow_id": workflow_id})
         except DocumentNotFoundException:
             raise tornado.web.HTTPError(404, reason="MQGroup not found")
 
