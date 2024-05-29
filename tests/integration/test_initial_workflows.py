@@ -100,11 +100,12 @@ async def test_100__mqgroup_activation__error_404(rc: RestClient) -> None:
             openapi_spec,
             "POST",
             f"/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group/activation",
+            {"criteria": {"priority": 99}},
         )
     assert e.value.response.status_code == 404
 
 
-async def test_110__mqgroup_get__error_404(rc: RestClient) -> None:
+async def test_110__get_mqgroup__error_404(rc: RestClient) -> None:
     """Test erroneous calls--logical errors (type-checking done by openapi)."""
     openapi_spec = await query_for_schema(rc)
 
