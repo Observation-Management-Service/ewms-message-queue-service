@@ -30,26 +30,34 @@ async def test_000(rc: RestClient) -> None:
     """Test normal initial workflow."""
     openapi_spec = await query_for_schema(rc)
 
-    # get queues
-    criteria = {"priority": 99, "n_queues": 5}
+    workflow_id = "abc123"
+    queue_aliases = ["queue1", "queue2", "queue3"]
+    public = ["queue1", "queue3"]
+
+    # reserve mq group
     resp = await utils.request_and_validate(
         rc,
         openapi_spec,
         "POST",
-        f"/{ROUTE_VERSION_PREFIX}/mq-group",
-        {"task_id": "a123", "criteria": criteria},
+        f"/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group/reservation",
+        {"queue_aliases": queue_aliases, "public": public},
     )
     mqgroup = resp["mqgroup"]
-    assert mqgroup["criteria"] == criteria
     mqprofiles = resp["mqprofiles"]
-    assert len(mqprofiles) == criteria["n_queues"]
+    assert len(mqprofiles) == len(queue_aliases)
+    for mqprofile in mqprofiles:
+        assert mqprofile["workflow_id"] == workflow_id
+        assert mqprofile["timestamp"] == mqgroup["timestamp"]
+        assert mqprofile["alias"] in queue_aliases
+        assert mqprofile["is_public"] == bool(mqprofile["alias"] in public)
+        assert not mqprofile["is_activated"]
 
     # check GET
     resp = await utils.request_and_validate(
         rc,
         openapi_spec,
         "GET",
-        f"/{ROUTE_VERSION_PREFIX}/mq-group/{mqgroup['mqgroup_id']}",
+        f"/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group",
     )
     assert resp == mqgroup
     # check GET
@@ -62,28 +70,60 @@ async def test_000(rc: RestClient) -> None:
         )
         assert resp == mqprofile
 
+    # activate mq group
+    criteria = {"priority": 99}
+    resp = await utils.request_and_validate(
+        rc,
+        openapi_spec,
+        "POST",
+        f"/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group/activation",
+        {"criteria": criteria},
+    )
+    assert resp["mqgroup"] == mqgroup
+    assert resp["mqprofiles"] == [{**p, "is_activated": True} for p in mqprofiles]
 
-async def test_100__get_mqgroup__error_404(rc: RestClient) -> None:
+
+async def test_100__mqgroup_activation__error_404(rc: RestClient) -> None:
     """Test erroneous calls--logical errors (type-checking done by openapi)."""
     openapi_spec = await query_for_schema(rc)
 
-    mqgroup_id = "foobarbaz"
+    workflow_id = "foobarbaz"
     with pytest.raises(
         requests.HTTPError,
         match=re.escape(
-            f"MQGroup not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/mq-group/{mqgroup_id}"
+            f"MQGroup not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group/activation"
         ),
     ) as e:
         await utils.request_and_validate(
             rc,
             openapi_spec,
             "GET",
-            f"/{ROUTE_VERSION_PREFIX}/mq-group/{mqgroup_id}",
+            f"/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group/activation",
         )
     assert e.value.response.status_code == 404
 
 
-async def test_110__get_mq__error_404(rc: RestClient) -> None:
+async def test_110__mqgroup_activation__error_404(rc: RestClient) -> None:
+    """Test erroneous calls--logical errors (type-checking done by openapi)."""
+    openapi_spec = await query_for_schema(rc)
+
+    workflow_id = "foobarbaz"
+    with pytest.raises(
+        requests.HTTPError,
+        match=re.escape(
+            f"MQGroup not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group"
+        ),
+    ) as e:
+        await utils.request_and_validate(
+            rc,
+            openapi_spec,
+            "GET",
+            f"/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group",
+        )
+    assert e.value.response.status_code == 404
+
+
+async def test_200__get_mq_profile__error_404(rc: RestClient) -> None:
     """Test erroneous calls--logical errors (type-checking done by openapi)."""
     openapi_spec = await query_for_schema(rc)
 
