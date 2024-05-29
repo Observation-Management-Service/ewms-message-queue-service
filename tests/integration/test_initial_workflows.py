@@ -43,6 +43,8 @@ async def test_000(rc: RestClient) -> None:
         {"queue_aliases": queue_aliases, "public": public},
     )
     mqgroup = resp["mqgroup"]
+    assert mqgroup["workflow_id"] == workflow_id
+    assert mqgroup["criteria"] is None
     mqprofiles = resp["mqprofiles"]
     assert len(mqprofiles) == len(queue_aliases)
     for mqprofile in mqprofiles:
