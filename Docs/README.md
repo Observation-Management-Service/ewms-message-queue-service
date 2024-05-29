@@ -20,6 +20,7 @@
  - [MQGroupObject](./Models/MQGroupObject.md)
  - [MQGroupObjectAndProfiles](./Models/MQGroupObjectAndProfiles.md)
  - [MQGroupObject_criteria](./Models/MQGroupObject_criteria.md)
+ - [MQGroupObject_criteria_anyOf](./Models/MQGroupObject_criteria_anyOf.md)
  - [MQProfileObject](./Models/MQProfileObject.md)
  - [_v0__get_400_response](./Models/_v0__get_400_response.md)
  - [_v0_mq_profile__mqid__get_400_response](./Models/_v0_mq_profile__mqid__get_400_response.md)
