@@ -8,16 +8,23 @@
             "type": "number"
         },
         "criteria": {
-            "type": "object",
-            "properties": {
-                "priority": {
-                    "type": "integer"
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "priority": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "priority"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "null"
                 }
-            },
-            "required": [
-                "priority"
-            ],
-            "additionalProperties": false
+            ]
         }
     },
     "required": [

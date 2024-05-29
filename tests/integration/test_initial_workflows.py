@@ -71,13 +71,12 @@ async def test_000(rc: RestClient) -> None:
         assert resp == mqprofile
 
     # activate mq group
-    criteria = {"priority": 99}
     resp = await utils.request_and_validate(
         rc,
         openapi_spec,
         "POST",
         f"/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group/activation",
-        {"criteria": criteria},
+        {"criteria": {"priority": 99}},
     )
     assert resp["mqgroup"] == mqgroup
     assert resp["mqprofiles"] == [{**p, "is_activated": True} for p in mqprofiles]

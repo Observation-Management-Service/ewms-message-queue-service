@@ -18,7 +18,7 @@
         },
         "responses": {
             "200": {
-                "description": "a activated created group of queues",
+                "description": "an activated group of queues",
                 "content": {
                     "application/json": {
                         "schema": {

@@ -30,7 +30,7 @@ class MQGroupReservationHandler(BaseMQSHandler):  # pylint: disable=W0223
         mqgroup = {
             "workflow_id": workflow_id,
             "timestamp": now,
-            "criteria": {},  # updated by /workflows/<workflow_id>/mq-group/activation
+            "criteria": None,  # updated by /workflows/<workflow_id>/mq-group/activation
         }
 
         # insert mq profiles
