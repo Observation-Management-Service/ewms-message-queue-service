@@ -1,13 +1,7 @@
 {
     "parameters": [
         {
-            "name": "mqgroup_id",
-            "in": "path",
-            "required": true,
-            "description": "the id of the mq group",
-            "schema": {
-                "type": "string"
-            }
+            "$ref": "#/components/parameters/WorkflowIDParam"
         }
     ],
     "get": {
