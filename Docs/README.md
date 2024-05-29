@@ -18,11 +18,11 @@
 ## Documentation for Models
 
  - [MQGroupObject](./Models/MQGroupObject.md)
+ - [MQGroupObjectAndProfiles](./Models/MQGroupObjectAndProfiles.md)
  - [MQGroupObject_criteria](./Models/MQGroupObject_criteria.md)
  - [MQProfileObject](./Models/MQProfileObject.md)
  - [_v0__get_400_response](./Models/_v0__get_400_response.md)
  - [_v0_mq_profile__mqid__get_400_response](./Models/_v0_mq_profile__mqid__get_400_response.md)
- - [_v0_workflows__workflow_id__mq_group_activation_post_200_response](./Models/_v0_workflows__workflow_id__mq_group_activation_post_200_response.md)
 
 
 <a name="documentation-for-authorization"></a>

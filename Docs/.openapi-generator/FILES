@@ -1,9 +1,9 @@
 .openapi-generator-ignore
 Apis/DefaultApi.md
 Models/MQGroupObject.md
+Models/MQGroupObjectAndProfiles.md
 Models/MQGroupObject_criteria.md
 Models/MQProfileObject.md
 Models/_v0__get_400_response.md
 Models/_v0_mq_profile__mqid__get_400_response.md
-Models/_v0_workflows__workflow_id__mq_group_activation_post_200_response.md
 README.md

@@ -1,4 +1,4 @@
-# _v0_workflows__workflow_id__mq_group_activation_post_200_response
+# MQGroupObjectAndProfiles
 ## Properties
 
 | Name | Type | Description | Notes |

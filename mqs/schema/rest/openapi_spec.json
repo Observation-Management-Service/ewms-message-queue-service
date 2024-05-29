@@ -15,7 +15,17 @@
         "version": "0.0.0"
     },
     "components": {
-        "parameters": {},
+        "parameters": {
+            "WorkflowIDParam": {
+                "name": "workflow_id",
+                "in": "path",
+                "required": true,
+                "description": "the id of the ewms workflow that maps to an mq group",
+                "schema": {
+                    "type": "string"
+                }
+            }
+        },
         "schemas": {
             "MQGroupObject": {
                 "type": "object",
@@ -65,6 +75,28 @@
                     }
                 },
                 "required": [],
+                "additionalProperties": false
+            },
+            "MQGroupObjectAndProfiles": {
+                "type": "object",
+                "properties": {
+                    "mqgroup": {
+                        "description": "the created mq group object",
+                        "$ref": "#/components/schemas/MQGroupObject"
+                    },
+                    "mqprofiles": {
+                        "description": "a list of mq profiles",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MQProfileObject"
+                        },
+                        "minItems": 0
+                    }
+                },
+                "required": [
+                    "mqgroup",
+                    "mqprofiles"
+                ],
                 "additionalProperties": false
             }
         }
@@ -232,13 +264,7 @@
         "/v0/workflows/{workflow_id}/mq-group": {
             "parameters": [
                 {
-                    "name": "mqgroup_id",
-                    "in": "path",
-                    "required": true,
-                    "description": "the id of the mq group",
-                    "schema": {
-                        "type": "string"
-                    }
+                    "$ref": "#/components/parameters/WorkflowIDParam"
                 }
             ],
             "get": {
@@ -307,15 +333,16 @@
             }
         },
         "/v0/workflows/{workflow_id}/mq-group/activation": {
-            "parameters": [],
+            "parameters": [
+                {
+                    "$ref": "#/components/parameters/WorkflowIDParam"
+                }
+            ],
             "post": {
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
-                                "task_id": {
-                                    "$ref": "#/components/schemas/MQGroupObject/properties/task_id"
-                                },
                                 "criteria": {
                                     "$ref": "#/components/schemas/MQGroupObject/properties/criteria"
                                 }
@@ -325,30 +352,11 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "a successfully created group of queues",
+                        "description": "a activated created group of queues",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "mqgroup": {
-                                            "description": "the created mq group object",
-                                            "$ref": "#/components/schemas/MQGroupObject"
-                                        },
-                                        "mqprofiles": {
-                                            "description": "a list of mq profiles",
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/MQProfileObject"
-                                            },
-                                            "minItems": 0
-                                        }
-                                    },
-                                    "required": [
-                                        "mqgroup",
-                                        "mqprofiles"
-                                    ],
-                                    "additionalProperties": false
+                                    "$ref": "#/components/schemas/MQGroupObjectAndProfiles"
                                 }
                             }
                         }
@@ -407,17 +415,31 @@
             }
         },
         "/v0/workflows/{workflow_id}/mq-group/reservation": {
-            "parameters": [],
+            "parameters": [
+                {
+                    "$ref": "#/components/parameters/WorkflowIDParam"
+                }
+            ],
             "post": {
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
-                                "task_id": {
-                                    "$ref": "#/components/schemas/MQGroupObject/properties/task_id"
+                                "queue_aliases": {
+                                    "description": "a list of queues requested, given by user-defined aliases",
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "minItems": 1
                                 },
-                                "criteria": {
-                                    "$ref": "#/components/schemas/MQGroupObject/properties/criteria"
+                                "public": {
+                                    "description": "a list of which queue aliases are deemed for public access (outside of EWMS)",
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "minItems": 0
                                 }
                             }
                         }
@@ -425,30 +447,11 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "a successfully created group of queues",
+                        "description": "a successfully reserved (unactivated) group of queues",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "mqgroup": {
-                                            "description": "the created mq group object",
-                                            "$ref": "#/components/schemas/MQGroupObject"
-                                        },
-                                        "mqprofiles": {
-                                            "description": "a list of mq profiles",
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/MQProfileObject"
-                                            },
-                                            "minItems": 0
-                                        }
-                                    },
-                                    "required": [
-                                        "mqgroup",
-                                        "mqprofiles"
-                                    ],
-                                    "additionalProperties": false
+                                    "$ref": "#/components/schemas/MQGroupObjectAndProfiles"
                                 }
                             }
                         }
