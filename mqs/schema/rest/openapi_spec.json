@@ -20,14 +20,11 @@
             "MQGroupObject": {
                 "type": "object",
                 "properties": {
-                    "mqgroup_id": {
-                        "type": "string"
-                    },
                     "workflow_id": {
                         "type": "string"
                     },
                     "timestamp": {
-                        "type": "integer"
+                        "type": "number"
                     },
                     "criteria": {
                         "type": "object",
@@ -51,11 +48,11 @@
                     "mqid": {
                         "type": "string"
                     },
-                    "mqgroup_id": {
+                    "workflow_id": {
                         "type": "string"
                     },
                     "timestamp": {
-                        "type": "integer"
+                        "type": "number"
                     },
                     "alias": {
                         "type": "string"

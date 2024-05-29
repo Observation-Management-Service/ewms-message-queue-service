@@ -21,7 +21,6 @@
         }
     },
     "required": [
-        "mqgroup_id",
         "workflow_id",
         "timestamp",
         "criteria"
