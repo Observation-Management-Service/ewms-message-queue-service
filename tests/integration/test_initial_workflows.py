@@ -80,7 +80,7 @@ async def test_000(rc: RestClient) -> None:
         f"/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group/activation",
         {"criteria": {"priority": 99}},
     )
-    assert resp["mqgroup"] == mqgroup
+    assert resp["mqgroup"] == {**mqgroup, "criteria": {"priority": 99}}
     assert resp["mqprofiles"] == [{**p, "is_activated": True} for p in mqprofiles]
 
 
