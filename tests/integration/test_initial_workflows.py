@@ -98,7 +98,7 @@ async def test_100__mqgroup_activation__error_404(rc: RestClient) -> None:
         await utils.request_and_validate(
             rc,
             openapi_spec,
-            "GET",
+            "POST",
             f"/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group/activation",
         )
     assert e.value.response.status_code == 404
