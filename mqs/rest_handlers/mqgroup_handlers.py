@@ -43,7 +43,7 @@ class MQGroupReservationHandler(BaseMQSHandler):  # pylint: disable=W0223
                 "is_public": bool(alias in self.get_argument("public")),
                 "is_activated": False,
             }
-            for alias in range(self.get_argument("queue_aliases"))
+            for alias in self.get_argument("queue_aliases")
         ]
 
         # put in db -- do last in case any exceptions above
