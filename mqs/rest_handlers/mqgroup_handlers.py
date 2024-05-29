@@ -72,10 +72,14 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
         # TODO: use criteria to determine if group can be activated
 
         # update db
-        mqgroup = await self.mqgroup_client.find_one_and_update(
-            {"workflow_id": workflow_id},
-            {"criteria": criteria},
-        )
+        try:
+            mqgroup = await self.mqgroup_client.find_one_and_update(
+                {"workflow_id": workflow_id},
+                {"criteria": criteria},
+            )
+        except DocumentNotFoundException:
+            raise tornado.web.HTTPError(404, reason="MQGroup not found")
+        #
         await self.mqprofile_client.update_set_many(
             {"workflow_id": workflow_id},
             {"is_activated": True},
