@@ -58,7 +58,7 @@ async def test_000(rc: RestClient) -> None:
             rc,
             openapi_spec,
             "GET",
-            f"/{ROUTE_VERSION_PREFIX}/mq/{mqprofile['mqid']}",
+            f"/{ROUTE_VERSION_PREFIX}/mq-profile/{mqprofile['mqid']}",
         )
         assert resp == mqprofile
 
@@ -91,10 +91,10 @@ async def test_110__get_mq__error_404(rc: RestClient) -> None:
     with pytest.raises(
         requests.HTTPError,
         match=re.escape(
-            f"MQProfile not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/mq/{mqid}"
+            f"MQProfile not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/mq-profile/{mqid}"
         ),
     ) as e:
         await utils.request_and_validate(
-            rc, openapi_spec, "GET", f"/{ROUTE_VERSION_PREFIX}/mq/{mqid}"
+            rc, openapi_spec, "GET", f"/{ROUTE_VERSION_PREFIX}/mq-profile/{mqid}"
         )
     assert e.value.response.status_code == 404

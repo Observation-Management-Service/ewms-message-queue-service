@@ -16,7 +16,7 @@ LOGGER = logging.getLogger(__name__)
 class MQProfileIDHandler(BaseMQSHandler):  # pylint: disable=W0223
     """The handler for interacting with MQ profiles."""
 
-    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mq/(?P<mqid>\w+)$"
+    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mq-profile/(?P<mqid>\w+)$"
 
     @auth.service_account_auth(roles=[auth.AuthAccounts.WMS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
