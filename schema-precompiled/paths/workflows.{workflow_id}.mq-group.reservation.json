@@ -1,15 +1,29 @@
 {
-    "parameters": [],
+    "parameters": [
+        {
+            "$ref": "#/components/parameters/WorkflowIDParam"
+        }
+    ],
     "post": {
         "requestBody": {
             "content": {
                 "application/json": {
                     "schema": {
-                        "task_id": {
-                            "$ref": "#/components/schemas/MQGroupObject/properties/task_id"
+                        "queue_aliases": {
+                            "description": "a list of queues requested, given by user-defined aliases",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "minItems": 1
                         },
-                        "criteria": {
-                            "$ref": "#/components/schemas/MQGroupObject/properties/criteria"
+                        "public": {
+                            "description": "a list of which queue aliases are deemed for public access (outside of EWMS)",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "minItems": 0
                         }
                     }
                 }
@@ -17,36 +31,42 @@
         },
         "responses": {
             "200": {
-                "description": "a successfully created group of queues",
+                "description": "a successfully reserved (unactivated) group of queues",
                 "content": {
                     "application/json": {
                         "schema": {
-                            "type": "object",
-                            "properties": {
-                                "mqgroup": {
-                                    "description": "the created mq group object",
-                                    "$ref": "#/components/schemas/MQGroupObject"
-                                },
-                                "mqprofiles": {
-                                    "description": "a list of mq profiles",
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/MQProfileObject"
-                                    },
-                                    "minItems": 0
-                                }
-                            },
-                            "required": [
-                                "mqgroup",
-                                "mqprofiles"
-                            ],
-                            "additionalProperties": false
+                            "$ref": "#/components/schemas/MQGroupObjectAndProfiles"
                         }
                     }
                 }
             },
             "400": {
                 "description": "invalid request arguments",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "description": "http error code",
+                                    "type": "integer"
+                                },
+                                "error": {
+                                    "description": "http error reason",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "code",
+                                "error"
+                            ],
+                            "additionalProperties": false
+                        }
+                    }
+                }
+            },
+            "404": {
+                "description": "not found",
                 "content": {
                     "application/json": {
                         "schema": {

@@ -1,23 +1,28 @@
 {
     "parameters": [
         {
-            "name": "mqgroup_id",
-            "in": "path",
-            "required": true,
-            "description": "the id of the mq group",
-            "schema": {
-                "type": "string"
-            }
+            "$ref": "#/components/parameters/WorkflowIDParam"
         }
     ],
-    "get": {
+    "post": {
+        "requestBody": {
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "criteria": {
+                            "$ref": "#/components/schemas/MQGroupObject/properties/criteria"
+                        }
+                    }
+                }
+            }
+        },
         "responses": {
             "200": {
-                "description": "the matching mq group object",
+                "description": "an activated group of queues",
                 "content": {
                     "application/json": {
                         "schema": {
-                            "$ref": "#/components/schemas/MQGroupObject"
+                            "$ref": "#/components/schemas/MQGroupObjectAndProfiles"
                         }
                     }
                 }

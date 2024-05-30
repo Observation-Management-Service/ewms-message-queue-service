@@ -16,8 +16,9 @@ HANDLERS = [
     #
     rest_handlers.schema_handlers.SchemaHandler,
     #
-    rest_handlers.mqgroup_handlers.MQGroupHandler,
-    rest_handlers.mqgroup_handlers.MQGroupIDHandler,
+    rest_handlers.mqgroup_handlers.MQGroupReservationHandler,
+    rest_handlers.mqgroup_handlers.MQGroupActivationHandler,
+    rest_handlers.mqgroup_handlers.MQGroupGetHandler,
     #
     rest_handlers.mqprofile_handlers.MQProfileIDHandler,
 ]

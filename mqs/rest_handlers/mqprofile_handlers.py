@@ -16,14 +16,14 @@ LOGGER = logging.getLogger(__name__)
 class MQProfileIDHandler(BaseMQSHandler):  # pylint: disable=W0223
     """The handler for interacting with MQ profiles."""
 
-    ROUTE = r"/mq/(?P<mqid>\w+)$"
+    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mq-profile/(?P<mqid>\w+)$"
 
     @auth.service_account_auth(roles=[auth.AuthAccounts.WMS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def get(self, mqid: str) -> None:
         """Handle GET requests."""
         try:
-            mqprofile = await self.mqprofile_client.find_one(dict(mqid=mqid))
+            mqprofile = await self.mqprofile_client.find_one({"mqid": mqid})
         except DocumentNotFoundException:
             raise tornado.web.HTTPError(404, reason="MQProfile not found")
 

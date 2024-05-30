@@ -4,21 +4,29 @@
         "mqid": {
             "type": "string"
         },
-        "mqgroup_id": {
+        "workflow_id": {
             "type": "string"
         },
         "timestamp": {
-            "type": "integer"
+            "type": "number"
         },
-        "nickname": {
+        "alias": {
             "type": "string"
+        },
+        "is_public": {
+            "type": "boolean"
+        },
+        "is_activated": {
+            "type": "boolean"
         }
     },
     "required": [
         "mqid",
-        "mqgroup_id",
+        "workflow_id",
         "timestamp",
-        "nickname"
+        "alias",
+        "is_public",
+        "is_activated"
     ],
     "additionalProperties": false
 }

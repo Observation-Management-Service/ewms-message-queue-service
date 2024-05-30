@@ -1,36 +1,34 @@
 {
     "type": "object",
     "properties": {
-        "mqgroup_id": {
-            "type": "string"
-        },
-        "task_id": {
+        "workflow_id": {
             "type": "string"
         },
         "timestamp": {
-            "type": "integer"
+            "type": "number"
         },
         "criteria": {
-            "type": "object",
-            "properties": {
-                "priority": {
-                    "type": "integer"
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "priority": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "priority"
+                    ],
+                    "additionalProperties": false
                 },
-                "n_queues": {
-                    "type": "integer",
-                    "minimum": 1
+                {
+                    "type": "null"
                 }
-            },
-            "required": [
-                "priority",
-                "n_queues"
-            ],
-            "additionalProperties": false
+            ]
         }
     },
     "required": [
-        "mqgroup_id",
-        "task_id",
+        "workflow_id",
         "timestamp",
         "criteria"
     ],
