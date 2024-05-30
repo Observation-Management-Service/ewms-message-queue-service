@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.1 (2024-05-30)
+
+### Other
+
+* <bot> update README.md ([`e01814c`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/e01814c537560775f1ca54c69ec45837dfa356c2))
+* Update README ([`df09c44`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/df09c4428ffdd43dc12336a622138376504d2b37))
+
 ## v0.1.0 (2024-05-30)
 
 
