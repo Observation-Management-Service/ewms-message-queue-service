@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2 (2024-06-05)
+
+### Other
+
+* <bot> update dependencies*.log files(s) ([`dd0519f`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/dd0519f22f9593f663de7b4f208bce950a4ccec8))
+* <ci> modify rest documentation ([`6be16e8`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/6be16e8edac690176a3c90439eacc0129b2238b8))
+* Fix DB Indexes ([`3be7951`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/3be7951f9d0ea19b067b549644d98b817794d64b))
+
 ## v0.1.1 (2024-05-30)
 
 ### Other
