@@ -71,6 +71,15 @@ async def test_000(rc: RestClient) -> None:
             f"/{ROUTE_VERSION_PREFIX}/mq-profiles/{mqprofile['mqid']}",
         )
         assert resp == mqprofile
+    # check GET for public mq profiles
+    resp = await utils.request_and_validate(
+        rc,
+        openapi_spec,
+        "GET",
+        f"/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-profiles/public",
+    )
+    assert len(resp["mqprofiles"]) == len(public)
+    assert resp["mqprofiles"] == [m for m in mqprofiles if m["alias"] in public]
 
     # activate mq group
     resp = await utils.request_and_validate(
