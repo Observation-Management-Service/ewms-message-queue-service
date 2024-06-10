@@ -516,7 +516,7 @@
                 }
             }
         },
-        "/v0/workflows/{workflow_id}/mq-profiles/public/activated": {
+        "/v0/workflows/{workflow_id}/mq-profiles/public": {
             "parameters": [
                 {
                     "$ref": "#/components/parameters/WorkflowIDParam"
