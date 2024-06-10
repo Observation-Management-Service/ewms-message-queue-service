@@ -45,8 +45,9 @@ class MQProfilePublicGetHandler(BaseMQSHandler):  # pylint: disable=W0223
                 {
                     "workflow_id": workflow_id,
                     "is_public": True,
-                }
-            )
+                },
+                projection=[],  # not a great way to get a list from query params
+            ),
         )
 
         self.write({"mqprofiles": mqprofiles})
