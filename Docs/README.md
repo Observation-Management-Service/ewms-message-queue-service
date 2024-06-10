@@ -12,6 +12,7 @@
 *DefaultApi* | [**v0WorkflowsWorkflowIdMqGroupActivationPost**](Apis/DefaultApi.md#v0workflowsworkflowidmqgroupactivationpost) | **POST** /v0/workflows/{workflow_id}/mq-group/activation |  |
 *DefaultApi* | [**v0WorkflowsWorkflowIdMqGroupGet**](Apis/DefaultApi.md#v0workflowsworkflowidmqgroupget) | **GET** /v0/workflows/{workflow_id}/mq-group |  |
 *DefaultApi* | [**v0WorkflowsWorkflowIdMqGroupReservationPost**](Apis/DefaultApi.md#v0workflowsworkflowidmqgroupreservationpost) | **POST** /v0/workflows/{workflow_id}/mq-group/reservation |  |
+*DefaultApi* | [**v0WorkflowsWorkflowIdMqProfilesPublicActivatedGet**](Apis/DefaultApi.md#v0workflowsworkflowidmqprofilespublicactivatedget) | **GET** /v0/workflows/{workflow_id}/mq-profiles/public/activated |  |
 
 
 <a name="documentation-for-models"></a>

@@ -10,6 +10,7 @@ All URIs are relative to *http://localhost*
 | [**v0WorkflowsWorkflowIdMqGroupActivationPost**](DefaultApi.md#v0WorkflowsWorkflowIdMqGroupActivationPost) | **POST** /v0/workflows/{workflow_id}/mq-group/activation |  |
 | [**v0WorkflowsWorkflowIdMqGroupGet**](DefaultApi.md#v0WorkflowsWorkflowIdMqGroupGet) | **GET** /v0/workflows/{workflow_id}/mq-group |  |
 | [**v0WorkflowsWorkflowIdMqGroupReservationPost**](DefaultApi.md#v0WorkflowsWorkflowIdMqGroupReservationPost) | **POST** /v0/workflows/{workflow_id}/mq-group/reservation |  |
+| [**v0WorkflowsWorkflowIdMqProfilesPublicActivatedGet**](DefaultApi.md#v0WorkflowsWorkflowIdMqProfilesPublicActivatedGet) | **GET** /v0/workflows/{workflow_id}/mq-profiles/public/activated |  |
 
 
 <a name="v0Get"></a>
@@ -150,5 +151,29 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+<a name="v0WorkflowsWorkflowIdMqProfilesPublicActivatedGet"></a>
+# **v0WorkflowsWorkflowIdMqProfilesPublicActivatedGet**
+> oas_any_type_not_mapped v0WorkflowsWorkflowIdMqProfilesPublicActivatedGet(workflow\_id)
+
+
+
+### Parameters
+
+|Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **workflow\_id** | **String**| the id of the ewms workflow that maps to an mq group | [default to null] |
+
+### Return type
+
+[**oas_any_type_not_mapped**](../Models/AnyType.md)
+
+### Authorization
+
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
