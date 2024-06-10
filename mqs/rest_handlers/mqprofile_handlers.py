@@ -31,7 +31,7 @@ class MQProfileIDHandler(BaseMQSHandler):  # pylint: disable=W0223
 
 
 class MQProfilePublicGetHandler(BaseMQSHandler):  # pylint: disable=W0223
-    """The handler for retrieving activated, public MQ profiles."""
+    """The handler for retrieving public MQ profiles."""
 
     ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/workflows/(?P<workflow_id>\w+)/mq-profiles/public$"
 
@@ -46,7 +46,7 @@ class MQProfilePublicGetHandler(BaseMQSHandler):  # pylint: disable=W0223
                     "workflow_id": workflow_id,
                     "is_public": True,
                 },
-                projection=[],  # not a great way to get a list from query params
+                projection=[],  # no great way to get a list from query params
             ),
         )
 
