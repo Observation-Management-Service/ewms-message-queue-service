@@ -13,7 +13,7 @@ LOGGER = logging.getLogger(__name__)
 class AuthAccounts(enum.StrEnum):  # attrs are str subclass types! (no `.value` needed)
     """Accounts for auth."""
 
-    # USER = "user"
+    USER = "user"
     WMS = "system-wms"
 
 
