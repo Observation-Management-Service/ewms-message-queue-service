@@ -20,7 +20,14 @@
             "type": "boolean"
         },
         "auth_token": {
-            "type": "string"
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ]
         }
     },
     "required": [

@@ -42,6 +42,7 @@ class MQGroupReservationHandler(BaseMQSHandler):  # pylint: disable=W0223
                 "alias": alias,
                 "is_public": bool(alias in self.get_argument("public")),
                 "is_activated": False,
+                "auth_token": None,  # to be added upon activation
             }
             for alias in self.get_argument("queue_aliases")
         ]
