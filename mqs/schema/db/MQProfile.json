@@ -29,7 +29,8 @@
         "timestamp",
         "alias",
         "is_public",
-        "is_activated"
+        "is_activated",
+        "auth_token"
     ],
     "additionalProperties": false
 }
