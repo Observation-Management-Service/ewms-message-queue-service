@@ -45,8 +45,7 @@ class MQProfilePublicGetHandler(BaseMQSHandler):  # pylint: disable=W0223
                 {
                     "workflow_id": workflow_id,
                     "is_public": True,
-                },
-                projection=self.get_argument("projection", []),
+                }
             )
         )
 
