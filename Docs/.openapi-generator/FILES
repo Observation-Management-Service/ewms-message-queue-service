@@ -6,5 +6,5 @@ Models/MQGroupObject_criteria.md
 Models/MQGroupObject_criteria_anyOf.md
 Models/MQProfileObject.md
 Models/_v0__get_400_response.md
-Models/_v0_mq_profile__mqid__get_400_response.md
+Models/_v0_mq_profiles__mqid__get_400_response.md
 README.md
