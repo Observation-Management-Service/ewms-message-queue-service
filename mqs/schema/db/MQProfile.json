@@ -18,6 +18,9 @@
         },
         "is_activated": {
             "type": "boolean"
+        },
+        "auth_token": {
+            "type": "string"
         }
     },
     "required": [
