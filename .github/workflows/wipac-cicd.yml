@@ -209,6 +209,8 @@ jobs:
         image: bitnami/mongodb:4
         ports:
           - 27017:27017
+        env:
+          MONGODB_REPLICA_SET_MODE: primary
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4

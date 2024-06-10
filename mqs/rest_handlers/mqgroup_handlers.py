@@ -72,25 +72,39 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
 
         # TODO: use criteria to determine if group can be activated
 
-        # update db
-        try:
-            mqgroup = await self.mqgroup_client.find_one_and_update(
-                {"workflow_id": workflow_id},
-                {"criteria": criteria},
+        mqid_auth_tokens = {}
+        async for p in self.mqprofile_client.find_all({"workflow_id": workflow_id}, []):
+            # TODO: generate auth token
+            mqid_auth_tokens[p["id"]] = "TODO"
+        if not mqid_auth_tokens:
+            raise tornado.web.HTTPError(
+                404, reason="No MQProfiles found for workflow id"
             )
-        except DocumentNotFoundException:
-            raise tornado.web.HTTPError(404, reason="MQGroup not found")
-        #
-        await self.mqprofile_client.update_set_many(
-            {"workflow_id": workflow_id},
-            {"is_activated": True},
-        )
-        mqprofiles = [
-            p
-            async for p in self.mqprofile_client.find_all(
-                {"workflow_id": workflow_id}, []
-            )
-        ]
+
+        # put all into db -- atomically
+        async with await self.mqgroup_client.mongo_client.start_session() as s:
+            async with s.start_transaction():  # atomic
+
+                # update mqgroup
+                try:
+                    mqgroup = await self.mqgroup_client.find_one_and_update(
+                        {"workflow_id": workflow_id},
+                        {"criteria": criteria},
+                    )
+                except DocumentNotFoundException:
+                    raise tornado.web.HTTPError(404, reason="MQGroup not found")
+
+                # update each mqprofile
+                mqprofiles = []
+                for mqid, token in mqid_auth_tokens.items():
+                    try:
+                        mqp = await self.mqprofile_client.find_one_and_update(
+                            {"mqid": mqid},
+                            {"is_activated": True, "auth_token": token},
+                        )
+                    except DocumentNotFoundException:
+                        raise tornado.web.HTTPError(404, reason="MQProfile not found")
+                    mqprofiles.append(mqp)
 
         self.write(
             {
