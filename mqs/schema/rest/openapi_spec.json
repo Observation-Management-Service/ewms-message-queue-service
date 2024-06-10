@@ -147,7 +147,7 @@
                 }
             }
         },
-        "/v0/mq-profile/{mqid}": {
+        "/v0/mq-profiles/{mqid}": {
             "parameters": [
                 {
                     "name": "mqid",

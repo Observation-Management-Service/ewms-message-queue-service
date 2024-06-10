@@ -33,13 +33,12 @@ class MQProfileIDHandler(BaseMQSHandler):  # pylint: disable=W0223
 class MQProfileGetActivePublicHandler(BaseMQSHandler):  # pylint: disable=W0223
     """The handler for retrieving activated, public MQ profiles."""
 
-    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mq-profiles/public/activated$"
+    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/workflows/(?P<workflow_id>\w+)/mq-profiles/public/activated$"
 
     @auth.service_account_auth(roles=[auth.AuthAccounts.USER])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
-    async def get(self) -> None:
+    async def get(self, workflow_id: str) -> None:
         """Handle GET requests."""
-        workflow_id = self.get_argument("workflow_id")
 
         mqprofiles = await utils.alist(
             self.mqprofile_client.find_all(
