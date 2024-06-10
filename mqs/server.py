@@ -21,6 +21,7 @@ HANDLERS = [
     rest_handlers.mqgroup_handlers.MQGroupGetHandler,
     #
     rest_handlers.mqprofile_handlers.MQProfileIDHandler,
+    rest_handlers.mqprofile_handlers.MQProfilePublicGetHandler,
 ]
 
 

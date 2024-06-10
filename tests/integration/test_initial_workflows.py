@@ -68,9 +68,18 @@ async def test_000(rc: RestClient) -> None:
             rc,
             openapi_spec,
             "GET",
-            f"/{ROUTE_VERSION_PREFIX}/mq-profile/{mqprofile['mqid']}",
+            f"/{ROUTE_VERSION_PREFIX}/mq-profiles/{mqprofile['mqid']}",
         )
         assert resp == mqprofile
+    # check GET for public mq profiles
+    resp = await utils.request_and_validate(
+        rc,
+        openapi_spec,
+        "GET",
+        f"/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-profiles/public",
+    )
+    assert len(resp["mqprofiles"]) == len(public)
+    assert resp["mqprofiles"] == [m for m in mqprofiles if m["alias"] in public]
 
     # activate mq group
     resp = await utils.request_and_validate(
@@ -133,10 +142,10 @@ async def test_200__get_mq_profile__error_404(rc: RestClient) -> None:
     with pytest.raises(
         requests.HTTPError,
         match=re.escape(
-            f"MQProfile not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/mq-profile/{mqid}"
+            f"MQProfile not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/mq-profiles/{mqid}"
         ),
     ) as e:
         await utils.request_and_validate(
-            rc, openapi_spec, "GET", f"/{ROUTE_VERSION_PREFIX}/mq-profile/{mqid}"
+            rc, openapi_spec, "GET", f"/{ROUTE_VERSION_PREFIX}/mq-profiles/{mqid}"
         )
     assert e.value.response.status_code == 404

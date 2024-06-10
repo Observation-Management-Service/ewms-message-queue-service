@@ -147,7 +147,7 @@
                 }
             }
         },
-        "/v0/mq-profile/{mqid}": {
+        "/v0/mq-profiles/{mqid}": {
             "parameters": [
                 {
                     "name": "mqid",
@@ -459,6 +459,85 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/MQGroupObjectAndProfiles"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "invalid request arguments",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "description": "http error code",
+                                            "type": "integer"
+                                        },
+                                        "error": {
+                                            "description": "http error reason",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "code",
+                                        "error"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "description": "http error code",
+                                            "type": "integer"
+                                        },
+                                        "error": {
+                                            "description": "http error reason",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "code",
+                                        "error"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/workflows/{workflow_id}/mq-profiles/public": {
+            "parameters": [
+                {
+                    "$ref": "#/components/parameters/WorkflowIDParam"
+                }
+            ],
+            "get": {
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "the matching results",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "mqprofiles": {
+                                        "description": "a list of mq profiles",
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/MQProfileObject"
+                                        },
+                                        "minItems": 0
+                                    }
                                 }
                             }
                         }

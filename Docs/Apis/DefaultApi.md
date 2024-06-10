@@ -5,11 +5,12 @@ All URIs are relative to *http://localhost*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**v0Get**](DefaultApi.md#v0Get) | **GET** /v0/ |  |
-| [**v0MqProfileMqidGet**](DefaultApi.md#v0MqProfileMqidGet) | **GET** /v0/mq-profile/{mqid} |  |
+| [**v0MqProfilesMqidGet**](DefaultApi.md#v0MqProfilesMqidGet) | **GET** /v0/mq-profiles/{mqid} |  |
 | [**v0SchemaOpenapiGet**](DefaultApi.md#v0SchemaOpenapiGet) | **GET** /v0/schema/openapi |  |
 | [**v0WorkflowsWorkflowIdMqGroupActivationPost**](DefaultApi.md#v0WorkflowsWorkflowIdMqGroupActivationPost) | **POST** /v0/workflows/{workflow_id}/mq-group/activation |  |
 | [**v0WorkflowsWorkflowIdMqGroupGet**](DefaultApi.md#v0WorkflowsWorkflowIdMqGroupGet) | **GET** /v0/workflows/{workflow_id}/mq-group |  |
 | [**v0WorkflowsWorkflowIdMqGroupReservationPost**](DefaultApi.md#v0WorkflowsWorkflowIdMqGroupReservationPost) | **POST** /v0/workflows/{workflow_id}/mq-group/reservation |  |
+| [**v0WorkflowsWorkflowIdMqProfilesPublicGet**](DefaultApi.md#v0WorkflowsWorkflowIdMqProfilesPublicGet) | **GET** /v0/workflows/{workflow_id}/mq-profiles/public |  |
 
 
 <a name="v0Get"></a>
@@ -33,9 +34,9 @@ null (empty response body)
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-<a name="v0MqProfileMqidGet"></a>
-# **v0MqProfileMqidGet**
-> MQProfileObject v0MqProfileMqidGet(mqid)
+<a name="v0MqProfilesMqidGet"></a>
+# **v0MqProfilesMqidGet**
+> MQProfileObject v0MqProfilesMqidGet(mqid)
 
 
 
@@ -150,5 +151,29 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+<a name="v0WorkflowsWorkflowIdMqProfilesPublicGet"></a>
+# **v0WorkflowsWorkflowIdMqProfilesPublicGet**
+> oas_any_type_not_mapped v0WorkflowsWorkflowIdMqProfilesPublicGet(workflow\_id)
+
+
+
+### Parameters
+
+|Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **workflow\_id** | **String**| the id of the ewms workflow that maps to an mq group | [default to null] |
+
+### Return type
+
+[**oas_any_type_not_mapped**](../Models/AnyType.md)
+
+### Authorization
+
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
