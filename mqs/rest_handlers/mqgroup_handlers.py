@@ -48,8 +48,10 @@ class MQGroupReservationHandler(BaseMQSHandler):  # pylint: disable=W0223
         ]
 
         # put in db -- do last in case any exceptions above
-        mqgroup = await self.mqgroup_client.insert_one(mqgroup)
-        mqprofiles = await self.mqprofile_client.insert_many(mqprofiles)
+        async with await self.mqgroup_client.mongo_client.start_session() as s:
+            async with s.start_transaction():  # atomic
+                mqgroup = await self.mqgroup_client.insert_one(mqgroup)
+                mqprofiles = await self.mqprofile_client.insert_many(mqprofiles)
 
         self.write(
             {
