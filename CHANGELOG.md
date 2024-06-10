@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.3 (2024-06-10)
+
+### Other
+
+* Add `/v0/mq-profiles/public` ([#10](https://github.com/Observation-Management-Service/ewms-message-queue-service/issues/10)) ([`d8bea4f`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/d8bea4f31d44f9b6efbe3f3a6ac2ae465c21dae6))
+
 ## v0.1.2 (2024-06-05)
 
 ### Other
