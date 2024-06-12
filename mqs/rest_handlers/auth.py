@@ -4,7 +4,6 @@ import enum
 import logging
 
 from rest_tools.server import token_attribute_role_mapping_auth
-from rest_tools.utils import Auth
 
 from ..config import ENV
 
