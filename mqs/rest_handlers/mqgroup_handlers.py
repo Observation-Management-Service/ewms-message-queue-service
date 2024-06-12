@@ -6,6 +6,7 @@ import time
 import mqclient
 import tornado
 from rest_tools.server import validate_request
+from rest_tools.utils import Auth
 
 from . import auth
 from .base_handlers import BaseMQSHandler
@@ -66,6 +67,29 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
 
     ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/workflows/(?P<workflow_id>\w+)/mq-group/activation$"
 
+    def generate_queue_auth_token(self, mqid: str) -> str:
+        """Generate auth token (JWT) for a queue."""
+        if config.ENV.CI:
+            return "TESTING-TOKEN"
+
+        jwt_auth_handler = Auth(
+            config.ENV.BROKER_QUEUE_AUTH_TOKEN_SECRET,
+            issuer=f"{self.request.full_url().rstrip(self.request.uri)}.well-known/jwks.json",
+        )
+
+        return jwt_auth_handler.create_token(
+            "mqs",
+            expiration=config.ENV.BROKER_QUEUE_AUTH_TOKEN_EXP,
+            payload={
+                # https://www.rabbitmq.com/docs/oauth2#scope-translation
+                # <permission>:<vhost_pattern>/<name_pattern>[/<routing_key_pattern>]
+                "scope": f"write:*/{mqid}/*",
+                # https://www.rabbitmq.com/docs/oauth2#prerequisites
+                # matches rabbitmq broker's 'resource_server_id' value
+                "aud": config.ENV.BROKER_RESOURCE_SERVER_ID,
+            },
+        )
+
     @auth.service_account_auth(roles=[auth.AuthAccounts.WMS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def post(self, workflow_id: str) -> None:
@@ -76,8 +100,7 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
 
         mqid_auth_tokens = {}
         async for p in self.mqprofile_client.find_all({"workflow_id": workflow_id}, []):
-            # TODO: generate auth token
-            mqid_auth_tokens[p["mqid"]] = auth.generate_queue_auth_token()
+            mqid_auth_tokens[p["mqid"]] = self.generate_queue_auth_token(p["mqid"])
         if not mqid_auth_tokens:
             raise tornado.web.HTTPError(
                 404, reason="No MQProfiles found for workflow id"

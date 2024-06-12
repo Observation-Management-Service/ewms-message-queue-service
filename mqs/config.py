@@ -31,6 +31,9 @@ class EnvConfig:
 
     BROKER_URL: str
     # TODO: add BROKER_MGMT_URL
+    BROKER_QUEUE_AUTH_TOKEN_SECRET: str = ""
+    BROKER_QUEUE_AUTH_TOKEN_EXP: int = 60 * 60 * 24
+    BROKER_RESOURCE_SERVER_ID: str = ""
 
     AUTH_AUDIENCE: str = ""
     AUTH_OPENID_URL: str = ""
