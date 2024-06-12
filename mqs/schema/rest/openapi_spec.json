@@ -536,7 +536,7 @@
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "the matching results",
+                        "description": "a successful result",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -547,6 +547,10 @@
                                             "$ref": "#/components/schemas/MQProfileObject"
                                         },
                                         "minItems": 0
+                                    },
+                                    "broker_url": {
+                                        "description": "the URL to reach the MQ broker",
+                                        "type": "string"
                                     }
                                 }
                             }
