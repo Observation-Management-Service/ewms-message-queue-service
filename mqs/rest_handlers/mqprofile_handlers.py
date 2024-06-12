@@ -50,4 +50,9 @@ class MQProfilePublicGetHandler(BaseMQSHandler):  # pylint: disable=W0223
             ),
         )
 
-        self.write({"mqprofiles": mqprofiles})
+        self.write(
+            {
+                "mqprofiles": mqprofiles,
+                "broker_url": config.ENV.BROKER_URL,
+            }
+        )

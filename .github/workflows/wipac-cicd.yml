@@ -10,6 +10,7 @@ env:
   MONGODB_PORT: 27017
   REST_HOST: localhost  # the server should connect to 0.0.0.0
   REST_PORT: 8080
+  BROKER_URL: test-broker.url.aq
   #
   REST_OPENAPI_SPEC_FPATH: "schema/rest/openapi_spec.json"
   DB_JSONSCHEMA_DIR: "schema/db"
@@ -234,6 +235,7 @@ jobs:
             --env MONGODB_PORT="${{ env.MONGODB_PORT }}" \
             --env REST_HOST="${{ env.REST_HOST }}" \
             --env REST_PORT="${{ env.REST_PORT }}" \
+            --env BROKER_URL="${{ env.BROKER_URL }}" \
             --env REST_OPENAPI_SPEC_FPATH="${{ env.REST_OPENAPI_SPEC_FPATH }}" \
             --env DB_JSONSCHEMA_DIR="${{ env.DB_JSONSCHEMA_DIR }}" \
             --env CI="true" \

@@ -80,6 +80,7 @@ async def test_000(rc: RestClient) -> None:
     )
     assert len(resp["mqprofiles"]) == len(public)
     assert resp["mqprofiles"] == [m for m in mqprofiles if m["alias"] in public]
+    assert resp["broker_url"] == os.getenv("BROKER_URL")
 
     # activate mq group
     resp = await utils.request_and_validate(
