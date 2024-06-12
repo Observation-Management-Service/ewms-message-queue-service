@@ -3,6 +3,7 @@
 import enum
 import logging
 
+import rest_tools
 from rest_tools.server import token_attribute_role_mapping_auth
 
 from ..config import ENV
@@ -38,3 +39,12 @@ else:
             AuthAccounts.WMS: ["ewms_role=system-wms"],
         }
     )
+
+
+def generate_queue_auth_token() -> str:
+    """Generate auth token (JWT) for a queue."""
+    if ENV.CI:
+        return "TESTING-TOKEN"
+
+    # TODO - put Auth instance in handler, then pass into this func
+    return rest_tools.utils.Auth("mysecret").create_token("mysubject")

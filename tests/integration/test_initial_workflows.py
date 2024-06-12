@@ -95,7 +95,7 @@ async def test_000(rc: RestClient) -> None:
         {
             **p,
             "is_activated": True,
-            "auth_token": "TODO",  # TODO: update, `if ENV.CI: ...`-logic is ok
+            "auth_token": "TESTING-TOKEN",  # TODO: do we want to test further?
         }
         for p in mqprofiles
     ]

@@ -4,7 +4,6 @@ import logging
 import time
 
 import mqclient
-import rest_tools.utils
 import tornado
 from rest_tools.server import validate_request
 
@@ -78,9 +77,7 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
         mqid_auth_tokens = {}
         async for p in self.mqprofile_client.find_all({"workflow_id": workflow_id}, []):
             # TODO: generate auth token
-            mqid_auth_tokens[p["mqid"]] = rest_tools.utils.Auth(
-                "mysecret"
-            ).create_token("mysubject")
+            mqid_auth_tokens[p["mqid"]] = auth.generate_queue_auth_token()
         if not mqid_auth_tokens:
             raise tornado.web.HTTPError(
                 404, reason="No MQProfiles found for workflow id"
