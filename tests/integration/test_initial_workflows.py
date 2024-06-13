@@ -101,7 +101,7 @@ async def test_100__mqgroup_activation__error_404(rc: RestClient) -> None:
     with pytest.raises(
         requests.HTTPError,
         match=re.escape(
-            f"MQGroup not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group/activation"
+            f"MQGroup not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/mqs/workflows/{workflow_id}/mq-group/activation"
         ),
     ) as e:
         await utils.request_and_validate(
@@ -122,7 +122,7 @@ async def test_110__get_mqgroup__error_404(rc: RestClient) -> None:
     with pytest.raises(
         requests.HTTPError,
         match=re.escape(
-            f"MQGroup not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group"
+            f"MQGroup not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/mqs/workflows/{workflow_id}/mq-group"
         ),
     ) as e:
         await utils.request_and_validate(
@@ -142,7 +142,7 @@ async def test_200__get_mq_profile__error_404(rc: RestClient) -> None:
     with pytest.raises(
         requests.HTTPError,
         match=re.escape(
-            f"MQProfile not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/mq-profiles/{mqid}"
+            f"MQProfile not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/mqs/mq-profiles/{mqid}"
         ),
     ) as e:
         await utils.request_and_validate(
