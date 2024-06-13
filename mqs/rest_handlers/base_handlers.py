@@ -42,7 +42,7 @@ class BaseMQSHandler(RestHandler):  # pylint: disable=W0223
 class MainHandler(BaseMQSHandler):  # pylint: disable=W0223
     """MainHandler is a BaseMQSHandler that handles the root route."""
 
-    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/$"
+    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mqs/$"
 
     @auth.service_account_auth(roles=[auth.ALL_AUTH_ACCOUNTS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]

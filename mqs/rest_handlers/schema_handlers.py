@@ -14,7 +14,7 @@ LOGGER = logging.getLogger(__name__)
 class SchemaHandler(BaseMQSHandler):  # pylint: disable=W0223
     """The sole handler for retrieving the OpenAPI schema."""
 
-    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/schema/openapi$"
+    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mqs/schema/openapi$"
 
     @auth.service_account_auth(roles=auth.ALL_AUTH_ACCOUNTS)  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
