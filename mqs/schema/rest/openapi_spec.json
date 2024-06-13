@@ -109,7 +109,7 @@
         }
     },
     "paths": {
-        "/v0/": {
+        "/v0/mqs": {
             "parameters": [],
             "get": {
                 "responses": {
@@ -147,7 +147,7 @@
                 }
             }
         },
-        "/v0/mq-profiles/{mqid}": {
+        "/v0/mqs/mq-profiles/{mqid}": {
             "parameters": [
                 {
                     "name": "mqid",
@@ -224,7 +224,7 @@
                 }
             }
         },
-        "/v0/schema/openapi": {
+        "/v0/mqs/schema/openapi": {
             "parameters": [],
             "get": {
                 "responses": {
@@ -268,7 +268,7 @@
                 }
             }
         },
-        "/v0/workflows/{workflow_id}/mq-group": {
+        "/v0/mqs/workflows/{workflow_id}/mq-group": {
             "parameters": [
                 {
                     "$ref": "#/components/parameters/WorkflowIDParam"
@@ -339,7 +339,7 @@
                 }
             }
         },
-        "/v0/workflows/{workflow_id}/mq-group/activation": {
+        "/v0/mqs/workflows/{workflow_id}/mq-group/activation": {
             "parameters": [
                 {
                     "$ref": "#/components/parameters/WorkflowIDParam"
@@ -421,7 +421,7 @@
                 }
             }
         },
-        "/v0/workflows/{workflow_id}/mq-group/reservation": {
+        "/v0/mqs/workflows/{workflow_id}/mq-group/reservation": {
             "parameters": [
                 {
                     "$ref": "#/components/parameters/WorkflowIDParam"
@@ -516,7 +516,7 @@
                 }
             }
         },
-        "/v0/workflows/{workflow_id}/mq-profiles/public": {
+        "/v0/mqs/workflows/{workflow_id}/mq-profiles/public": {
             "parameters": [
                 {
                     "$ref": "#/components/parameters/WorkflowIDParam"
