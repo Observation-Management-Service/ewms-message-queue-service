@@ -15,7 +15,7 @@ ROUTE_VERSION_PREFIX = "v0"
 
 async def query_for_schema(rc: RestClient) -> openapi_core.OpenAPI:
     """Grab the openapi schema from the rest server and check that it matches the json file."""
-    resp = await rc.request("GET", f"/{ROUTE_VERSION_PREFIX}/schema/openapi")
+    resp = await rc.request("GET", f"/{ROUTE_VERSION_PREFIX}/mqs/schema/openapi")
     with open(
         f'{os.environ["GITHUB_WORKSPACE"]}/mqs/{os.environ["REST_OPENAPI_SPEC_FPATH"]}',
         "rb",
@@ -39,7 +39,7 @@ async def test_000(rc: RestClient) -> None:
         rc,
         openapi_spec,
         "POST",
-        f"/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group/reservation",
+        f"/{ROUTE_VERSION_PREFIX}/mqs/workflows/{workflow_id}/mq-group/reservation",
         {"queue_aliases": queue_aliases, "public": public},
     )
     mqgroup = resp["mqgroup"]
@@ -59,7 +59,7 @@ async def test_000(rc: RestClient) -> None:
         rc,
         openapi_spec,
         "GET",
-        f"/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group",
+        f"/{ROUTE_VERSION_PREFIX}/mqs/workflows/{workflow_id}/mq-group",
     )
     assert resp == mqgroup
     # check GET
@@ -68,7 +68,7 @@ async def test_000(rc: RestClient) -> None:
             rc,
             openapi_spec,
             "GET",
-            f"/{ROUTE_VERSION_PREFIX}/mq-profiles/{mqprofile['mqid']}",
+            f"/{ROUTE_VERSION_PREFIX}/mqs/mq-profiles/{mqprofile['mqid']}",
         )
         assert resp == mqprofile
     # check GET for public mq profiles
@@ -76,7 +76,7 @@ async def test_000(rc: RestClient) -> None:
         rc,
         openapi_spec,
         "GET",
-        f"/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-profiles/public",
+        f"/{ROUTE_VERSION_PREFIX}/mqs/workflows/{workflow_id}/mq-profiles/public",
     )
     assert len(resp["mqprofiles"]) == len(public)
     assert resp["mqprofiles"] == [m for m in mqprofiles if m["alias"] in public]
@@ -86,7 +86,7 @@ async def test_000(rc: RestClient) -> None:
         rc,
         openapi_spec,
         "POST",
-        f"/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group/activation",
+        f"/{ROUTE_VERSION_PREFIX}/mqs/workflows/{workflow_id}/mq-group/activation",
         {"criteria": {"priority": 99}},
     )
     assert resp["mqgroup"] == {**mqgroup, "criteria": {"priority": 99}}
@@ -101,14 +101,14 @@ async def test_100__mqgroup_activation__error_404(rc: RestClient) -> None:
     with pytest.raises(
         requests.HTTPError,
         match=re.escape(
-            f"MQGroup not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group/activation"
+            f"MQGroup not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/mqs/workflows/{workflow_id}/mq-group/activation"
         ),
     ) as e:
         await utils.request_and_validate(
             rc,
             openapi_spec,
             "POST",
-            f"/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group/activation",
+            f"/{ROUTE_VERSION_PREFIX}/mqs/workflows/{workflow_id}/mq-group/activation",
             {"criteria": {"priority": 99}},
         )
     assert e.value.response.status_code == 404
@@ -122,14 +122,14 @@ async def test_110__get_mqgroup__error_404(rc: RestClient) -> None:
     with pytest.raises(
         requests.HTTPError,
         match=re.escape(
-            f"MQGroup not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group"
+            f"MQGroup not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/mqs/workflows/{workflow_id}/mq-group"
         ),
     ) as e:
         await utils.request_and_validate(
             rc,
             openapi_spec,
             "GET",
-            f"/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group",
+            f"/{ROUTE_VERSION_PREFIX}/mqs/workflows/{workflow_id}/mq-group",
         )
     assert e.value.response.status_code == 404
 
@@ -142,10 +142,10 @@ async def test_200__get_mq_profile__error_404(rc: RestClient) -> None:
     with pytest.raises(
         requests.HTTPError,
         match=re.escape(
-            f"MQProfile not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/mq-profiles/{mqid}"
+            f"MQProfile not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/mqs/mq-profiles/{mqid}"
         ),
     ) as e:
         await utils.request_and_validate(
-            rc, openapi_spec, "GET", f"/{ROUTE_VERSION_PREFIX}/mq-profiles/{mqid}"
+            rc, openapi_spec, "GET", f"/{ROUTE_VERSION_PREFIX}/mqs/mq-profiles/{mqid}"
         )
     assert e.value.response.status_code == 404
