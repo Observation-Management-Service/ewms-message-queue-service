@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.4 (2024-06-13)
+
+### Other
+
+* Prefix All URIs with `/v0/mqs/` ([#12](https://github.com/Observation-Management-Service/ewms-message-queue-service/issues/12)) ([`ebe1550`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/ebe15502cff4da751c191b8c23cd7e252ca6c3e2))
+
 ## v0.1.3 (2024-06-10)
 
 ### Other
