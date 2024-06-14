@@ -108,7 +108,7 @@ async def test_100__mqgroup_activation__error_404(rc: RestClient) -> None:
     with pytest.raises(
         requests.HTTPError,
         match=re.escape(
-            f"404 Client Error: No MQProfiles found for workflow id for url: {rc.address}/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group/activation"
+            f"404 Client Error: No MQProfiles found for workflow id for url: {rc.address}/{ROUTE_VERSION_PREFIX}/mqs/workflows/{workflow_id}/mq-group/activation"
         ),
     ) as e:
         await utils.request_and_validate(
