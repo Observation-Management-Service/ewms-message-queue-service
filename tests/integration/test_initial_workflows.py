@@ -129,7 +129,7 @@ async def test_110__get_mqgroup__error_404(rc: RestClient) -> None:
     with pytest.raises(
         requests.HTTPError,
         match=re.escape(
-            f"MQGroup not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/workflows/{workflow_id}/mq-group"
+            f"MQGroup not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/mqs/workflows/{workflow_id}/mq-group"
         ),
     ) as e:
         await utils.request_and_validate(
