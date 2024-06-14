@@ -149,7 +149,7 @@ async def test_200__get_mq_profile__error_404(rc: RestClient) -> None:
     with pytest.raises(
         requests.HTTPError,
         match=re.escape(
-            f"MQProfile not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/mq-profiles/{mqid}"
+            f"MQProfile not found for url: {rc.address}/{ROUTE_VERSION_PREFIX}/mqs/mq-profiles/{mqid}"
         ),
     ) as e:
         await utils.request_and_validate(
