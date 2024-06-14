@@ -90,7 +90,14 @@ async def test_000(rc: RestClient) -> None:
         {"criteria": {"priority": 99}},
     )
     assert resp["mqgroup"] == {**mqgroup, "criteria": {"priority": 99}}
-    assert resp["mqprofiles"] == [{**p, "is_activated": True} for p in mqprofiles]
+    assert resp["mqprofiles"] == [
+        {
+            **p,
+            "is_activated": True,
+            "auth_token": "TESTING-TOKEN",
+        }
+        for p in mqprofiles
+    ]
 
 
 async def test_100__mqgroup_activation__error_404(rc: RestClient) -> None:
