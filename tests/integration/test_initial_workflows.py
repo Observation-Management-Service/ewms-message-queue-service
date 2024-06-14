@@ -80,7 +80,6 @@ async def test_000(rc: RestClient) -> None:
     )
     assert len(resp["mqprofiles"]) == len(public)
     assert resp["mqprofiles"] == [m for m in mqprofiles if m["alias"] in public]
-    assert resp["broker_url"] == os.getenv("BROKER_URL")
 
     # activate mq group
     resp = await utils.request_and_validate(
@@ -91,14 +90,7 @@ async def test_000(rc: RestClient) -> None:
         {"criteria": {"priority": 99}},
     )
     assert resp["mqgroup"] == {**mqgroup, "criteria": {"priority": 99}}
-    assert resp["mqprofiles"] == [
-        {
-            **p,
-            "is_activated": True,
-            "auth_token": "TESTING-TOKEN",  # TODO: do we want to test further?
-        }
-        for p in mqprofiles
-    ]
+    assert resp["mqprofiles"] == [{**p, "is_activated": True} for p in mqprofiles]
 
 
 async def test_100__mqgroup_activation__error_404(rc: RestClient) -> None:

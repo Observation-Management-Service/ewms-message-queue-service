@@ -1,4 +1,4 @@
-# _v0__get_400_response
+# _v0_mqs_mq_profiles__mqid__get_400_response
 ## Properties
 
 | Name | Type | Description | Notes |
