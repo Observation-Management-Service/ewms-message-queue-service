@@ -28,6 +28,26 @@
                     "type": "null"
                 }
             ]
+        },
+        "broker_type": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ]
+        },
+        "broker_address": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ]
         }
     },
     "required": [

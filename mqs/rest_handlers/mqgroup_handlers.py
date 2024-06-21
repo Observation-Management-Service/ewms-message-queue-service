@@ -37,13 +37,18 @@ class MQGroupReservationHandler(BaseMQSHandler):  # pylint: disable=W0223
         # insert mq profiles
         mqprofiles = [
             {
+                # static/constant:
                 "mqid": mqclient.Queue.make_name(),
                 "workflow_id": workflow_id,
                 "timestamp": now,
                 "alias": alias,
                 "is_public": bool(alias in self.get_argument("public")),
                 "is_activated": False,
-                "auth_token": None,  # to be added upon activation
+                #
+                # to be added upon activation:
+                "auth_token": None,
+                "broker_type": None,
+                "broker_address": None,
             }
             for alias in self.get_argument("queue_aliases")
         ]
@@ -125,7 +130,12 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
                     try:
                         mqp = await self.mqprofile_client.find_one_and_update(
                             {"mqid": mqid},
-                            {"is_activated": True, "auth_token": token},
+                            {
+                                "is_activated": True,
+                                "auth_token": token,
+                                "broker_type": config.ENV.BROKER_TYPE,
+                                "broker_address": config.ENV.BROKER_URL,
+                            },
                         )
                     except DocumentNotFoundException:
                         raise tornado.web.HTTPError(404, reason="MQProfile not found")

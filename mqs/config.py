@@ -30,6 +30,7 @@ class EnvConfig:
     REST_PORT: int  # 8080
 
     BROKER_URL: str
+    BROKER_TYPE: str = "rabbitmq"
     # TODO: add BROKER_MGMT_URL
     BROKER_QUEUE_AUTH_TOKEN_SECRET: str = ""
     BROKER_QUEUE_AUTH_TOKEN_EXP: int = 60 * 60 * 24
