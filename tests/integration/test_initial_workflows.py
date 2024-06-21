@@ -11,6 +11,7 @@ from jsonschema_path import SchemaPath
 from rest_tools.client import RestClient, utils
 
 ROUTE_VERSION_PREFIX = "v0"
+BROKER_TYPE = "rabbitmq"
 
 
 async def query_for_schema(rc: RestClient) -> openapi_core.OpenAPI:
@@ -95,6 +96,8 @@ async def test_000(rc: RestClient) -> None:
             **p,
             "is_activated": True,
             "auth_token": "TESTING-TOKEN",
+            "broker_type": BROKER_TYPE,
+            "broker_address": os.environ["BROKER_URL"],
         }
         for p in mqprofiles
     ]
