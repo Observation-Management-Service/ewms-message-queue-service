@@ -57,7 +57,9 @@
         "alias",
         "is_public",
         "is_activated",
-        "auth_token"
+        "auth_token",
+        "broker_type",
+        "broker_address"
     ],
     "additionalProperties": false
 }

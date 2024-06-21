@@ -89,6 +89,26 @@
                                 "type": "null"
                             }
                         ]
+                    },
+                    "broker_type": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "broker_address": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     }
                 },
                 "required": [],
@@ -547,10 +567,6 @@
                                             "$ref": "#/components/schemas/MQProfileObject"
                                         },
                                         "minItems": 0
-                                    },
-                                    "broker_url": {
-                                        "description": "the URL to reach the MQ broker",
-                                        "type": "string"
                                     }
                                 }
                             }
