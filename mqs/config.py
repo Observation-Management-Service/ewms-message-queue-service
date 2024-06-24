@@ -37,9 +37,10 @@ class EnvConfig:
     BROKER_TYPE: str
     # TODO: add BROKER_MGMT_URL
 
-    # broker/mq auth
+    # broker/mq auth -> keys
     BROKER_QUEUE_AUTH_PRIVATE_KEY: str
     BROKER_QUEUE_AUTH_PUBLIC_KEY: str
+    # -> meta
     BROKER_QUEUE_AUTH_TOKEN_EXP: int = 60 * 60 * 24
     BROKER_RESOURCE_SERVER_ID: str = ""
 

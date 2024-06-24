@@ -81,10 +81,10 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
         jwt_auth_handler = Auth(
             config.ENV.BROKER_QUEUE_AUTH_PRIVATE_KEY,
             pub_secret=config.ENV.BROKER_QUEUE_AUTH_PUBLIC_KEY,
-            algorithm=config.BROKER_QUEUE_AUTH_ALGO,
             issuer=urljoin(  # mqs.my-url.aq/blah + /this = mqs.my-url.aq/this
                 self.request.full_url(), "/.well-known/jwks.json"
             ),
+            algorithm=config.BROKER_QUEUE_AUTH_ALGO,
         )
 
         return jwt_auth_handler.create_token(

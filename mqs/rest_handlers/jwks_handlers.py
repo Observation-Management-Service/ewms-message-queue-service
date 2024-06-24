@@ -1,56 +1,38 @@
-"""REST handlers for ."""
+"""REST handlers for the JWKS endpoint."""
 
+import json
 import logging
-from typing import Any
+import re
 
-from motor.motor_asyncio import AsyncIOMotorClient
-from rest_tools.server import RestHandler
+from jwt.algorithms import RSAAlgorithm
 from rest_tools.server import validate_request
 
 from . import auth
+from .base_handlers import BaseMQSHandler
 from .. import config
-from .. import database as db
 
 LOGGER = logging.getLogger(__name__)
-
-
-class BaseMQSHandler(RestHandler):  # pylint: disable=W0223
-    """BaseMQSHandler is a RestHandler for all MQS routes."""
-
-    def initialize(  # type: ignore  # pylint: disable=W0221
-        self,
-        mongo_client: AsyncIOMotorClient,  # type: ignore[valid-type]
-        *args: Any,
-        **kwargs: Any,
-    ) -> None:
-        """Initialize a BaseMQSHandler object."""
-        super().initialize(*args, **kwargs)  # type: ignore[no-untyped-call]
-        # pylint: disable=W0201
-        self.mqprofile_client = db.client.JSONSchemaMongoClient(
-            mongo_client,
-            db.utils.MQPROFILE_COLL_NAME,
-        )
-        self.mqgroup_client = db.client.JSONSchemaMongoClient(
-            mongo_client,
-            db.utils.MQGROUP_COLL_NAME,
-        )
 
 
 # ----------------------------------------------------------------------------
 
 
-class MainHandler(BaseMQSHandler):  # pylint: disable=W0223
-    """MainHandler is a BaseMQSHandler that handles the root route."""
+class JWKSJsonHandler(BaseMQSHandler):
+    """Handles the JWKS JSON response."""
 
-    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mqs$"
+    ROUTE = re.escape("/.well-known/jwks.json") + "$"
 
     @auth.service_account_auth(roles=[auth.ALL_AUTH_ACCOUNTS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def get(self) -> None:
         """Handle GET."""
-        self.write({})
+        key_obj = RSAAlgorithm(RSAAlgorithm.SHA256).prepare_key(
+            key=config.ENV.BROKER_QUEUE_AUTH_PUBLIC_KEY
+        )
+        jwk = json.loads(RSAAlgorithm.to_jwk(key_obj))
+        jwk["kid"] = "no-id"
+
+        self.write(jwk)
 
 
 # -----------------------------------------------------------------------------
-
-# ALL OTHER HANDLERS GO IN DEDICATED MODULES
