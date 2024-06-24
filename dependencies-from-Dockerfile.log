@@ -182,6 +182,7 @@ mqs
 │   ├── parse [required: Any, installed: 1.20.2]
 │   └── Werkzeug [required: Any, installed: 3.0.3]
 │       └── MarkupSafe [required: >=2.1.1, installed: 2.1.5]
+├── PyJWT [required: Any, installed: 2.8.0]
 ├── wipac-dev-tools [required: Any, installed: 1.10.6]
 │   ├── requests [required: Any, installed: 2.32.3]
 │   │   ├── certifi [required: >=2017.4.17, installed: 2024.6.2]
