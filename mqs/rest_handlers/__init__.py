@@ -5,4 +5,5 @@ from . import (  # noqa: F401
     schema_handlers,
     mqgroup_handlers,
     mqprofile_handlers,
+    jwks_handlers,
 )

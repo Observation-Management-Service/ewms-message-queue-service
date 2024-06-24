@@ -27,7 +27,7 @@ class JWKSJsonHandler(BaseMQSHandler):
     async def get(self) -> None:
         """Handle GET."""
         key_obj = RSAAlgorithm(RSAAlgorithm.SHA256).prepare_key(
-            key=config.ENV.BROKER_QUEUE_AUTH_PUBLIC_KEY
+            key=self.broker_queue_auth.public_key,
         )
         jwk = json.loads(RSAAlgorithm.to_jwk(key_obj))
         jwk["kid"] = "no-id"

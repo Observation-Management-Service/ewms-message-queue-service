@@ -8,6 +8,7 @@ from rest_tools.server import RestHandlerSetup, RestServer
 
 from . import rest_handlers
 from .config import ENV
+from .jwks_auth import BrokerQueueAuth
 
 LOGGER = logging.getLogger(__name__)
 
@@ -22,6 +23,8 @@ HANDLERS = [
     #
     rest_handlers.mqprofile_handlers.MQProfileIDHandler,
     rest_handlers.mqprofile_handlers.MQProfilePublicGetHandler,
+    #
+    # rest_handlers.jwks_handlers.JWKSJsonHandler,
 ]
 
 
@@ -38,6 +41,7 @@ async def make(mongo_client: AsyncIOMotorClient) -> RestServer:  # type: ignore[
     #
     # Setup clients/apis
     args["mongo_client"] = mongo_client
+    args["broker_queue_auth"] = BrokerQueueAuth()
 
     # Configure REST Routes
     rs = RestServer(debug=ENV.CI)
