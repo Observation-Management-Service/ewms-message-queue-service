@@ -7,7 +7,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from rest_tools.server import RestHandler
 from rest_tools.server import validate_request
 
-from . import auth
+from . import rest_auth
 from .. import config
 from .. import database as db
 
@@ -44,7 +44,7 @@ class MainHandler(BaseMQSHandler):  # pylint: disable=W0223
 
     ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mqs$"
 
-    @auth.service_account_auth(roles=[auth.ALL_AUTH_ACCOUNTS])  # type: ignore
+    @rest_auth.service_account_auth(roles=rest_auth.ALL_AUTH_ACCOUNTS)  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def get(self) -> None:
         """Handle GET."""

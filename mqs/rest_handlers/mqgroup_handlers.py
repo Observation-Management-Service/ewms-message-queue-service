@@ -2,15 +2,14 @@
 
 import logging
 import time
-from urllib.parse import urljoin
 
 import mqclient
 import tornado
 from rest_tools.server import validate_request
-from rest_tools.utils import Auth
 
-from . import auth
+from . import rest_auth
 from .base_handlers import BaseMQSHandler
+from .jwks_auth import generate_queue_jwt
 from .. import config
 from ..database.client import DocumentNotFoundException
 
@@ -22,7 +21,7 @@ class MQGroupReservationHandler(BaseMQSHandler):  # pylint: disable=W0223
 
     ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mqs/workflows/(?P<workflow_id>\w+)/mq-group/reservation$"
 
-    @auth.service_account_auth(roles=[auth.AuthAccounts.WMS])  # type: ignore
+    @rest_auth.service_account_auth(roles=[rest_auth.AuthAccounts.WMS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def post(self, workflow_id: str) -> None:
         """Handle POST requests."""
@@ -73,34 +72,7 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
 
     ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mqs/workflows/(?P<workflow_id>\w+)/mq-group/activation$"
 
-    def generate_queue_auth_token(self, mqid: str) -> str:
-        """Generate auth token (JWT) for a queue."""
-        if config.ENV.CI:
-            return "TESTING-TOKEN"
-
-        jwt_auth_handler = Auth(
-            config.ENV.BROKER_QUEUE_AUTH_PRIVATE_KEY,
-            pub_secret=config.ENV.BROKER_QUEUE_AUTH_PUBLIC_KEY,
-            issuer=urljoin(  # mqs.my-url.aq/blah + /this = mqs.my-url.aq/this
-                self.request.full_url(), "/.well-known/jwks.json"
-            ),
-            algorithm=config.BROKER_QUEUE_AUTH_ALGO,
-        )
-
-        return jwt_auth_handler.create_token(
-            "mqs",
-            expiration=config.ENV.BROKER_QUEUE_AUTH_TOKEN_EXP,
-            payload={
-                # https://www.rabbitmq.com/docs/oauth2#scope-translation
-                # <permission>:<vhost_pattern>/<name_pattern>[/<routing_key_pattern>]
-                "scope": f"write:*/{mqid}/*",
-                # https://www.rabbitmq.com/docs/oauth2#prerequisites
-                # matches rabbitmq broker's 'resource_server_id' value
-                "aud": config.ENV.BROKER_RESOURCE_SERVER_ID,
-            },
-        )
-
-    @auth.service_account_auth(roles=[auth.AuthAccounts.WMS])  # type: ignore
+    @rest_auth.service_account_auth(roles=[rest_auth.AuthAccounts.WMS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def post(self, workflow_id: str) -> None:
         """Handle POST requests."""
@@ -110,7 +82,7 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
 
         mqid_auth_tokens = {}
         async for p in self.mqprofile_client.find_all({"workflow_id": workflow_id}, []):
-            mqid_auth_tokens[p["mqid"]] = self.generate_queue_auth_token(p["mqid"])
+            mqid_auth_tokens[p["mqid"]] = generate_queue_jwt(self.request, p["mqid"])
         if not mqid_auth_tokens:
             raise tornado.web.HTTPError(
                 404, reason="No MQProfiles found for workflow id"
@@ -161,7 +133,7 @@ class MQGroupGetHandler(BaseMQSHandler):  # pylint: disable=W0223
         rf"/{config.ROUTE_VERSION_PREFIX}/mqs/workflows/(?P<workflow_id>\w+)/mq-group$"
     )
 
-    @auth.service_account_auth(roles=[auth.AuthAccounts.WMS])  # type: ignore
+    @rest_auth.service_account_auth(roles=[rest_auth.AuthAccounts.WMS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def get(self, workflow_id: str) -> None:
         """Handle GET requests."""
