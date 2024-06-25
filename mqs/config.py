@@ -15,7 +15,6 @@ from wipac_dev_tools import from_environment_as_dataclass, logging_tools
 
 LOGGER = logging.getLogger(__name__)
 
-BROKER_QUEUE_AUTH_ALGO = "RSA256"
 
 # --------------------------------------------------------------------------------------
 

@@ -1,13 +1,17 @@
 """Utilities for working with JWKS auth."""
 
+import json
 import os
 from pathlib import Path
 from urllib.parse import urljoin
 
+from jwt.algorithms import RSAAlgorithm
 from rest_tools.utils import Auth
 from tornado import httputil
 
 from mqs import config
+
+BROKER_QUEUE_AUTH_ALGO = "RS256"
 
 
 class BrokerQueueAuth:
@@ -64,7 +68,7 @@ class BrokerQueueAuth:
             issuer=urljoin(  # mqs.my-url.aq/blah + /this = mqs.my-url.aq/this
                 request.full_url(), "/.well-known/jwks.json"
             ),
-            algorithm=config.BROKER_QUEUE_AUTH_ALGO,
+            algorithm=BROKER_QUEUE_AUTH_ALGO,
         )
 
         return jwt_auth_handler.create_token(
@@ -79,3 +83,11 @@ class BrokerQueueAuth:
                 "aud": config.ENV.BROKER_RESOURCE_SERVER_ID,
             },
         )
+
+    def get_jwk(self) -> dict[str, str]:
+        """Generate JWKS."""
+        key_obj = RSAAlgorithm(RSAAlgorithm.SHA256).prepare_key(key=self.public_key)
+        jwk = json.loads(RSAAlgorithm.to_jwk(key_obj))
+        jwk["kid"] = "no-id"
+
+        return jwk

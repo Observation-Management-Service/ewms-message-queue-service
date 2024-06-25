@@ -1,10 +1,8 @@
 """REST handlers for the JWKS endpoint."""
 
-import json
 import logging
 import re
 
-from jwt.algorithms import RSAAlgorithm
 from rest_tools.server import validate_request
 
 from . import rest_auth
@@ -26,13 +24,7 @@ class JWKSJsonHandler(BaseMQSHandler):
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def get(self) -> None:
         """Handle GET."""
-        key_obj = RSAAlgorithm(RSAAlgorithm.SHA256).prepare_key(
-            key=self.broker_queue_auth.public_key,
-        )
-        jwk = json.loads(RSAAlgorithm.to_jwk(key_obj))
-        jwk["kid"] = "no-id"
-
-        self.write(jwk)
+        self.write(self.broker_queue_auth.get_jwk())
 
 
 # -----------------------------------------------------------------------------
