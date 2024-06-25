@@ -41,7 +41,7 @@ async def make(mongo_client: AsyncIOMotorClient) -> RestServer:  # type: ignore[
     #
     # Setup clients/apis
     args["mongo_client"] = mongo_client
-    args["broker_queue_auth"] = BrokerQueueAuth()
+    args["broker_queue_auth"] = BrokerQueueAuth(mongo_client)
 
     # Configure REST Routes
     rs = RestServer(debug=ENV.CI)

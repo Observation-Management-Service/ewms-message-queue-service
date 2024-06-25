@@ -5,9 +5,9 @@ import re
 
 from rest_tools.server import validate_request
 
-from .. import config
 from . import rest_auth
 from .base_handlers import BaseMQSHandler
+from .. import config
 
 LOGGER = logging.getLogger(__name__)
 
@@ -26,7 +26,7 @@ class JWKSJsonHandler(BaseMQSHandler):
         """Handle GET."""
         self.write(
             {
-                "keys": self.broker_queue_auth.get_jwks(),
+                "keys": await self.broker_queue_auth.get_jwks_from_db(),
             }
         )
 
