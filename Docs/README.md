@@ -13,6 +13,7 @@
 *DefaultApi* | [**v0MqsWorkflowsWorkflowIdMqGroupGet**](Apis/DefaultApi.md#v0mqsworkflowsworkflowidmqgroupget) | **GET** /v0/mqs/workflows/{workflow_id}/mq-group |  |
 *DefaultApi* | [**v0MqsWorkflowsWorkflowIdMqGroupReservationPost**](Apis/DefaultApi.md#v0mqsworkflowsworkflowidmqgroupreservationpost) | **POST** /v0/mqs/workflows/{workflow_id}/mq-group/reservation |  |
 *DefaultApi* | [**v0MqsWorkflowsWorkflowIdMqProfilesPublicGet**](Apis/DefaultApi.md#v0mqsworkflowsworkflowidmqprofilespublicget) | **GET** /v0/mqs/workflows/{workflow_id}/mq-profiles/public |  |
+*DefaultApi* | [**v0WellKnownJwksJsonGet**](Apis/DefaultApi.md#v0wellknownjwksjsonget) | **GET** /v0//.well-known/jwks.json |  |
 
 
 <a name="documentation-for-models"></a>
@@ -23,8 +24,8 @@
  - [MQGroupObject_criteria](./Models/MQGroupObject_criteria.md)
  - [MQGroupObject_criteria_anyOf](./Models/MQGroupObject_criteria_anyOf.md)
  - [MQProfileObject](./Models/MQProfileObject.md)
- - [_v0_mqs_get_400_response](./Models/_v0_mqs_get_400_response.md)
- - [_v0_mqs_mq_profiles__mqid__get_400_response](./Models/_v0_mqs_mq_profiles__mqid__get_400_response.md)
+ - [_v0___well_known_jwks_json_get_200_response](./Models/_v0___well_known_jwks_json_get_200_response.md)
+ - [_v0___well_known_jwks_json_get_400_response](./Models/_v0___well_known_jwks_json_get_400_response.md)
 
 
 <a name="documentation-for-authorization"></a>

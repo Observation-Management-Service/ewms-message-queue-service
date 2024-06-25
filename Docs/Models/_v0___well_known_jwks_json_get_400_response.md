@@ -1,4 +1,4 @@
-# _v0_mqs_get_400_response
+# _v0___well_known_jwks_json_get_400_response
 ## Properties
 
 | Name | Type | Description | Notes |
