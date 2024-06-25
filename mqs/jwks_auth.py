@@ -1,6 +1,7 @@
 """Utilities for working with JWKS auth."""
 
 import hashlib
+import logging
 import os
 import time
 from pathlib import Path
@@ -14,6 +15,8 @@ from . import config
 from .database.utils import get_jwks_collection_obj
 
 BROKER_QUEUE_AUTH_ALGO = "RS256"
+
+LOGGER = logging.getLogger(__name__)
 
 
 class BrokerQueueAuth:
@@ -53,6 +56,7 @@ class BrokerQueueAuth:
             self._pub_key,
         )
         if updated:
+            LOGGER.info("Updated broker-queue auth public key")
             await self._update_jwks_in_db()
             self.kid = hashlib.sha512(self._pub_key).hexdigest()
         return self._pub_key
@@ -60,11 +64,13 @@ class BrokerQueueAuth:
     @property
     def private_key(self) -> bytes:
         """Private key, smartly cached so key source file can update on file system."""
-        self._priv_key_file_last_modtime, self._priv_key, _ = self._retrieve_key(
+        self._priv_key_file_last_modtime, self._priv_key, updated = self._retrieve_key(
             config.ENV.BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE,
             self._priv_key_file_last_modtime,
             self._priv_key,
         )
+        if updated:
+            LOGGER.info("Updated broker-queue auth private key")
         # don't store this in db
         return self._priv_key
 
@@ -112,6 +118,7 @@ class BrokerQueueAuth:
         """
         # check if this was actually an update; else, the process just restarted
         if await self._mongo_collection.find_one({"kid": self.kid}):
+            LOGGER.info("Updated broker-queue auth public key is already in db")
             return
 
         # set exp on "current" jwk
@@ -124,6 +131,7 @@ class BrokerQueueAuth:
                 "$set": {"_exp": time.time() + config.ENV.BROKER_QUEUE_AUTH_TOKEN_EXP},
             },
         )
+        LOGGER.info("Set expiration for previous JWK in db")
 
         # insert new jwk
         key_obj = RSAAlgorithm(RSAAlgorithm.SHA256).prepare_key(
@@ -135,10 +143,14 @@ class BrokerQueueAuth:
             **RSAAlgorithm.to_jwk(key_obj, as_dict=True),
         }
         await self._mongo_collection.insert_one(jwk)
+        LOGGER.info("Added new JWK to db")
 
         # remove any expired
-        await self._mongo_collection.delete_many({"_exp": {"$lt": time.time()}})
+        res = await self._mongo_collection.delete_many({"_exp": {"$lt": time.time()}})
+        LOGGER.info(f"Deleted {res.deleted_count} expired JWKs")
 
     async def get_jwks_from_db(self) -> list[dict[str, str]]:
         """Retrieve the JWKS list from the database."""
-        return [d async for d in self._mongo_collection.find()]
+        jwks = [d async for d in self._mongo_collection.find()]
+        LOGGER.info(f"Retrieved all ({len(jwks)}) JWKS dicts")
+        return jwks
