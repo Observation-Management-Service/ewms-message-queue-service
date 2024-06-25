@@ -1,6 +1,5 @@
 """Utilities for working with JWKS auth."""
 
-import json
 import os
 from pathlib import Path
 
@@ -95,7 +94,7 @@ class BrokerQueueAuth:
     def get_jwk(self) -> dict[str, str]:
         """Generate JWKS."""
         key_obj = RSAAlgorithm(RSAAlgorithm.SHA256).prepare_key(key=self.public_key)
-        jwk = json.loads(RSAAlgorithm.to_jwk(key_obj))
+        jwk = RSAAlgorithm.to_jwk(key_obj, as_dict=True)
         jwk["kid"] = "no-id"
 
         return jwk
