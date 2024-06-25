@@ -3,7 +3,6 @@
 import json
 import os
 from pathlib import Path
-from urllib.parse import urljoin
 
 from jwt.algorithms import RSAAlgorithm
 from rest_tools.utils import Auth
@@ -65,9 +64,7 @@ class BrokerQueueAuth:
         jwt_auth_handler = Auth(
             self.private_key,
             pub_secret=self.public_key,
-            issuer=urljoin(  # mqs.my-url.aq/blah + /this = mqs.my-url.aq/this
-                request.full_url(), "/.well-known/jwks.json"
-            ),
+            issuer=request.full_url().rstrip(request.uri),  # just the base url
             algorithm=BROKER_QUEUE_AUTH_ALGO,
         )
 
