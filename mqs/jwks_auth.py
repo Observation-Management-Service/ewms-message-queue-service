@@ -146,12 +146,14 @@ class BrokerQueueAuth:
         await self._mongo_collection.insert_one(jwk)
         LOGGER.info("Added new JWK to db")
 
+    async def get_jwks_from_db(self) -> list[dict[str, str]]:
+        """Retrieve the JWKS list from the database."""
         # remove any expired
         res = await self._mongo_collection.delete_many({"_exp": {"$lt": time.time()}})
         LOGGER.info(f"Deleted {res.deleted_count} expired JWKs")
 
-    async def get_jwks_from_db(self) -> list[dict[str, str]]:
-        """Retrieve the JWKS list from the database."""
+        # get all
         jwks = [d async for d in self._mongo_collection.find()]
         LOGGER.info(f"Retrieved all ({len(jwks)}) JWKS dicts")
+
         return jwks
