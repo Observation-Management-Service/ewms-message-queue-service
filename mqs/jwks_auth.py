@@ -9,7 +9,6 @@ from pathlib import Path
 import motor.motor_asyncio
 from jwt.algorithms import RSAAlgorithm
 from rest_tools.utils import Auth
-from tornado import httputil
 
 from . import config
 from .database.utils import get_jwks_collection_obj
@@ -74,7 +73,7 @@ class BrokerQueueAuth:
         # don't store this in db
         return self._priv_key
 
-    def generate_jwt(self, request: httputil.HTTPServerRequest, mqid: str) -> str:
+    def generate_jwt(self, mqid: str) -> str:
         """Generate auth token (JWT) for a queue."""
         if config.ENV.CI:
             return "TESTING-TOKEN"
@@ -82,7 +81,9 @@ class BrokerQueueAuth:
         jwt_auth_handler = Auth(
             self.private_key,
             pub_secret=self.get_public_key(),
-            issuer=request.full_url().rstrip(request.uri),  # just the base url
+            # don't auto-detect url in case k8s ingress is redirecting the incoming request
+            # -> aka, k8s is 'using spec.rules.http.path' prefix
+            issuer=config.ENV.BROKER_QUEUE_AUTH_ISSUER_URL,
             algorithm=BROKER_QUEUE_AUTH_ALGO,
         )
 

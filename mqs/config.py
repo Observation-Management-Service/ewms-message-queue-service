@@ -40,6 +40,7 @@ class EnvConfig:
     # -> keys (by file)
     BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE: Path
     BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE: Path
+    BROKER_QUEUE_AUTH_ISSUER_URL: str
     # -> meta
     BROKER_QUEUE_AUTH_TOKEN_EXP: int = 60 * 60 * 24
     BROKER_RESOURCE_SERVER_ID: str = ""

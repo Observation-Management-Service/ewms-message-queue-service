@@ -14,6 +14,7 @@ env:
   BROKER_TYPE: rabbitmq
   BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE: ./broker-queue-private.key
   BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE: ./broker-queue-public.key
+  BROKER_QUEUE_AUTH_ISSUER_URL: mqs.testing-url.aq
   #
   REST_OPENAPI_SPEC_FPATH: "schema/rest/openapi_spec.json"
   DB_JSONSCHEMA_DIR: "schema/db"

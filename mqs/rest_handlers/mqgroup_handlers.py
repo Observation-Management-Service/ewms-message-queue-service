@@ -7,10 +7,10 @@ import mqclient
 import tornado
 from rest_tools.server import validate_request
 
-from .. import config
-from ..database.client import DocumentNotFoundException
 from . import rest_auth
 from .base_handlers import BaseMQSHandler
+from .. import config
+from ..database.client import DocumentNotFoundException
 
 LOGGER = logging.getLogger(__name__)
 
@@ -81,9 +81,7 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
 
         mqid_auth_tokens = {}
         async for p in self.mqprofile_client.find_all({"workflow_id": workflow_id}, []):
-            mqid_auth_tokens[p["mqid"]] = self.broker_queue_auth.generate_jwt(
-                self.request, p["mqid"]
-            )
+            mqid_auth_tokens[p["mqid"]] = self.broker_queue_auth.generate_jwt(p["mqid"])
         if not mqid_auth_tokens:
             raise tornado.web.HTTPError(
                 404, reason="No MQProfiles found for workflow id"

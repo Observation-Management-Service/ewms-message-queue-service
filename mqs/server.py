@@ -24,7 +24,7 @@ HANDLERS = [
     rest_handlers.mqprofile_handlers.MQProfileIDHandler,
     rest_handlers.mqprofile_handlers.MQProfilePublicGetHandler,
     #
-    # rest_handlers.jwks_handlers.JWKSJsonHandler,
+    rest_handlers.jwks_handlers.WellKnownJWKSDotJSONHandler,
 ]
 
 
