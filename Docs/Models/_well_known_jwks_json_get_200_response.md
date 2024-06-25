@@ -1,10 +1,9 @@
-# _v0__well_known_jwks_json_get_400_response
+# _well_known_jwks_json_get_200_response
 ## Properties
 
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
-| **code** | **Integer** | http error code | [default to null] |
-| **error** | **String** | http error reason | [default to null] |
+| **keys** | [**oas_any_type_not_mapped**](.md) | the JWKS keys | [default to null] |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

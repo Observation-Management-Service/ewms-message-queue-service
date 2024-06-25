@@ -11,7 +11,7 @@ All URIs are relative to *http://localhost*
 | [**v0MqsWorkflowsWorkflowIdMqGroupGet**](DefaultApi.md#v0MqsWorkflowsWorkflowIdMqGroupGet) | **GET** /v0/mqs/workflows/{workflow_id}/mq-group |  |
 | [**v0MqsWorkflowsWorkflowIdMqGroupReservationPost**](DefaultApi.md#v0MqsWorkflowsWorkflowIdMqGroupReservationPost) | **POST** /v0/mqs/workflows/{workflow_id}/mq-group/reservation |  |
 | [**v0MqsWorkflowsWorkflowIdMqProfilesPublicGet**](DefaultApi.md#v0MqsWorkflowsWorkflowIdMqProfilesPublicGet) | **GET** /v0/mqs/workflows/{workflow_id}/mq-profiles/public |  |
-| [**v0WellKnownJwksJsonGet**](DefaultApi.md#v0WellKnownJwksJsonGet) | **GET** /v0/.well-known/jwks.json |  |
+| [**wellKnownJwksJsonGet**](DefaultApi.md#wellKnownJwksJsonGet) | **GET** /.well-known/jwks.json |  |
 
 
 <a name="v0MqsGet"></a>
@@ -178,9 +178,9 @@ This endpoint does not need any parameter.
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-<a name="v0WellKnownJwksJsonGet"></a>
-# **v0WellKnownJwksJsonGet**
-> _v0__well_known_jwks_json_get_200_response v0WellKnownJwksJsonGet()
+<a name="wellKnownJwksJsonGet"></a>
+# **wellKnownJwksJsonGet**
+> _well_known_jwks_json_get_200_response wellKnownJwksJsonGet()
 
 
 
@@ -189,7 +189,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**_v0__well_known_jwks_json_get_200_response**](../Models/_v0__well_known_jwks_json_get_200_response.md)
+[**_well_known_jwks_json_get_200_response**](../Models/_well_known_jwks_json_get_200_response.md)
 
 ### Authorization
 
