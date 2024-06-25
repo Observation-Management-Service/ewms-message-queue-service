@@ -2,6 +2,7 @@
 
 import hashlib
 import os
+import time
 from pathlib import Path
 
 import motor.motor_asyncio
@@ -74,7 +75,7 @@ class BrokerQueueAuth:
 
         jwt_auth_handler = Auth(
             self.private_key,
-            pub_secret=self.get_public_key,
+            pub_secret=self.get_public_key(),
             issuer=request.full_url().rstrip(request.uri),  # just the base url
             algorithm=BROKER_QUEUE_AUTH_ALGO,
         )
@@ -109,20 +110,34 @@ class BrokerQueueAuth:
 
         Triggered when a public key is updated.
         """
+        # check if this was actually an update; else, the process just restarted
         if await self._mongo_collection.find_one({"kid": self.kid}):
             return
 
-        # make new jwk
+        # set exp on "current" jwk
+        await self._mongo_collection.update_many(  # expected to be only 1 doc
+            {
+                "_exp": None,  # get those w/ field that is None or doesn't exist
+            },
+            {
+                # set exp so it is greater than the last jwt generated using jwk's pub key
+                "$set": {"_exp": time.time() + config.ENV.BROKER_QUEUE_AUTH_TOKEN_EXP},
+            },
+        )
+
+        # insert new jwk
         key_obj = RSAAlgorithm(RSAAlgorithm.SHA256).prepare_key(
             key=await self.get_public_key()
         )
-        jwk = RSAAlgorithm.to_jwk(key_obj, as_dict=True)
-        jwk["kid"] = self.kid
-
-        # put in db
+        jwk = {
+            "kid": self.kid,
+            "_exp": None,
+            **RSAAlgorithm.to_jwk(key_obj, as_dict=True),
+        }
         await self._mongo_collection.insert_one(jwk)
 
-        # TODO: remove any expired
+        # remove any expired
+        await self._mongo_collection.delete_many({"_exp": {"$lt": time.time()}})
 
     async def get_jwks_from_db(self) -> list[dict[str, str]]:
         """Retrieve the JWKS list from the database."""
