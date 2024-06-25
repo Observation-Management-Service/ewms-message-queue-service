@@ -75,12 +75,23 @@ class BrokerQueueAuth:
             "mqs",
             expiration=config.ENV.BROKER_QUEUE_AUTH_TOKEN_EXP,
             payload={
-                # https://www.rabbitmq.com/docs/oauth2#scope-translation
-                # <permission>:<vhost_pattern>/<name_pattern>[/<routing_key_pattern>]
-                "scope": f"write:*/{mqid}/*",
                 # https://www.rabbitmq.com/docs/oauth2#prerequisites
                 # matches rabbitmq broker's 'resource_server_id' value
                 "aud": config.ENV.BROKER_RESOURCE_SERVER_ID,
+                # https://www.rabbitmq.com/docs/oauth2#rich-authorization-request
+                "authorization_details": [
+                    {
+                        # https://www.rabbitmq.com/docs/oauth2#type-field
+                        # -> matches rabbitmq broker's 'resource_server_type' value
+                        "type": "rabbitmq",
+                        # https://www.rabbitmq.com/docs/oauth2#locations-field
+                        "locations": [
+                            f"cluster:^{config.ENV.BROKER_RESOURCE_SERVER_ID}$/queue:^{mqid}$"
+                        ],
+                        # https://www.rabbitmq.com/docs/oauth2#actions-field
+                        "actions": ["read", "write"],
+                    }
+                ],
             },
         )
 
