@@ -1,5 +1,6 @@
 """Utilities for working with JWKS auth."""
 
+import hashlib
 import os
 from pathlib import Path
 
@@ -55,6 +56,10 @@ class BrokerQueueAuth:
         )
         return self._private_key
 
+    @property
+    def kid(self) -> str:
+        return hashlib.sha512(self._public_key).hexdigest()
+
     def generate_jwt(self, request: httputil.HTTPServerRequest, mqid: str) -> str:
         """Generate auth token (JWT) for a queue."""
         if config.ENV.CI:
@@ -89,12 +94,15 @@ class BrokerQueueAuth:
                     }
                 ],
             },
+            headers={"kid": self.kid},
         )
 
-    def get_jwk(self) -> dict[str, str]:
-        """Generate JWKS."""
+    def get_jwks(self) -> list[dict[str, str]]:
+        """Generate JWKS list."""
         key_obj = RSAAlgorithm(RSAAlgorithm.SHA256).prepare_key(key=self.public_key)
         jwk = RSAAlgorithm.to_jwk(key_obj, as_dict=True)
-        jwk["kid"] = "no-id"
+        jwk["kid"] = self.kid
 
-        return jwk
+        # TODO: add recently old jwks
+
+        return [jwk]
