@@ -2,8 +2,8 @@
 
 from . import (  # noqa: F401
     base_handlers,
-    schema_handlers,
+    jwks_handlers,
     mqgroup_handlers,
     mqprofile_handlers,
-    jwks_handlers,
+    schema_handlers,
 )

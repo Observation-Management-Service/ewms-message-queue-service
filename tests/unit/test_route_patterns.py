@@ -3,7 +3,7 @@
 import logging
 import re
 
-from mqs import server, config
+from mqs import config, server
 
 LOGGER = logging.getLogger(__name__)
 
