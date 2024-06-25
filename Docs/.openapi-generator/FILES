@@ -5,6 +5,6 @@ Models/MQGroupObjectAndProfiles.md
 Models/MQGroupObject_criteria.md
 Models/MQGroupObject_criteria_anyOf.md
 Models/MQProfileObject.md
-Models/_v0___well_known_jwks_json_get_200_response.md
-Models/_v0___well_known_jwks_json_get_400_response.md
+Models/_v0__well_known_jwks_json_get_200_response.md
+Models/_v0__well_known_jwks_json_get_400_response.md
 README.md
