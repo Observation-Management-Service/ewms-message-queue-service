@@ -1,0 +1,31 @@
+{
+    "parameters": [
+    ],
+    "get": {
+        "responses": {
+            "200": {
+                "description": "the JWKS keys",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "keys": {
+                                    "description": "the JWKS keys",
+                                    "items": {
+                                        "type": "object"
+                                    },
+                                    "minItems": 0
+                                }
+                            },
+                            "required": [
+                                "keys"
+                            ],
+                            "additionalProperties": false
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
