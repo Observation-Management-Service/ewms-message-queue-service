@@ -139,7 +139,7 @@
         }
     },
     "paths": {
-        "/v0//.well-known/jwks.json": {
+        "/v0/.well-known/jwks.json": {
             "parameters": [],
             "get": {
                 "responses": {
