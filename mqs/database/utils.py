@@ -16,6 +16,9 @@ _DB_NAME = "MQS_DB"
 MQPROFILE_COLL_NAME = "MQProfileColl"
 MQGROUP_COLL_NAME = "MQGroupColl"
 
+_JWKS_DB_NAME = "JWK_DB"
+_JWKS_COLL_NAME = "JWKS_COLL"
+
 
 def get_jsonschema_spec_name(collection_name: str) -> str:
     """Map between the two naming schemes."""
@@ -36,6 +39,11 @@ async def create_mongodb_client() -> AsyncIOMotorClient:  # type: ignore[valid-t
     return mongo_client
 
 
+def get_jwks_collection_obj(mongo_client: AsyncIOMotorClient):
+    """Get the JWKS mongo collection object."""
+    return mongo_client[_JWKS_DB_NAME][_JWKS_COLL_NAME]
+
+
 async def ensure_indexes(mongo_client: AsyncIOMotorClient) -> None:  # type: ignore[valid-type]
     """Create indexes in collections.
 
@@ -43,9 +51,9 @@ async def ensure_indexes(mongo_client: AsyncIOMotorClient) -> None:  # type: ign
     """
     LOGGER.info("Ensuring indexes...")
 
-    async def make_index(coll: str, attr: str, unique: bool = False) -> None:
-        LOGGER.info(f"creating index for {coll=} {attr=} {unique=}...")
-        await mongo_client[_DB_NAME][coll].create_index(  # type: ignore[index]
+    async def make_index(db: str, coll: str, attr: str, unique: bool = False) -> None:
+        LOGGER.info(f"creating index for ({db=}, {coll=}, {attr=}, {unique=})...")
+        await mongo_client[db][coll].create_index(  # type: ignore[index]
             attr,
             name=f"{attr.replace('.', '_')}_index",
             unique=unique,
@@ -53,13 +61,16 @@ async def ensure_indexes(mongo_client: AsyncIOMotorClient) -> None:  # type: ign
         )
 
     # MQPROFILE
-    await make_index(MQPROFILE_COLL_NAME, "mqid", unique=True)
-    await make_index(MQPROFILE_COLL_NAME, "workflow_id")
-    await make_index(MQPROFILE_COLL_NAME, "timestamp")
+    await make_index(_DB_NAME, MQPROFILE_COLL_NAME, "mqid", unique=True)
+    await make_index(_DB_NAME, MQPROFILE_COLL_NAME, "workflow_id")
+    await make_index(_DB_NAME, MQPROFILE_COLL_NAME, "timestamp")
 
     # MQGROUP
-    await make_index(MQGROUP_COLL_NAME, "workflow_id", unique=True)
-    await make_index(MQGROUP_COLL_NAME, "timestamp")
+    await make_index(_DB_NAME, MQGROUP_COLL_NAME, "workflow_id", unique=True)
+    await make_index(_DB_NAME, MQGROUP_COLL_NAME, "timestamp")
+
+    # JWKS
+    await make_index(_JWKS_DB_NAME, _JWKS_COLL_NAME, "kid", unique=True)
 
     LOGGER.info("Ensured indexes (may continue in background).")
 

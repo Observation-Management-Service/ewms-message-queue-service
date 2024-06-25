@@ -10,6 +10,7 @@ from rest_tools.utils import Auth
 from tornado import httputil
 
 from . import config
+from .database.utils import get_jwks_collection_obj
 
 BROKER_QUEUE_AUTH_ALGO = "RS256"
 
@@ -21,7 +22,7 @@ class BrokerQueueAuth:
         self,
         mongo_client: motor.motor_asyncio.AsyncIOMotorClient,
     ):
-        self._mongo_collection = mongo_client["JWK_DB"]["JWKS"]
+        self._mongo_collection = get_jwks_collection_obj(mongo_client)
         self._pub_key = b""
         self._pub_key_file_last_modtime = float("-inf")
         self._priv_key = b""
