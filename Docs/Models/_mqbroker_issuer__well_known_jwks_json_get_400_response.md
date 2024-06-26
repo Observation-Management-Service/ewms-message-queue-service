@@ -1,4 +1,4 @@
-# __well_known_jwks_json_get_400_response
+# _mqbroker_issuer__well_known_jwks_json_get_400_response
 ## Properties
 
 | Name | Type | Description | Notes |

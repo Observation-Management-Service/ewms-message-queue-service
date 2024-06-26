@@ -4,6 +4,7 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**mqbrokerIssuerWellKnownJwksJsonGet**](DefaultApi.md#mqbrokerIssuerWellKnownJwksJsonGet) | **GET** /mqbroker-issuer/.well-known/jwks.json |  |
 | [**v0MqsGet**](DefaultApi.md#v0MqsGet) | **GET** /v0/mqs |  |
 | [**v0MqsMqProfilesMqidGet**](DefaultApi.md#v0MqsMqProfilesMqidGet) | **GET** /v0/mqs/mq-profiles/{mqid} |  |
 | [**v0MqsSchemaOpenapiGet**](DefaultApi.md#v0MqsSchemaOpenapiGet) | **GET** /v0/mqs/schema/openapi |  |
@@ -11,8 +12,28 @@ All URIs are relative to *http://localhost*
 | [**v0MqsWorkflowsWorkflowIdMqGroupGet**](DefaultApi.md#v0MqsWorkflowsWorkflowIdMqGroupGet) | **GET** /v0/mqs/workflows/{workflow_id}/mq-group |  |
 | [**v0MqsWorkflowsWorkflowIdMqGroupReservationPost**](DefaultApi.md#v0MqsWorkflowsWorkflowIdMqGroupReservationPost) | **POST** /v0/mqs/workflows/{workflow_id}/mq-group/reservation |  |
 | [**v0MqsWorkflowsWorkflowIdMqProfilesPublicGet**](DefaultApi.md#v0MqsWorkflowsWorkflowIdMqProfilesPublicGet) | **GET** /v0/mqs/workflows/{workflow_id}/mq-profiles/public |  |
-| [**wellKnownJwksJsonGet**](DefaultApi.md#wellKnownJwksJsonGet) | **GET** /.well-known/jwks.json |  |
 
+
+<a name="mqbrokerIssuerWellKnownJwksJsonGet"></a>
+# **mqbrokerIssuerWellKnownJwksJsonGet**
+> _mqbroker_issuer__well_known_jwks_json_get_200_response mqbrokerIssuerWellKnownJwksJsonGet()
+
+
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**_mqbroker_issuer__well_known_jwks_json_get_200_response**](../Models/_mqbroker_issuer__well_known_jwks_json_get_200_response.md)
+
+### Authorization
+
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 <a name="v0MqsGet"></a>
 # **v0MqsGet**
@@ -169,27 +190,6 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**oas_any_type_not_mapped**](../Models/AnyType.md)
-
-### Authorization
-
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-<a name="wellKnownJwksJsonGet"></a>
-# **wellKnownJwksJsonGet**
-> __well_known_jwks_json_get_200_response wellKnownJwksJsonGet()
-
-
-
-### Parameters
-This endpoint does not need any parameter.
-
-### Return type
-
-[**__well_known_jwks_json_get_200_response**](../Models/__well_known_jwks_json_get_200_response.md)
 
 ### Authorization
 
