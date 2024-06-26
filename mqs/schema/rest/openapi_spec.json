@@ -155,7 +155,8 @@
                                             "type": "array",
                                             "items": {
                                                 "type": "object",
-                                                "minProperties": 0
+                                                "minProperties": 0,
+                                                "additionalProperties": true
                                             },
                                             "minItems": 0
                                         }
