@@ -1,6 +1,7 @@
 """REST handlers for the JWKS endpoint."""
 
 import logging
+import re
 
 from rest_tools.server import validate_request
 
@@ -17,7 +18,7 @@ LOGGER = logging.getLogger(__name__)
 class WellKnownJWKSDotJSONHandler(BaseMQSHandler):
     """Handles the JWKS JSON response."""
 
-    ROUTE = r"/.well-known/jwks.json$"
+    ROUTE = re.escape("/.well-known/jwks.json") + "$"
 
     @rest_auth.service_account_auth(roles=rest_auth.ALL_AUTH_ACCOUNTS)  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
