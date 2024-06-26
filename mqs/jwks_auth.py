@@ -4,6 +4,7 @@ import hashlib
 import logging
 import os
 import time
+import urllib.parse
 from pathlib import Path
 
 import motor.motor_asyncio
@@ -13,9 +14,21 @@ from rest_tools.utils import Auth
 from . import config
 from .database.utils import get_jwks_collection_obj
 
+LOGGER = logging.getLogger(__name__)
+
+
+# -----------------------------------------------------------------------------
+
+
 BROKER_QUEUE_AUTH_ALGO = "RS256"
 
-LOGGER = logging.getLogger(__name__)
+BROKER_QUEUE_AUTH_PATH_COMPONENT = "mqbroker-issuer"
+BROKER_QUEUE_AUTH_ISSUER_URL = urllib.parse.urljoin(
+    config.ENV.HERE_URL, BROKER_QUEUE_AUTH_PATH_COMPONENT
+)
+
+
+# -----------------------------------------------------------------------------
 
 
 class BrokerQueueAuth:
@@ -83,7 +96,7 @@ class BrokerQueueAuth:
             pub_secret=self.get_public_key(),
             # don't auto-detect url in case k8s ingress is redirecting the incoming request
             # -> aka, k8s is 'using spec.rules.http.path' prefix
-            issuer=config.ENV.BROKER_QUEUE_AUTH_ISSUER_URL,
+            issuer=BROKER_QUEUE_AUTH_ISSUER_URL,
             algorithm=BROKER_QUEUE_AUTH_ALGO,
         )
 
