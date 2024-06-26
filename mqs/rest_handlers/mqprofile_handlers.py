@@ -5,10 +5,10 @@ import logging
 import tornado
 from rest_tools.server import validate_request
 
-from .. import config, utils
-from ..database.client import DocumentNotFoundException
 from . import rest_auth
 from .base_handlers import BaseMQSHandler
+from .. import config, utils
+from ..database.client import DocumentNotFoundException
 
 LOGGER = logging.getLogger(__name__)
 
