@@ -110,7 +110,7 @@ jobs:
         if: github.actor != 'dependabot[bot]'
         run: |
           pip install isort
-          isort . --profile black -v --float-to-top
+          isort . --profile black -v --float-to-top --reverse-relative
       - name: push changes
         if: github.actor != 'dependabot[bot]'
         run: |

@@ -7,8 +7,8 @@ from typing import Any, AsyncIterator
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorCollection
 from pymongo import ReturnDocument
 
-from ..config import MONGO_COLLECTION_JSONSCHEMA_SPECS
 from .utils import _DB_NAME, get_jsonschema_spec_name, web_jsonschema_validate
+from ..config import MONGO_COLLECTION_JSONSCHEMA_SPECS
 
 
 class DocumentNotFoundException(Exception):
@@ -24,7 +24,7 @@ class JSONSchemaMongoClient:
         collection_name: str,
     ) -> None:
         self.mongo_client = mongo_client
-        self._collection = AsyncIOMotorCollection(
+        self._collection: AsyncIOMotorCollection = AsyncIOMotorCollection(
             mongo_client[_DB_NAME],  # type: ignore[arg-type]
             collection_name,
         )
