@@ -139,7 +139,7 @@
         }
     },
     "paths": {
-        "/.well-known/jwks.json": {
+        "/mqbroker-issuer/.well-known/jwks.json": {
             "parameters": [],
             "get": {
                 "responses": {
