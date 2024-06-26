@@ -137,7 +137,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # fyi, dependabot can't access normal secrets
-      - uses: WIPACrepo/wipac-dev-rest-interface-schema-action@v1.3
+      - uses: WIPACrepo/wipac-dev-rest-interface-schema-action@main
         with:
           rest_openapi_paths_dir: "schema-precompiled/paths"
           rest_openapi_prebuild_fpath: "schema-precompiled/openapi_prebuild.json"
