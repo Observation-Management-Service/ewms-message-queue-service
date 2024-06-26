@@ -180,7 +180,7 @@ This endpoint does not need any parameter.
 
 <a name="wellKnownJwksJsonGet"></a>
 # **wellKnownJwksJsonGet**
-> _well_known_jwks_json_get_200_response wellKnownJwksJsonGet()
+> __well_known_jwks_json_get_200_response wellKnownJwksJsonGet()
 
 
 
@@ -189,7 +189,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**_well_known_jwks_json_get_200_response**](../Models/_well_known_jwks_json_get_200_response.md)
+[**__well_known_jwks_json_get_200_response**](../Models/__well_known_jwks_json_get_200_response.md)
 
 ### Authorization
 

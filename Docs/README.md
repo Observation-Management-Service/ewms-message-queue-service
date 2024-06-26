@@ -24,8 +24,8 @@
  - [MQGroupObject_criteria](./Models/MQGroupObject_criteria.md)
  - [MQGroupObject_criteria_anyOf](./Models/MQGroupObject_criteria_anyOf.md)
  - [MQProfileObject](./Models/MQProfileObject.md)
- - [_well_known_jwks_json_get_200_response](./Models/_well_known_jwks_json_get_200_response.md)
- - [_well_known_jwks_json_get_400_response](./Models/_well_known_jwks_json_get_400_response.md)
+ - [__well_known_jwks_json_get_200_response](./Models/__well_known_jwks_json_get_200_response.md)
+ - [__well_known_jwks_json_get_400_response](./Models/__well_known_jwks_json_get_400_response.md)
 
 
 <a name="documentation-for-authorization"></a>
