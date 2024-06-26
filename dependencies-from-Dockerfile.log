@@ -27,7 +27,7 @@ jsonschema-specifications==2023.12.1
 lazy-object-proxy==1.10.0
 MarkupSafe==2.1.5
 more-itertools==10.3.0
-motor==3.4.0
+motor==3.5.0
 oms-mqclient==2.6.0
 openapi-core==0.19.2
 openapi-schema-validator==0.6.2
@@ -87,7 +87,7 @@ mqs
 │   │   ├── attrs [required: >=22.2.0, installed: 23.2.0]
 │   │   └── rpds-py [required: >=0.7.0, installed: 0.18.1]
 │   └── rpds-py [required: >=0.7.1, installed: 0.18.1]
-├── motor [required: Any, installed: 3.4.0]
+├── motor [required: Any, installed: 3.5.0]
 │   └── pymongo [required: >=4.5,<5, installed: 4.7.3]
 │       └── dnspython [required: >=1.16.0,<3.0.0, installed: 2.6.1]
 ├── oms-mqclient [required: Any, installed: 2.6.0]
