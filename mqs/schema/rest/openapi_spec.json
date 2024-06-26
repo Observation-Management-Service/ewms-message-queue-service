@@ -152,6 +152,7 @@
                                     "properties": {
                                         "keys": {
                                             "description": "the JWKS keys",
+                                            "type": "array",
                                             "items": {
                                                 "type": "object",
                                                 "minProperties": 0
