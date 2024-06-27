@@ -7,7 +7,8 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from rest_tools.server import RestHandler, validate_request
 
 from . import rest_auth
-from .. import config, database as db
+from .. import config
+from .. import database as db
 from ..jwks_auth import BrokerQueueAuth
 
 LOGGER = logging.getLogger(__name__)
