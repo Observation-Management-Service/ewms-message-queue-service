@@ -38,7 +38,7 @@ class BrokerQueueAuth:
         self,
         mongo_client: motor.motor_asyncio.AsyncIOMotorClient,
     ):
-        self._mongo_collection = get_jwks_collection_obj(mongo_client)
+        self._mongo_coll = get_jwks_collection_obj(mongo_client)
         self._pub_key = b""
         self._pub_key_file_last_modtime = float("-inf")
         self._priv_key = b""
@@ -61,7 +61,10 @@ class BrokerQueueAuth:
             return fpath_last_modtime, current_val, False
 
     async def get_public_key(self) -> bytes:
-        """Public key, smartly cached so key source file can update on file system."""
+        """Public key, smartly cached so key source file can update on file system.
+
+        Updates the JWKS if the key updated.
+        """
         self._pub_key_file_last_modtime, self._pub_key, updated = self._retrieve_key(
             config.ENV.BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE,
             self._pub_key_file_last_modtime,
@@ -69,12 +72,11 @@ class BrokerQueueAuth:
         )
         if updated:
             LOGGER.info("Updated broker-queue auth public key")
-            await self._update_jwks_in_db()
             self.kid = hashlib.sha512(self._pub_key).hexdigest()
+            await self._update_jwks_in_db(self._mongo_coll, self.kid, self._pub_key)
         return self._pub_key
 
-    @property
-    def private_key(self) -> bytes:
+    def _get_private_key(self) -> bytes:
         """Private key, smartly cached so key source file can update on file system."""
         self._priv_key_file_last_modtime, self._priv_key, updated = self._retrieve_key(
             config.ENV.BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE,
@@ -86,13 +88,18 @@ class BrokerQueueAuth:
         # don't store this in db
         return self._priv_key
 
+    async def reload_keys_if_needed(self) -> None:
+        """Reload the keys in case the source files have updated."""
+        await self.get_public_key()
+        self._get_private_key()
+
     def generate_jwt(self, mqid: str) -> str:
         """Generate auth token (JWT) for a queue."""
         if config.ENV.CI:
             return "TESTING-TOKEN"
 
         jwt_auth_handler = Auth(
-            self.private_key,
+            self._get_private_key(),
             pub_secret=self.get_public_key(),
             # don't auto-detect url in case k8s ingress is redirecting the incoming request
             # -> aka, k8s is 'using spec.rules.http.path' prefix
@@ -125,18 +132,19 @@ class BrokerQueueAuth:
             headers={"kid": self.kid},
         )
 
-    async def _update_jwks_in_db(self) -> None:
+    @staticmethod
+    async def _update_jwks_in_db(mongo_collection, kid: str, public_key: bytes) -> None:
         """Add a JWK to the database and remove old ones.
 
         Triggered when a public key is updated.
         """
         # check if this was actually an update; else, the process just restarted
-        if await self._mongo_collection.find_one({"kid": self.kid}):
+        if await mongo_collection.find_one({"kid": kid}):
             LOGGER.info("Updated broker-queue auth public key is already in db")
             return
 
-        # set exp on "current" jwk
-        await self._mongo_collection.update_many(  # expected to be only 1 doc
+        # set exp on "to-be-replaced" jwk
+        await mongo_collection.update_many(  # expected to be only 1 doc
             {
                 "_exp": float("inf"),  # get those w/ field that is unset
             },
@@ -148,25 +156,25 @@ class BrokerQueueAuth:
         LOGGER.info("Set expiration for previous JWK in db")
 
         # insert new jwk
-        key_obj = RSAAlgorithm(RSAAlgorithm.SHA256).prepare_key(
-            key=await self.get_public_key()
-        )
+        key_obj = RSAAlgorithm(RSAAlgorithm.SHA256).prepare_key(key=public_key)
         jwk = {
-            "kid": self.kid,
+            "kid": kid,
             "_exp": float("inf"),
             **RSAAlgorithm.to_jwk(key_obj, as_dict=True),
         }
-        await self._mongo_collection.insert_one(jwk)
+        await mongo_collection.insert_one(jwk)
         LOGGER.info("Added new JWK to db")
 
     async def get_jwks_from_db(self) -> list[dict[str, str]]:
         """Retrieve the JWKS list from the database."""
+        await self.reload_keys_if_needed()
+
         # remove any expired
-        res = await self._mongo_collection.delete_many({"_exp": {"$lt": time.time()}})
+        res = await self._mongo_coll.delete_many({"_exp": {"$lt": time.time()}})
         LOGGER.info(f"Deleted {res.deleted_count} expired JWKs")
 
         # get all
-        jwks = [d async for d in self._mongo_collection.find()]
+        jwks = [d async for d in self._mongo_coll.find()]
         LOGGER.info(f"Retrieved all ({len(jwks)}) JWKS dicts")
 
         return jwks
