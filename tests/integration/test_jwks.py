@@ -16,6 +16,8 @@ from rest_tools.utils.auth import _AuthValidate
 
 LOGGER = logging.getLogger(__name__)
 
+ROUTE_VERSION_PREFIX = "v0"
+
 
 class OpenIDAuthWithProviderInfo(_AuthValidate):
     """Handle validation of JWT tokens using OpenID .well-known auto-discovery."""
@@ -84,7 +86,7 @@ class OpenIDAuthWithProviderInfo(_AuthValidate):
             raise Exception(f'JWT key {header["kid"]} not found')
 
 
-def test_jwks(rc: RestClient):
+async def test_jwks(rc: RestClient):
     """Test a normal interaction."""
 
     # write public and private files
@@ -120,8 +122,24 @@ def test_jwks(rc: RestClient):
         for obj in auth.public_keys.values()
     ] == [public_key]
 
-    # get jwt & validate
-    # token: dict = {}
-    # auth.validate(token)
+    # get jwt(s) & validate
+    workflow_id = "abc123"
+    queue_aliases = ["queue1", "queue2", "queue3"]
+    public = ["queue1", "queue3"]
+    # -> reserve mq group
+    await rc.request(
+        "POST",
+        f"/{ROUTE_VERSION_PREFIX}/mqs/workflows/{workflow_id}/mq-group/reservation",
+        {"queue_aliases": queue_aliases, "public": public},
+    )
+    # -> activate mq group
+    resp = await rc.request(
+        "POST",
+        f"/{ROUTE_VERSION_PREFIX}/mqs/workflows/{workflow_id}/mq-group/activation",
+        {"criteria": {"priority": 99}},
+    )
+    # -> validate jwt(s)
+    for mqprofile in resp["mqprofiles"]:
+        assert auth.validate(mqprofile["auth_token"])
 
     # TODO - repeat with changed keys
