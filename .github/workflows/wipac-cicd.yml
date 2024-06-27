@@ -14,8 +14,8 @@ env:
   REST_PORT: 8080
   BROKER_URL: test-broker.url.aq
   BROKER_TYPE: rabbitmq
-  BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE: ./broker-queue-private.key
-  BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE: ./broker-queue-public.key
+  BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE: /test-keys/broker-queue-private.key  # root dir
+  BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE: /test-keys/broker-queue-public.key  # root dir
   #
   REST_OPENAPI_SPEC_FPATH: "schema/rest/openapi_spec.json"
   DB_JSONSCHEMA_DIR: "schema/db"
@@ -256,6 +256,8 @@ jobs:
             --env REST_OPENAPI_SPEC_FPATH="${{ env.REST_OPENAPI_SPEC_FPATH }}" \
             --env DB_JSONSCHEMA_DIR="${{ env.DB_JSONSCHEMA_DIR }}" \
             --env CI="true" \
+            --mount type=bind,source={ $(dirname ${{ env.BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE }}) },target=${{ env.BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE }} \
+            --mount type=bind,source={ $(dirname ${{ env.BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE }}) },target=${{ env.BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE }} \
             ${{ env.CI_DOCKER_IMAGE_W_TAG }} &> ./rest.out &
           sleep 1  # hopefully not needed, but jic 
 
