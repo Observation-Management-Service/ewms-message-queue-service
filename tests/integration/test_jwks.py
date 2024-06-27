@@ -3,6 +3,7 @@
 import json
 import logging
 import os
+from urllib.parse import urljoin
 
 import jwt
 import requests
@@ -92,7 +93,7 @@ def test_jwks(rc: RestClient):
     auth = OpenIDAuthWithProviderInfo(
         rc.address,
         {
-            "jwks_uri": "http://localhost/mqbroker-issuer/.well-known/jwks.json",
+            "jwks_uri": urljoin(rc.address, "mqbroker-issuer/.well-known/jwks.json"),
         },
     )
     assert list(auth.public_keys.values()) == [public_key]
