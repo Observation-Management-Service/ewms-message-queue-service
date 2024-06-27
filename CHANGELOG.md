@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.5 (2024-06-27)
+
+### Other
+
+* Broker Queue Auth: Add `auth_token` Field & JWKS Endpoint Handler ([#11](https://github.com/Observation-Management-Service/ewms-message-queue-service/issues/11)) ([`a2f827e`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/a2f827e85f1815dc956342d6e99e4b14a9f8bc7d))
+
 ## v0.1.4 (2024-06-13)
 
 ### Other
