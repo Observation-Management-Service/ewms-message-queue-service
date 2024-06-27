@@ -8,9 +8,6 @@ from urllib.parse import urljoin
 import cryptography
 import jwt
 import requests
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.asymmetric import rsa
 from rest_tools.client import RestClient
 from rest_tools.utils.auth import _AuthValidate
 

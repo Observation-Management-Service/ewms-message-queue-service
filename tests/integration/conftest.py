@@ -9,7 +9,7 @@ from pymongo import MongoClient
 from rest_tools.client import RestClient
 from wipac_dev_tools import logging_tools
 
-from tests.integration.utils import refresh_mqbroker_key_files
+from .utils import refresh_mqbroker_key_files
 
 LOGGER = logging.getLogger(__name__)
 
