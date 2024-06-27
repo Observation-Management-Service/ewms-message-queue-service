@@ -9,6 +9,8 @@ from pymongo import MongoClient
 from rest_tools.client import RestClient
 from wipac_dev_tools import logging_tools
 
+from tests.integration.utils import refresh_mqbroker_key_files
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -37,6 +39,9 @@ async def rc() -> AsyncIterator[RestClient]:
         if db not in ["admin", "config", "local"]:
             for coll in mongo_client[db].list_collection_names():
                 mongo_client[db][coll].delete_many({})
+
+    # write public and private files
+    refresh_mqbroker_key_files()
 
     # connect rc
     yield RestClient(
