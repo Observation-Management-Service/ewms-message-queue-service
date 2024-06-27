@@ -264,8 +264,8 @@ jobs:
             --env REST_OPENAPI_SPEC_FPATH="${{ env.REST_OPENAPI_SPEC_FPATH }}" \
             --env DB_JSONSCHEMA_DIR="${{ env.DB_JSONSCHEMA_DIR }}" \
             --env CI="true" \
-            --mount type=bind,source=$(dirname ${{ env.BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE }}),target=${{ env.BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE }} \
-            --mount type=bind,source=$(dirname ${{ env.BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE }}),target=${{ env.BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE }} \
+            --mount type=bind,source=$(dirname ${{ env.BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE }}),target=$(dirname ${{ env.BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE }}) \
+            --mount type=bind,source=$(dirname ${{ env.BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE }}),target=$(dirname ${{ env.BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE }}) \
             ${{ env.CI_DOCKER_IMAGE_W_TAG }} &> ./rest.out &
           sleep 1  # hopefully not needed, but jic 
 
