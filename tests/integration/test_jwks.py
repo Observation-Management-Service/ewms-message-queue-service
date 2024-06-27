@@ -113,7 +113,7 @@ async def test_jwks(rc: RestClient):
         ) == sorted(all_public_keys)
 
         # get jwt(s) & validate
-        workflow_id = f"abc123:{i}"
+        workflow_id = f"workflowforjwkstesting-{i}"
         queue_aliases = ["queue1", "queue2", "queue3"]
         public = ["queue1", "queue3"]
         # -> reserve mq group
