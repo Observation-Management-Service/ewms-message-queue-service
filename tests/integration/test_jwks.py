@@ -7,6 +7,9 @@ from urllib.parse import urljoin
 
 import jwt
 import requests
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import rsa
 from rest_tools.client import RestClient
 from rest_tools.utils.auth import _AuthValidate
 
@@ -82,10 +85,20 @@ def test_jwks(rc: RestClient):
     """Test a normal interaction."""
 
     # write public and private files
-    public_key = b"public"
+    key = rsa.generate_private_key(
+        public_exponent=65537, key_size=2048, backend=default_backend()
+    )
+    public_key = key.public_key().public_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PublicFormat.SubjectPublicKeyInfo,
+    )
     with open(os.environ["BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE"], "wb") as f:
         f.write(public_key)
-    private_key = b"private"
+    private_key = key.private_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PrivateFormat.TraditionalOpenSSL,
+        encryption_algorithm=serialization.NoEncryption(),
+    )
     with open(os.environ["BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE"], "wb") as f:
         f.write(private_key)
 
