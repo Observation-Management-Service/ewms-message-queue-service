@@ -94,11 +94,11 @@ class BrokerQueueAuth:
         await self.get_public_key()
         self._get_private_key()
 
-    def generate_jwt(self, mqid: str) -> str:
+    async def generate_jwt(self, mqid: str) -> str:
         """Generate auth token (JWT) for a queue."""
         jwt_auth_handler = Auth(
             self._get_private_key(),
-            pub_secret=self.get_public_key(),
+            pub_secret=await self.get_public_key(),
             # don't auto-detect url in case k8s ingress is redirecting the incoming request
             # -> aka, k8s is 'using spec.rules.http.path' prefix
             issuer=BROKER_QUEUE_AUTH_ISSUER_URL,

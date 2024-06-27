@@ -29,7 +29,7 @@ class WellKnownJWKSDotJSONHandler(BaseMQSHandler):
         """Handle GET."""
         self.write(
             {
-                "keys": await self.broker_queue_auth.get_jwks_from_db(),
+                "keys": await self.mqbroker_auth.get_jwks_from_db(),
             }
         )
 

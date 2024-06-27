@@ -81,7 +81,9 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
 
         mqid_auth_tokens = {}
         async for p in self.mqprofile_client.find_all({"workflow_id": workflow_id}, []):
-            mqid_auth_tokens[p["mqid"]] = self.broker_queue_auth.generate_jwt(p["mqid"])
+            mqid_auth_tokens[p["mqid"]] = await self.mqbroker_auth.generate_jwt(
+                p["mqid"]
+            )
         if not mqid_auth_tokens:
             raise tornado.web.HTTPError(
                 404, reason="No MQProfiles found for workflow id"
