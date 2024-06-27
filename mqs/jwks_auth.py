@@ -5,6 +5,7 @@ import logging
 import os
 import time
 import urllib.parse
+from datetime import datetime
 from pathlib import Path
 
 import motor.motor_asyncio
@@ -71,7 +72,7 @@ class BrokerQueueAuth:
             self._pub_key,
         )
         if updated:
-            LOGGER.info("Updated broker-queue auth public key")
+            LOGGER.info("Updated mqbroker auth public key")
             self.kid = hashlib.sha512(self._pub_key).hexdigest()
             await self._update_jwks_in_db(self._mongo_coll, self.kid, self._pub_key)
         return self._pub_key
@@ -84,7 +85,7 @@ class BrokerQueueAuth:
             self._priv_key,
         )
         if updated:
-            LOGGER.info("Updated broker-queue auth private key")
+            LOGGER.info("Updated mqbroker auth private key")
         # don't store this in db
         return self._priv_key
 
@@ -140,20 +141,23 @@ class BrokerQueueAuth:
         """
         # check if this was actually an update; else, the process just restarted
         if await mongo_collection.find_one({"kid": kid}):
-            LOGGER.info("Updated broker-queue auth public key is already in db")
+            LOGGER.info("Updated mqbroker auth public key is already in db")
             return
 
         # set exp on "to-be-replaced" jwk
+        new_exp = time.time() + config.ENV.BROKER_QUEUE_AUTH_TOKEN_EXP
         await mongo_collection.update_many(  # expected to be only 1 doc
             {
                 "_exp": float("inf"),  # get those w/ field that is unset
             },
             {
                 # set exp so it is greater than the last jwt generated using jwk's pub key
-                "$set": {"_exp": time.time() + config.ENV.BROKER_QUEUE_AUTH_TOKEN_EXP},
+                "$set": {"_exp": new_exp},
             },
         )
-        LOGGER.info("Set expiration for previous JWK in db")
+        LOGGER.info(
+            f"Set expiration for previous JWK in db: {datetime.fromtimestamp(new_exp)} ({new_exp})"
+        )
 
         # insert new jwk
         key_obj = RSAAlgorithm(RSAAlgorithm.SHA256).prepare_key(key=public_key)
