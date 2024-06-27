@@ -46,9 +46,9 @@ async def test_000(rc: RestClient) -> None:
     mqgroup = resp["mqgroup"]
     assert mqgroup["workflow_id"] == workflow_id
     assert mqgroup["criteria"] is None
-    mqprofiles = resp["mqprofiles"]
-    assert len(mqprofiles) == len(queue_aliases)
-    for mqprofile in mqprofiles:
+    og_mqprofiles = resp["mqprofiles"]
+    assert len(og_mqprofiles) == len(queue_aliases)
+    for mqprofile in og_mqprofiles:
         assert mqprofile["workflow_id"] == workflow_id
         assert mqprofile["timestamp"] == mqgroup["timestamp"]
         assert mqprofile["alias"] in queue_aliases
@@ -64,7 +64,7 @@ async def test_000(rc: RestClient) -> None:
     )
     assert resp == mqgroup
     # check GET
-    for mqprofile in mqprofiles:
+    for mqprofile in og_mqprofiles:
         resp = await utils.request_and_validate(
             rc,
             openapi_spec,
@@ -80,7 +80,7 @@ async def test_000(rc: RestClient) -> None:
         f"/{ROUTE_VERSION_PREFIX}/mqs/workflows/{workflow_id}/mq-profiles/public",
     )
     assert len(resp["mqprofiles"]) == len(public)
-    assert resp["mqprofiles"] == [m for m in mqprofiles if m["alias"] in public]
+    assert resp["mqprofiles"] == [m for m in og_mqprofiles if m["alias"] in public]
 
     # activate mq group
     resp = await utils.request_and_validate(
@@ -105,7 +105,7 @@ async def test_000(rc: RestClient) -> None:
                     assert v == os.environ["BROKER_URL"]
                 # assert value has not changed
                 case _:
-                    assert v == mqprofiles[i][k]
+                    assert v == og_mqprofiles[i][k]
 
 
 async def test_100__mqgroup_activation__error_404(rc: RestClient) -> None:
