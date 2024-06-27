@@ -252,6 +252,7 @@ jobs:
           sudo chmod -R 777 $(dirname ${{ env.BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE }})
       - name: test (run rest server in background)
         run: |
+          set -ex
           # this needs to be in the same step b/c shell exits when step is done
           docker run --network='host' --rm --name rest \
             --env HERE_URL="${{ env.HERE_URL }}" \
