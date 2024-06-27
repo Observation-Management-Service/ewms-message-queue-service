@@ -167,7 +167,7 @@ class BrokerQueueAuth:
             **RSAAlgorithm.to_jwk(key_obj, as_dict=True),
         }
         await mongo_collection.insert_one(jwk)
-        LOGGER.info("Added new JWK to db")
+        LOGGER.info(f"Added new JWK to db: {jwk}")
 
     async def get_jwks_from_db(self) -> list[dict[str, str]]:
         """Retrieve the JWKS list from the database."""
