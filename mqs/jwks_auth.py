@@ -96,9 +96,6 @@ class BrokerQueueAuth:
 
     def generate_jwt(self, mqid: str) -> str:
         """Generate auth token (JWT) for a queue."""
-        if config.ENV.CI:
-            return "TESTING-TOKEN"
-
         jwt_auth_handler = Auth(
             self._get_private_key(),
             pub_secret=self.get_public_key(),

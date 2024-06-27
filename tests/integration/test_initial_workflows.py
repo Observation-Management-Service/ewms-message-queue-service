@@ -98,7 +98,7 @@ async def test_000(rc: RestClient) -> None:
                 case "is_activated":
                     assert v is True
                 case "auth_token":
-                    assert v == "TESTING-TOKEN"
+                    assert v is not None  # token generation is tested by test_jwks.py
                 case "broker_type":
                     assert v == BROKER_TYPE
                 case "broker_address":
