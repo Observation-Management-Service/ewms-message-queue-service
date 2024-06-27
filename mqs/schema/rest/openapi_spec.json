@@ -79,6 +79,36 @@
                     },
                     "is_activated": {
                         "type": "boolean"
+                    },
+                    "auth_token": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "broker_type": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "broker_address": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     }
                 },
                 "required": [],
@@ -109,6 +139,64 @@
         }
     },
     "paths": {
+        "/mqbroker-issuer/.well-known/jwks.json": {
+            "parameters": [],
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "the JWKS keys",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "keys": {
+                                            "description": "the JWKS keys",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "minProperties": 0,
+                                                "additionalProperties": true
+                                            },
+                                            "minItems": 0
+                                        }
+                                    },
+                                    "required": [
+                                        "keys"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "invalid request arguments",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "description": "http error code",
+                                            "type": "integer"
+                                        },
+                                        "error": {
+                                            "description": "http error reason",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "code",
+                                        "error"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v0/mqs": {
             "parameters": [],
             "get": {
@@ -526,7 +614,7 @@
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "the matching results",
+                        "description": "a successful result",
                         "content": {
                             "application/json": {
                                 "schema": {

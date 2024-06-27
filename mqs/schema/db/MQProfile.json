@@ -18,6 +18,36 @@
         },
         "is_activated": {
             "type": "boolean"
+        },
+        "auth_token": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ]
+        },
+        "broker_type": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ]
+        },
+        "broker_address": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ]
         }
     },
     "required": [
@@ -26,7 +56,10 @@
         "timestamp",
         "alias",
         "is_public",
-        "is_activated"
+        "is_activated",
+        "auth_token",
+        "broker_type",
+        "broker_address"
     ],
     "additionalProperties": false
 }

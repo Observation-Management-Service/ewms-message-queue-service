@@ -4,12 +4,12 @@ import logging
 from typing import Any
 
 from motor.motor_asyncio import AsyncIOMotorClient
-from rest_tools.server import RestHandler
-from rest_tools.server import validate_request
+from rest_tools.server import RestHandler, validate_request
 
-from . import auth
+from . import rest_auth
 from .. import config
 from .. import database as db
+from ..jwks_auth import BrokerQueueAuth
 
 LOGGER = logging.getLogger(__name__)
 
@@ -20,6 +20,7 @@ class BaseMQSHandler(RestHandler):  # pylint: disable=W0223
     def initialize(  # type: ignore  # pylint: disable=W0221
         self,
         mongo_client: AsyncIOMotorClient,  # type: ignore[valid-type]
+        mqbroker_auth: BrokerQueueAuth,
         *args: Any,
         **kwargs: Any,
     ) -> None:
@@ -34,6 +35,7 @@ class BaseMQSHandler(RestHandler):  # pylint: disable=W0223
             mongo_client,
             db.utils.MQGROUP_COLL_NAME,
         )
+        self.mqbroker_auth = mqbroker_auth
 
 
 # ----------------------------------------------------------------------------
@@ -44,7 +46,7 @@ class MainHandler(BaseMQSHandler):  # pylint: disable=W0223
 
     ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mqs$"
 
-    @auth.service_account_auth(roles=[auth.ALL_AUTH_ACCOUNTS])  # type: ignore
+    @rest_auth.service_account_auth(roles=rest_auth.ALL_AUTH_ACCOUNTS)  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def get(self) -> None:
         """Handle GET."""

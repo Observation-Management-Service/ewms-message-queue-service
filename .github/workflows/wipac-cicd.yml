@@ -6,10 +6,16 @@ on: [ push ]
 
 env:
   CI_DOCKER_IMAGE_W_TAG: mqs/test:local
+  #
+  HERE_URL: mqs.testing-url.aq
   MONGODB_HOST: localhost
   MONGODB_PORT: 27017
   REST_HOST: localhost  # the server should connect to 0.0.0.0
   REST_PORT: 8080
+  BROKER_URL: test-broker.url.aq
+  BROKER_TYPE: rabbitmq
+  BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE: /test-priv-keys/broker-queue-private.key  # root dir
+  BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE: /test-pub-keys/broker-queue-public.key  # root dir
   #
   REST_OPENAPI_SPEC_FPATH: "schema/rest/openapi_spec.json"
   DB_JSONSCHEMA_DIR: "schema/db"
@@ -90,26 +96,36 @@ jobs:
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # fyi, dependabot can't access normal secrets
-      - if: github.actor != 'dependabot[bot]'
+      - name: git config
+        if: github.actor != 'dependabot[bot]'
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-
-          # check git status
-          git fetch
-          if [[ $(git status -sb | grep behind) ]]; then
-            echo "this commit is not the most recent on this branch -- rest of action will be skipped"
-            exit 0
-          fi
-
+      - name: ruff
+        if: github.actor != 'dependabot[bot]'
+        run: |
           # use literal collection syntax, see https://docs.astral.sh/ruff/rules/unnecessary-collection-call/
           pip install ruff
           ruff check --select C408 --fix . --unsafe-fixes
-
-          # push
-          git add . || true
-          git commit -m "<bot> auto code format file(s)" || true
-          git push || true
+      - name: isort
+        if: github.actor != 'dependabot[bot]'
+        run: |
+          pip install isort
+          isort . --profile black -v --float-to-top --reverse-relative
+      - name: push changes
+        if: github.actor != 'dependabot[bot]'
+        run: |
+          # check git status
+          git fetch
+          if [[ $(git status -sb | grep behind) ]]; then
+            echo "this commit is not the most recent on this branch -- changes won't be pushed"
+            exit 0
+          else
+            # push
+            git add . || true
+            git commit -m "<bot> auto code format file(s)" || true
+            git push || true
+          fi
 
 
   ############################################################################
@@ -122,12 +138,13 @@ jobs:
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # fyi, dependabot can't access normal secrets
-      - uses: WIPACrepo/wipac-dev-rest-interface-schema-action@v1.1
+      - uses: WIPACrepo/wipac-dev-rest-interface-schema-action@v1.3
         with:
           rest_openapi_paths_dir: "schema-precompiled/paths"
           rest_openapi_prebuild_fpath: "schema-precompiled/openapi_prebuild.json"
           rest_openapi_spec_fpath: "mqs/${{ env.REST_OPENAPI_SPEC_FPATH }}"
           db_jsonschema_dir: "mqs/${{ env.DB_JSONSCHEMA_DIR }}"
+          dunder_paths_no_vprefix: "mqbroker-issuer__.well-known__jwks.json"
 
   api-documentation:
     runs-on: ubuntu-latest
@@ -209,6 +226,8 @@ jobs:
         image: bitnami/mongodb:4
         ports:
           - 27017:27017
+        env:
+          MONGODB_REPLICA_SET_MODE: primary
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
@@ -224,17 +243,29 @@ jobs:
           load: true
       - run: |
           pip install .[tests]
+      - name: make mqbroker key file directories
+        run: |
+          set -ex
+          sudo mkdir -p $(dirname ${{ env.BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE }})
+          sudo chmod -R 777 $(dirname ${{ env.BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE }})
+          sudo mkdir -p $(dirname ${{ env.BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE }})
+          sudo chmod -R 777 $(dirname ${{ env.BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE }})
       - name: test (run rest server in background)
         run: |
+          set -ex
           # this needs to be in the same step b/c shell exits when step is done
           docker run --network='host' --rm --name rest \
+            --env HERE_URL="${{ env.HERE_URL }}" \
             --env MONGODB_HOST="${{ env.MONGODB_HOST }}" \
             --env MONGODB_PORT="${{ env.MONGODB_PORT }}" \
             --env REST_HOST="${{ env.REST_HOST }}" \
             --env REST_PORT="${{ env.REST_PORT }}" \
+            $(env | grep '^BROKER_' | awk '$0="--env "$0') \
             --env REST_OPENAPI_SPEC_FPATH="${{ env.REST_OPENAPI_SPEC_FPATH }}" \
             --env DB_JSONSCHEMA_DIR="${{ env.DB_JSONSCHEMA_DIR }}" \
             --env CI="true" \
+            --mount type=bind,source=$(dirname ${{ env.BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE }}),target=$(dirname ${{ env.BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE }}) \
+            --mount type=bind,source=$(dirname ${{ env.BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE }}),target=$(dirname ${{ env.BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE }}) \
             ${{ env.CI_DOCKER_IMAGE_W_TAG }} &> ./rest.out &
           sleep 1  # hopefully not needed, but jic 
 

@@ -1,56 +1,35 @@
 {
-    "parameters": [
-        {
-            "$ref": "#/components/parameters/WorkflowIDParam"
-        }
-    ],
+    "parameters": [],
     "get": {
-        "parameters": [],
         "responses": {
             "200": {
-                "description": "the matching results",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "mqprofiles": {
-                                "description": "a list of mq profiles",
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/MQProfileObject"
-                                },
-                                "minItems": 0
-                            }
-                        }
-                    }
-                }
-            },
-            "400": {
-                "description": "invalid request arguments",
+                "description": "the JWKS keys",
                 "content": {
                     "application/json": {
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "code": {
-                                    "description": "http error code",
-                                    "type": "integer"
-                                },
-                                "error": {
-                                    "description": "http error reason",
-                                    "type": "string"
+                                "keys": {
+                                    "description": "the JWKS keys",
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "minProperties": 0,
+                                        "additionalProperties": true
+                                    },
+                                    "minItems": 0
                                 }
                             },
                             "required": [
-                                "code",
-                                "error"
+                                "keys"
                             ],
                             "additionalProperties": false
                         }
                     }
                 }
             },
-            "404": {
-                "description": "not found",
+            "400": {
+                "description": "invalid request arguments",
                 "content": {
                     "application/json": {
                         "schema": {

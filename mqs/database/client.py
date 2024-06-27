@@ -23,7 +23,8 @@ class JSONSchemaMongoClient:
         mongo_client: AsyncIOMotorClient,  # type: ignore[valid-type]
         collection_name: str,
     ) -> None:
-        self._collection = AsyncIOMotorCollection(
+        self.mongo_client = mongo_client
+        self._collection: AsyncIOMotorCollection = AsyncIOMotorCollection(
             mongo_client[_DB_NAME],  # type: ignore[arg-type]
             collection_name,
         )

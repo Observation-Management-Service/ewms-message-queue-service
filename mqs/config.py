@@ -23,26 +23,49 @@ LOGGER = logging.getLogger(__name__)
 class EnvConfig:
     """Environment variables."""
 
-    # pylint:disable=invalid-name
+    HERE_URL: str
+
+    # mongo address
     MONGODB_HOST: str  # "localhost"
     MONGODB_PORT: int  # 27017
+
+    # here address
     REST_HOST: str  # "localhost"
     REST_PORT: int  # 8080
 
+    # broker info
+    BROKER_URL: str
+    BROKER_TYPE: str
+    # TODO: add BROKER_MGMT_URL
+
+    # broker/mq auth
+    # -> keys (by file)
+    BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE: Path
+    BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE: Path
+    # -> meta
+    BROKER_QUEUE_AUTH_TOKEN_EXP: int = 60 * 60 * 24
+    BROKER_RESOURCE_SERVER_ID: str = ""
+
+    # rest auth
     AUTH_AUDIENCE: str = ""
     AUTH_OPENID_URL: str = ""
+
+    # mongo auth
     MONGODB_AUTH_PASS: str = ""  # empty means no authentication required
     MONGODB_AUTH_USER: str = ""  # None means required to specify
 
+    # misc
     CI: bool = False  # github actions sets this to 'true'
     LOG_LEVEL: str = "DEBUG"
-    LOG_LEVEL_THIRD_PARTY: str = "DEBUG"
+    LOG_LEVEL_THIRD_PARTY: str = "INFO"
     LOG_LEVEL_REST_TOOLS: str = "DEBUG"
 
+    # backlog
     SKIP_BACKLOG_MIN_PRIORITY: int = 10
     BACKLOG_RUNNER_SHORT_DELAY: int = 15
     BACKLOG_RUNNER_DELAY: int = 5 * 60
 
+    # schema
     DB_JSONSCHEMA_DIR: str = "schema/db"
     REST_OPENAPI_SPEC_FPATH: str = "schema/rest/openapi_spec.json"
 

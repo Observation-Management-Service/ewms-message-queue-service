@@ -3,7 +3,7 @@
 import logging
 import re
 
-from mqs import server, config
+from mqs import config, server
 
 LOGGER = logging.getLogger(__name__)
 
@@ -30,6 +30,8 @@ def test_route_prefixes() -> None:
     """Check that all the routes have correct prefixes."""
     routes = [getattr(h, "ROUTE") for h in server.HANDLERS]
     for pattern in routes:
-        assert pattern == f"/{config.ROUTE_VERSION_PREFIX}/mqs$" or pattern.startswith(
-            f"/{config.ROUTE_VERSION_PREFIX}/mqs/"
+        assert (
+            pattern == f"/{config.ROUTE_VERSION_PREFIX}/mqs$"
+            or pattern.startswith(f"/{config.ROUTE_VERSION_PREFIX}/mqs/")
+            or "jwks" in pattern  # jwks endpoints are not versioned
         )

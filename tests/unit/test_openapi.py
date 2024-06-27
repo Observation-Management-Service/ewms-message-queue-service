@@ -27,11 +27,15 @@ def test_census_routes() -> None:
     missing: list[tuple[str, str]] = []
 
     for handler in server.HANDLERS:
-        route = re.sub(
-            r"\(\?P<([^>]+)>\\w\+\)",  # match named groups: (?P<task_id>\w+)
-            r"{\1}",  # replace w/ braces: {task_id}
-            getattr(handler, "ROUTE"),
-        ).rstrip("$")
+        route = (
+            re.sub(  # convert named groups
+                r"\(\?P<([^>]+)>\\w\+\)",  # match named groups: (?P<task_id>\w+)
+                r"{\1}",  # replace w/ braces: {task_id}
+                getattr(handler, "ROUTE"),
+            )
+            .rstrip("$")  # strip end
+            .replace("\\", "")  # un-escape special chars
+        )
         LOGGER.info(f"Checking route: {route}")
 
         implemented_rest_methods = [

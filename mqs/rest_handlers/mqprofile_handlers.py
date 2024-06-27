@@ -5,7 +5,7 @@ import logging
 import tornado
 from rest_tools.server import validate_request
 
-from . import auth
+from . import rest_auth
 from .base_handlers import BaseMQSHandler
 from .. import config, utils
 from ..database.client import DocumentNotFoundException
@@ -18,7 +18,7 @@ class MQProfileIDHandler(BaseMQSHandler):  # pylint: disable=W0223
 
     ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mqs/mq-profiles/(?P<mqid>\w+)$"
 
-    @auth.service_account_auth(roles=[auth.AuthAccounts.WMS])  # type: ignore
+    @rest_auth.service_account_auth(roles=[rest_auth.AuthAccounts.WMS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def get(self, mqid: str) -> None:
         """Handle GET requests."""
@@ -35,7 +35,7 @@ class MQProfilePublicGetHandler(BaseMQSHandler):  # pylint: disable=W0223
 
     ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mqs/workflows/(?P<workflow_id>\w+)/mq-profiles/public$"
 
-    @auth.service_account_auth(roles=[auth.AuthAccounts.USER])  # type: ignore
+    @rest_auth.service_account_auth(roles=[rest_auth.AuthAccounts.USER])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def get(self, workflow_id: str) -> None:
         """Handle GET requests."""
@@ -50,4 +50,8 @@ class MQProfilePublicGetHandler(BaseMQSHandler):  # pylint: disable=W0223
             ),
         )
 
-        self.write({"mqprofiles": mqprofiles})
+        self.write(
+            {
+                "mqprofiles": mqprofiles,
+            }
+        )
