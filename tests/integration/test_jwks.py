@@ -5,6 +5,7 @@ import logging
 import os
 from urllib.parse import urljoin
 
+import cryptography
 import jwt
 import requests
 from cryptography.hazmat.backends import default_backend
@@ -27,7 +28,9 @@ class OpenIDAuthWithProviderInfo(_AuthValidate):
     ):
         super().__init__(**kwargs)
         self.url = url if url.endswith("/") else url + "/"
-        self.public_keys: dict[str, bytes] = {}
+        self.public_keys: dict[
+            str, cryptography.hazmat.primitives.asymmetric.rsa.RSAPublicKey
+        ] = {}
         self.provider_info = provider_info if provider_info else {}
         self.token_url: str | None = None
 
@@ -109,7 +112,13 @@ def test_jwks(rc: RestClient):
             "jwks_uri": urljoin(rc.address, "mqbroker-issuer/.well-known/jwks.json"),
         },
     )
-    assert list(auth.public_keys.values()) == [public_key]
+    assert [
+        obj.public_bytes(
+            cryptography.hazmat.primitives.serialization.Encoding.PEM,
+            cryptography.hazmat.primitives.serialization.PublicFormat.SubjectPublicKeyInfo,
+        )
+        for obj in auth.public_keys.values()
+    ] == [public_key]
 
     # get jwt & validate
     token: dict = {}
