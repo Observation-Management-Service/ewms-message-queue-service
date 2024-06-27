@@ -245,8 +245,8 @@ jobs:
           pip install .[tests]
       - name: test (run rest server in background)
         run: |
-          mkdir -p dirname ${{ env.BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE }}
-          mkdir -p dirname ${{ env.BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE }}
+          sudo mkdir -p dirname ${{ env.BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE }}
+          sudo mkdir -p dirname ${{ env.BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE }}
           
           # this needs to be in the same step b/c shell exits when step is done
           docker run --network='host' --rm --name rest \
