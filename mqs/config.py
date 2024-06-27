@@ -57,7 +57,7 @@ class EnvConfig:
     # misc
     CI: bool = False  # github actions sets this to 'true'
     LOG_LEVEL: str = "DEBUG"
-    LOG_LEVEL_THIRD_PARTY: str = "DEBUG"
+    LOG_LEVEL_THIRD_PARTY: str = "INFO"
     LOG_LEVEL_REST_TOOLS: str = "DEBUG"
 
     # backlog
