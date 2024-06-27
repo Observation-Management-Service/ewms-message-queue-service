@@ -138,7 +138,7 @@ class BrokerQueueAuth:
         # set exp on "current" jwk
         await self._mongo_collection.update_many(  # expected to be only 1 doc
             {
-                "_exp": None,  # get those w/ field that is None or doesn't exist
+                "_exp": float("inf"),  # get those w/ field that is unset
             },
             {
                 # set exp so it is greater than the last jwt generated using jwk's pub key
@@ -153,7 +153,7 @@ class BrokerQueueAuth:
         )
         jwk = {
             "kid": self.kid,
-            "_exp": None,
+            "_exp": float("inf"),
             **RSAAlgorithm.to_jwk(key_obj, as_dict=True),
         }
         await self._mongo_collection.insert_one(jwk)
