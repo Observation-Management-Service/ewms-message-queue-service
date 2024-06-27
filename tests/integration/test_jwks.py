@@ -98,7 +98,7 @@ def test_jwks(rc: RestClient):
     assert list(auth.public_keys.values()) == [public_key]
 
     # get jwt & validate
-    token = {}
+    token: dict = {}
     auth.validate(token)
 
     # TODO - repeat with changed keys
