@@ -140,6 +140,7 @@ async def test_jwks(rc: RestClient):
     )
     # -> validate jwt(s)
     for mqprofile in resp["mqprofiles"]:
+        print(mqprofile["auth_token"])
         assert auth.validate(mqprofile["auth_token"])
 
     # TODO - repeat with changed keys
