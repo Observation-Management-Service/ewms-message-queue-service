@@ -8,6 +8,7 @@ from urllib.parse import urljoin
 import cryptography
 import jwt
 import requests
+from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
 from rest_tools.client import RestClient
 from rest_tools.utils.auth import _AuthValidate
 
@@ -107,15 +108,12 @@ async def test_jwks(rc: RestClient):
             },
         )
         assert sorted(
-            obj.public_bytes(
-                cryptography.hazmat.primitives.serialization.Encoding.PEM,
-                cryptography.hazmat.primitives.serialization.PublicFormat.SubjectPublicKeyInfo,
-            )
+            obj.public_bytes(Encoding.PEM, PublicFormat.SubjectPublicKeyInfo)
             for obj in auth.public_keys.values()
         ) == sorted(all_public_keys)
 
         # get jwt(s) & validate
-        workflow_id = "abc123"
+        workflow_id = f"abc123:{i}"
         queue_aliases = ["queue1", "queue2", "queue3"]
         public = ["queue1", "queue3"]
         # -> reserve mq group
