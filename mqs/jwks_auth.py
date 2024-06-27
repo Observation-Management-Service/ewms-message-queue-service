@@ -178,7 +178,7 @@ class BrokerQueueAuth:
         LOGGER.info(f"Deleted {res.deleted_count} expired JWKs")
 
         # get all
-        jwks = [d async for d in self._mongo_coll.find()]
+        jwks = [d async for d in self._mongo_coll.find({}, {"_id": False})]
         LOGGER.info(f"Retrieved all ({len(jwks)}) JWKS dicts")
 
         return jwks
