@@ -91,16 +91,21 @@ async def test_000(rc: RestClient) -> None:
         {"criteria": {"priority": 99}},
     )
     assert resp["mqgroup"] == {**mqgroup, "criteria": {"priority": 99}}
-    assert resp["mqprofiles"] == [
-        {
-            **p,
-            "is_activated": True,
-            "auth_token": "TESTING-TOKEN",
-            "broker_type": BROKER_TYPE,
-            "broker_address": os.environ["BROKER_URL"],
-        }
-        for p in mqprofiles
-    ]
+    for i, resp_mqp in enumerate(resp["mqprofiles"]):
+        for k, v in resp_mqp.items():
+            match k:
+                # newly update fields...
+                case "is_activated":
+                    assert v is True
+                case "auth_token":
+                    assert v == "TESTING-TOKEN"
+                case "broker_type":
+                    assert v == BROKER_TYPE
+                case "broker_address":
+                    assert v == os.environ["BROKER_URL"]
+                # assert value has not changed
+                case _:
+                    assert v == mqprofiles[i][k]
 
 
 async def test_100__mqgroup_activation__error_404(rc: RestClient) -> None:
