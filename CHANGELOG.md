@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.6 (2024-06-28)
+
+### Other
+
+* Enable `"user"` REST Auth Account ([`a13821d`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/a13821dc377508d92d1bc2c8d715965414307f13))
+
 ## v0.1.5 (2024-06-27)
 
 ### Other
