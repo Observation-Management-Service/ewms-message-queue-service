@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.8 (2024-07-01)
+
+### Other
+
+* Don't Return `"_exp"` Field in JWKS - 2 ([`2d9a318`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/2d9a318f771c5bf69d0428ae6f8edb21225c28f0))
+* Merge remote-tracking branch 'origin/main' ([`4b574de`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/4b574deed5b5882d2b53377a3af770914aa12eb2))
+* Don't Return `"_exp"` Field in JWKS ([`53e3c7e`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/53e3c7ee03c84446fc84ed26ed156a4a762603c4))
+
 ## v0.1.7 (2024-07-01)
 
 ### Other
