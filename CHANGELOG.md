@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.7 (2024-07-01)
+
+### Other
+
+* Make JWKS Endpoint Public ([`70484ad`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/70484ad5dd2f8aedee3830de730f45ab7b5ce1e9))
+
 ## v0.1.6 (2024-06-28)
 
 ### Other
