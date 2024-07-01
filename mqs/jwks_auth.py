@@ -28,7 +28,7 @@ BROKER_QUEUE_AUTH_ISSUER_URL = urllib.parse.urljoin(
     config.ENV.HERE_URL, BROKER_QUEUE_AUTH_PATH_COMPONENT
 )
 
-EXP_KEY = "_exp"
+EXP_FIELD = "_exp"
 
 
 # -----------------------------------------------------------------------------
@@ -147,11 +147,11 @@ class BrokerQueueAuth:
         new_exp = time.time() + config.ENV.BROKER_QUEUE_AUTH_TOKEN_EXP
         await mongo_collection.update_many(  # expected to be only 1 doc
             {
-                EXP_KEY: float("inf"),  # get those w/ field that is unset
+                EXP_FIELD: float("inf"),  # get those w/ field that is unset
             },
             {
                 # set exp so it is greater than the last jwt generated using jwk's pub key
-                "$set": {EXP_KEY: new_exp},
+                "$set": {EXP_FIELD: new_exp},
             },
         )
         LOGGER.info(
@@ -162,7 +162,7 @@ class BrokerQueueAuth:
         key_obj = RSAAlgorithm(RSAAlgorithm.SHA256).prepare_key(key=public_key)
         jwk = {
             "kid": kid,
-            EXP_KEY: float("inf"),
+            EXP_FIELD: float("inf"),
             **RSAAlgorithm.to_jwk(key_obj, as_dict=True),
         }
         await mongo_collection.insert_one(jwk)
@@ -173,12 +173,12 @@ class BrokerQueueAuth:
         await self.reload_keys_if_needed()
 
         # remove any expired
-        res = await self._mongo_coll.delete_many({EXP_KEY: {"$lt": time.time()}})
+        res = await self._mongo_coll.delete_many({EXP_FIELD: {"$lt": time.time()}})
         LOGGER.info(f"Deleted {res.deleted_count} expired JWKs")
 
         # get all
         jwks = [
-            d async for d in self._mongo_coll.find({}, {"_id": False, EXP_KEY: False})
+            d async for d in self._mongo_coll.find({}, {"_id": False, EXP_FIELD: False})
         ]
         LOGGER.info(f"Retrieved all ({len(jwks)}) JWKS dicts")
 
