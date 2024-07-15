@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.11 (2024-07-15)
+
+### Other
+
+* Add `BROKER_QUEUE_USERNAME` ([`2f47662`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/2f476627b7346f719bfe46d61b9104630943cdff))
+
 ## v0.1.10 (2024-07-15)
 
 ### Other
