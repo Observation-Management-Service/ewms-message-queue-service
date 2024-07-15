@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.14 (2024-07-15)
+
+### Other
+
+* Add `amq.default` Exchange in JWT ([`1d10442`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/1d10442a90442178ba77863729749e74f50e0f08))
+
 ## v0.1.13 (2024-07-15)
 
 ### Other
