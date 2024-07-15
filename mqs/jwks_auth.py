@@ -108,7 +108,7 @@ class BrokerQueueAuth:
         )
 
         return jwt_auth_handler.create_token(
-            "",  # the user
+            "user",  # the user
             expiration=config.ENV.BROKER_QUEUE_AUTH_TOKEN_EXP,
             payload={
                 # https://www.rabbitmq.com/docs/oauth2#prerequisites
