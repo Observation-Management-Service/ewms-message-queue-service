@@ -2,6 +2,15 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.10 (2024-07-15)
+
+### Other
+
+* <bot> update dependencies*.log files(s) ([`3240c49`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/3240c492a2651adc80e14084aef946f1b5c0b129))
+* <ci> modify rest documentation ([`0d5ae7f`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/0d5ae7fc1dc07b7269a5e3a7e713ea066b798fab))
+* Merge remote-tracking branch 'origin/main' ([`d051df7`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/d051df714746117bd52a18a5116bc21a29248eaf))
+* Use `"user"` for JWT User/Subject ([`0d67a2a`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/0d67a2a83ae01a412619c284c7ae90aa267f6cec))
+
 ## v0.1.9 (2024-07-01)
 
 ### Other
