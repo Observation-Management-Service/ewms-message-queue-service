@@ -119,7 +119,7 @@ class BrokerQueueAuth:
                     {
                         # https://www.rabbitmq.com/docs/oauth2#type-field
                         # -> matches rabbitmq broker's 'resource_server_type' value
-                        "type": "rabbitmq",  # TODO: config.ENV.BROKER_RESOURCE_SERVER_TYPE
+                        "type": config.ENV.BROKER_RESOURCE_SERVER_TYPE,
                         # https://www.rabbitmq.com/docs/oauth2#locations-field
                         "locations": [
                             f"cluster:{config.ENV.BROKER_RESOURCE_SERVER_ID}/queue:{mqid}",

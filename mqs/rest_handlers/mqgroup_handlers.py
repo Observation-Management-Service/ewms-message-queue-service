@@ -112,7 +112,7 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
                                 "is_activated": True,
                                 "auth_token": token,
                                 "broker_type": config.ENV.BROKER_TYPE,
-                                "broker_address": config.ENV.BROKER_URL,
+                                "broker_address": f"{config.ENV.BROKER_QUEUE_USERNAME}@{config.ENV.BROKER_URL}",
                             },
                         )
                     except DocumentNotFoundException:
