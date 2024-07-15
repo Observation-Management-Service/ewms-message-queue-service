@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.15 (2024-07-15)
+
+### Other
+
+* Add `BROKER_RESOURCE_SERVER_TYPE` & Prepend `BROKER_QUEUE_USERNAME` to URL - 3 ([`70117f7`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/70117f7d0062ebe860a47b82c93c06bc6b4d109f))
+* Add `BROKER_RESOURCE_SERVER_TYPE` & Prepend `BROKER_QUEUE_USERNAME` to URL - 2 ([`e69b3ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/e69b3cae28e6874b1423af86066220afdfa2a9e3))
+* Add `BROKER_RESOURCE_SERVER_TYPE` & Prepend `BROKER_QUEUE_USERNAME` to URL ([`c37269b`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/c37269bbad9b3eaedbb3bd5292de415871eaf8e1))
+
 ## v0.1.14 (2024-07-15)
 
 ### Other
