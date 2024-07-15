@@ -125,7 +125,7 @@ class BrokerQueueAuth:
                             f"cluster:{config.ENV.BROKER_RESOURCE_SERVER_ID}/queue:{mqid}"
                         ],
                         # https://www.rabbitmq.com/docs/oauth2#actions-field
-                        "actions": ["read", "write"],
+                        "actions": ["configure", "read", "write"],
                     }
                 ],
             },
