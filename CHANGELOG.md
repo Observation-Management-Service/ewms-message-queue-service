@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.13 (2024-07-15)
+
+### Other
+
+* <bot> update dependencies*.log files(s) ([`5244976`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/52449764876ab3393db0d34b5a0e5f96048e9620))
+* Add `"configure"` Action to JWT ([`8d6c92a`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/8d6c92adb97f90ba9c6194ec3dea8b08a402333e))
+
 ## v0.1.12 (2024-07-15)
 
 ### Other
