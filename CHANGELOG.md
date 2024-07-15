@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.12 (2024-07-15)
+
+### Other
+
+* De-Patternify the rabbitmq token locations ([`044eeb1`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/044eeb1b9b347bef0b23c49c94a26796dc3e2fef))
+
 ## v0.1.11 (2024-07-15)
 
 ### Other
