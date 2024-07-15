@@ -122,7 +122,8 @@ class BrokerQueueAuth:
                         "type": "rabbitmq",  # TODO: config.ENV.BROKER_RESOURCE_SERVER_TYPE
                         # https://www.rabbitmq.com/docs/oauth2#locations-field
                         "locations": [
-                            f"cluster:{config.ENV.BROKER_RESOURCE_SERVER_ID}/queue:{mqid}"
+                            f"cluster:{config.ENV.BROKER_RESOURCE_SERVER_ID}/queue:{mqid}",
+                            f"cluster:{config.ENV.BROKER_RESOURCE_SERVER_ID}/exchange:amq.default",  # needed to connect
                         ],
                         # https://www.rabbitmq.com/docs/oauth2#actions-field
                         "actions": ["configure", "read", "write"],
