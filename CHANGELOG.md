@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.16 (2024-07-15)
+
+### Other
+
+* Separate Auth Permissions for Exchange (JWT) ([`a378f45`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/a378f4565293d8788169057d499110158e2b63f1))
+
 ## v0.1.15 (2024-07-15)
 
 ### Other
