@@ -102,7 +102,10 @@ async def test_000(rc: RestClient) -> None:
                 case "broker_type":
                     assert v == BROKER_TYPE
                 case "broker_address":
-                    assert v == f'{os.environ["BROKER_URL"]}@{os.environ["BROKER_URL"]}'
+                    assert (
+                        v
+                        == f'{os.environ["BROKER_QUEUE_USERNAME"]}@{os.environ["BROKER_URL"]}'
+                    )
                 # assert value has not changed
                 case _:
                     assert v == og_mqprofiles[i][k]
