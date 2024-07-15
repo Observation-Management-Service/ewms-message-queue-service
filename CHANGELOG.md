@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.9 (2024-07-01)
+
+### Other
+
+* Use `""` for JWT User/Subject ([`4bc767f`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/4bc767f0fd25e17901103f00688565c268b3207d))
+
 ## v0.1.8 (2024-07-01)
 
 ### Other
