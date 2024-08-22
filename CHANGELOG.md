@@ -2,6 +2,15 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.17 (2024-08-22)
+
+### Other
+
+* <bot> update dependencies*.log files(s) ([`ed93bde`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/ed93bded98815e631ea27f829408911934d45663))
+* Allow `-` in IDs - 2 ([`0e1babd`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/0e1babd2c921cc84bc94fdd891aa80466358a0c6))
+* <ci> modify rest documentation ([`5f8a273`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/5f8a2735224e72787176c90062409ee9789b0807))
+* Allow `-` in IDs ([`4da4c76`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/4da4c7658adad37508fc4455251c20e5f1dc5e46))
+
 ## v0.1.16 (2024-07-15)
 
 ### Other
