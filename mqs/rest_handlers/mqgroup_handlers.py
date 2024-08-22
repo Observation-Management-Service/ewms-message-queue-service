@@ -18,7 +18,7 @@ LOGGER = logging.getLogger(__name__)
 class MQGroupReservationHandler(BaseMQSHandler):  # pylint: disable=W0223
     """The handler for reserving MQ groups."""
 
-    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mqs/workflows/(?P<workflow_id>\w+)/mq-group/reservation$"
+    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mqs/workflows/(?P<workflow_id>[\w-]+)/mq-group/reservation$"
 
     @rest_auth.service_account_auth(roles=[rest_auth.AuthAccounts.WMS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
@@ -69,7 +69,7 @@ class MQGroupReservationHandler(BaseMQSHandler):  # pylint: disable=W0223
 class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
     """The handler for activating MQ groups."""
 
-    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mqs/workflows/(?P<workflow_id>\w+)/mq-group/activation$"
+    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mqs/workflows/(?P<workflow_id>[\w-]+)/mq-group/activation$"
 
     @rest_auth.service_account_auth(roles=[rest_auth.AuthAccounts.WMS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
@@ -131,7 +131,7 @@ class MQGroupGetHandler(BaseMQSHandler):  # pylint: disable=W0223
     """The handler for interacting with MQ groups."""
 
     ROUTE = (
-        rf"/{config.ROUTE_VERSION_PREFIX}/mqs/workflows/(?P<workflow_id>\w+)/mq-group$"
+        rf"/{config.ROUTE_VERSION_PREFIX}/mqs/workflows/(?P<workflow_id>[\w-]+)/mq-group$"
     )
 
     @rest_auth.service_account_auth(roles=[rest_auth.AuthAccounts.WMS])  # type: ignore

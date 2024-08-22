@@ -26,10 +26,16 @@ def test_census_routes() -> None:
     """Check that all the routes have openapi schemas."""
     missing: list[tuple[str, str]] = []
 
+    # match named groups: (?P<task_id>\w+)
+    regular_id = rf"{re.escape(r'(?P<')}([^>]+){re.escape(r'>\w+)')}"
+
+    # match named groups: (?P<task_id>[\w-]+)
+    withdashes_id = rf"{re.escape(r'(?P<')}([^>]+){re.escape(r'>[\w-]+)')}"
+
     for handler in server.HANDLERS:
         route = (
-            re.sub(  # convert named groups
-                r"\(\?P<([^>]+)>\\w\+\)",  # match named groups: (?P<task_id>\w+)
+            re.sub(
+                rf"{regular_id}|{withdashes_id}",
                 r"{\1}",  # replace w/ braces: {task_id}
                 getattr(handler, "ROUTE"),
             )

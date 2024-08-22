@@ -16,7 +16,7 @@ LOGGER = logging.getLogger(__name__)
 class MQProfileIDHandler(BaseMQSHandler):  # pylint: disable=W0223
     """The handler for interacting with MQ profiles."""
 
-    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mqs/mq-profiles/(?P<mqid>\w+)$"
+    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mqs/mq-profiles/(?P<mqid>[\w-]+)$"
 
     @rest_auth.service_account_auth(roles=[rest_auth.AuthAccounts.WMS])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
@@ -33,7 +33,7 @@ class MQProfileIDHandler(BaseMQSHandler):  # pylint: disable=W0223
 class MQProfilePublicGetHandler(BaseMQSHandler):  # pylint: disable=W0223
     """The handler for retrieving public MQ profiles."""
 
-    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mqs/workflows/(?P<workflow_id>\w+)/mq-profiles/public$"
+    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mqs/workflows/(?P<workflow_id>[\w-]+)/mq-profiles/public$"
 
     @rest_auth.service_account_auth(roles=[rest_auth.AuthAccounts.USER])  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
