@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.18 (2024-12-16)
+
+### Other
+
+* Add User Token Group: `/tokens/ewms-dev` ([#13](https://github.com/Observation-Management-Service/ewms-message-queue-service/issues/13)) ([`a8b9459`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/a8b94596fbe2379919ebea87fd7dbf3f0c40ed6d))
+
 ## v0.1.17 (2024-08-22)
 
 ### Other
