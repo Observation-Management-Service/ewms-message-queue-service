@@ -37,6 +37,7 @@ else:
             AuthAccounts.USER: [
                 "groups=/institutions/IceCube.*",
                 "groups=/tokens/ewms-dev",
+                "ewms_role=user",
             ],
             AuthAccounts.WMS: ["ewms_role=system-wms"],
         }
