@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.19 (2025-02-05)
+
+### Other
+
+* Update CI ([`e5a33b5`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/e5a33b5a646adee0a7facf82e3d9cdb606fff559))
+* <ci> modify rest documentation ([`f560942`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/f5609424a230eee1267f3310a3adaf2fdfd7980a))
+* Auth: Add `ewms_role=user` ([`1c69e45`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/1c69e45b3ea810e89d398e5b9846ff3d55a0233b))
+
 ## v0.1.18 (2024-12-16)
 
 ### Other
