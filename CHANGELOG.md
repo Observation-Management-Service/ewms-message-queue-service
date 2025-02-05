@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.20 (2025-02-05)
+
+### Other
+
+* <bot> update dependencies*.log files(s) ([`d7f4b97`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/d7f4b974bc45e295480fb4216b93033e3c94917d))
+* Merge remote-tracking branch 'origin/main' ([`d0ee57f`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/d0ee57ff92db74ffc28e8254cc251809d57b6002))
+* Update CI - 2 ([`fa70d79`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/fa70d79e3ac92fb5dd8515b9b3ae4a36cf7c4fe7))
+
 ## v0.1.19 (2025-02-05)
 
 ### Other
