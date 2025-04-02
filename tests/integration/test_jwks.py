@@ -12,7 +12,7 @@ from .utils import refresh_mqbroker_key_files
 
 LOGGER = logging.getLogger(__name__)
 
-ROUTE_VERSION_PREFIX = "v0"
+ROUTE_VERSION_PREFIX = "v1"
 
 
 async def test_jwks(rc: RestClient):
