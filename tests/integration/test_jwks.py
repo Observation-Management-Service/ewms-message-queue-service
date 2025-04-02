@@ -12,7 +12,7 @@ from .utils import refresh_mqbroker_key_files
 
 LOGGER = logging.getLogger(__name__)
 
-ROUTE_VERSION_PREFIX = "v1"
+_URL_V_PREFIX = "v1"
 
 
 async def test_jwks(rc: RestClient):
@@ -48,13 +48,13 @@ async def test_jwks(rc: RestClient):
         # -> reserve mq group
         await rc.request(
             "POST",
-            f"/{ROUTE_VERSION_PREFIX}/mqs/workflows/{workflow_id}/mq-group/reservation",
+            f"/{_URL_V_PREFIX}/mqs/workflows/{workflow_id}/mq-group/reservation",
             {"queue_aliases": queue_aliases, "public": public},
         )
         # -> activate mq group
         resp = await rc.request(
             "POST",
-            f"/{ROUTE_VERSION_PREFIX}/mqs/workflows/{workflow_id}/mq-group/activation",
+            f"/{_URL_V_PREFIX}/mqs/workflows/{workflow_id}/mq-group/activation",
             {"criteria": {"priority": 99}},
         )
         # -> validate jwt(s)

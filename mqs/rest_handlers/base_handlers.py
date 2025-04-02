@@ -7,8 +7,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from rest_tools.server import RestHandler, validate_request
 
 from . import rest_auth
-from .. import config
-from .. import database as db
+from .. import config, database as db
 from ..jwks_auth import BrokerQueueAuth
 
 LOGGER = logging.getLogger(__name__)
@@ -44,7 +43,7 @@ class BaseMQSHandler(RestHandler):  # pylint: disable=W0223
 class MainHandler(BaseMQSHandler):  # pylint: disable=W0223
     """MainHandler is a BaseMQSHandler that handles the root route."""
 
-    ROUTE = rf"/{config.ROUTE_VERSION_PREFIX}/mqs$"
+    ROUTE = rf"/{config.URL_V_PREFIX}/mqs$"
 
     @rest_auth.service_account_auth(roles=rest_auth.ALL_AUTH_ACCOUNTS)  # type: ignore
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]

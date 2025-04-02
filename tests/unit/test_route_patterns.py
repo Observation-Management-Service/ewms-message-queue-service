@@ -31,7 +31,7 @@ def test_route_prefixes() -> None:
     routes = [getattr(h, "ROUTE") for h in server.HANDLERS]
     for pattern in routes:
         assert (
-            pattern == f"/{config.ROUTE_VERSION_PREFIX}/mqs$"
-            or pattern.startswith(f"/{config.ROUTE_VERSION_PREFIX}/mqs/")
+            pattern == f"/{config.URL_V_PREFIX}/mqs$"
+            or pattern.startswith(f"/{config.URL_V_PREFIX}/mqs/")
             or "jwks" in pattern  # jwks endpoints are not versioned
         )
