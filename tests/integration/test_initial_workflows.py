@@ -10,7 +10,7 @@ import requests
 from jsonschema_path import SchemaPath
 from rest_tools.client import RestClient, utils
 
-ROUTE_VERSION_PREFIX = "v0"
+ROUTE_VERSION_PREFIX = "v1"
 BROKER_TYPE = "rabbitmq"
 
 
