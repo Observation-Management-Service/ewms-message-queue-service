@@ -183,53 +183,15 @@ jobs:
           version: 1
 
   api-documentation:
+    needs: [ schema-modifications ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # fyi, dependabot can't access normal secrets
-      - uses: actions/setup-python@v4
-      - name: Is this the most recent commit? It won't be if the action was reran
-        run: |
-          git fetch &> /dev/null
-          if [[ $(git status -sb | grep behind) ]]; then
-            echo "this commit is not the most recent on this branch -- rest of action will be skipped"
-            echo "IS_GIT_BEHIND=true" >> $GITHUB_ENV
-          else
-            echo "IS_GIT_BEHIND=false" >> $GITHUB_ENV
-          fi
-      - name: Git config
-        if: env.IS_GIT_BEHIND != 'true'
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-      - name: generate docs (README)
-        if: env.IS_GIT_BEHIND != 'true'
-        run: |
-          outdir=Docs
-          git rm -r $outdir || true
-          # generate
-          docker run --rm \
-              -v $PWD:/local \
-              openapitools/openapi-generator-cli generate \
-              --skip-validate-spec \
-              -i /local/mqs/$REST_OPENAPI_SPEC_FPATH \
-              -g markdown \
-              -o /local/$outdir
-          set -ex
-          sudo chmod -R +777 $outdir  # needed since the 'rm' above wiped previous ownership & now container owns it all
-          # tweak auto-generated contents -- miscellaneous
-          # remove "no auth" mentions
-          sed -i "/All endpoints do not require authorization./d" $outdir/README.md
-          sed -i "\|All URIs are relative to \*http://localhost\*|d" $outdir/README.md
-          #       ^^ alternate delimiter: https://stackoverflow.com/a/1797967
-          find $outdir -type f -exec sed -i '/No authorization required/d' {} +
-      - name: git add, commit, push
-        if: env.IS_GIT_BEHIND != 'true'
-        run: |
-          git add . || true
-          git commit -m "<ci> modify rest documentation" || true
-          git push || true
+      - uses: WIPACrepo/wipac-dev-openapi-docs-action@main
+        with:
+          openapi_fpath: "mqs/${{ env.REST_OPENAPI_SPEC_FPATH }}"
 
 
   ############################################################################
