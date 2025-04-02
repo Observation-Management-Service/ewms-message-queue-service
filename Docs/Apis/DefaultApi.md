@@ -5,13 +5,13 @@ All URIs are relative to *http://localhost*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**mqbrokerIssuerWellKnownJwksJsonGet**](DefaultApi.md#mqbrokerIssuerWellKnownJwksJsonGet) | **GET** /mqbroker-issuer/.well-known/jwks.json |  |
-| [**v0MqsGet**](DefaultApi.md#v0MqsGet) | **GET** /v0/mqs |  |
-| [**v0MqsMqProfilesMqidGet**](DefaultApi.md#v0MqsMqProfilesMqidGet) | **GET** /v0/mqs/mq-profiles/{mqid} |  |
-| [**v0MqsSchemaOpenapiGet**](DefaultApi.md#v0MqsSchemaOpenapiGet) | **GET** /v0/mqs/schema/openapi |  |
-| [**v0MqsWorkflowsWorkflowIdMqGroupActivationPost**](DefaultApi.md#v0MqsWorkflowsWorkflowIdMqGroupActivationPost) | **POST** /v0/mqs/workflows/{workflow_id}/mq-group/activation |  |
-| [**v0MqsWorkflowsWorkflowIdMqGroupGet**](DefaultApi.md#v0MqsWorkflowsWorkflowIdMqGroupGet) | **GET** /v0/mqs/workflows/{workflow_id}/mq-group |  |
-| [**v0MqsWorkflowsWorkflowIdMqGroupReservationPost**](DefaultApi.md#v0MqsWorkflowsWorkflowIdMqGroupReservationPost) | **POST** /v0/mqs/workflows/{workflow_id}/mq-group/reservation |  |
-| [**v0MqsWorkflowsWorkflowIdMqProfilesPublicGet**](DefaultApi.md#v0MqsWorkflowsWorkflowIdMqProfilesPublicGet) | **GET** /v0/mqs/workflows/{workflow_id}/mq-profiles/public |  |
+| [**v1MqsGet**](DefaultApi.md#v1MqsGet) | **GET** /v1/mqs |  |
+| [**v1MqsMqProfilesMqidGet**](DefaultApi.md#v1MqsMqProfilesMqidGet) | **GET** /v1/mqs/mq-profiles/{mqid} |  |
+| [**v1MqsSchemaOpenapiGet**](DefaultApi.md#v1MqsSchemaOpenapiGet) | **GET** /v1/mqs/schema/openapi |  |
+| [**v1MqsWorkflowsWorkflowIdMqGroupActivationPost**](DefaultApi.md#v1MqsWorkflowsWorkflowIdMqGroupActivationPost) | **POST** /v1/mqs/workflows/{workflow_id}/mq-group/activation |  |
+| [**v1MqsWorkflowsWorkflowIdMqGroupGet**](DefaultApi.md#v1MqsWorkflowsWorkflowIdMqGroupGet) | **GET** /v1/mqs/workflows/{workflow_id}/mq-group |  |
+| [**v1MqsWorkflowsWorkflowIdMqGroupReservationPost**](DefaultApi.md#v1MqsWorkflowsWorkflowIdMqGroupReservationPost) | **POST** /v1/mqs/workflows/{workflow_id}/mq-group/reservation |  |
+| [**v1MqsWorkflowsWorkflowIdMqProfilesPublicGet**](DefaultApi.md#v1MqsWorkflowsWorkflowIdMqProfilesPublicGet) | **GET** /v1/mqs/workflows/{workflow_id}/mq-profiles/public |  |
 
 
 <a name="mqbrokerIssuerWellKnownJwksJsonGet"></a>
@@ -35,9 +35,9 @@ This endpoint does not need any parameter.
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-<a name="v0MqsGet"></a>
-# **v0MqsGet**
-> v0MqsGet()
+<a name="v1MqsGet"></a>
+# **v1MqsGet**
+> v1MqsGet()
 
 
 
@@ -56,9 +56,9 @@ null (empty response body)
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-<a name="v0MqsMqProfilesMqidGet"></a>
-# **v0MqsMqProfilesMqidGet**
-> MQProfileObject v0MqsMqProfilesMqidGet(mqid)
+<a name="v1MqsMqProfilesMqidGet"></a>
+# **v1MqsMqProfilesMqidGet**
+> MQProfileObject v1MqsMqProfilesMqidGet(mqid)
 
 
 
@@ -80,9 +80,9 @@ null (empty response body)
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-<a name="v0MqsSchemaOpenapiGet"></a>
-# **v0MqsSchemaOpenapiGet**
-> Map v0MqsSchemaOpenapiGet()
+<a name="v1MqsSchemaOpenapiGet"></a>
+# **v1MqsSchemaOpenapiGet**
+> Map v1MqsSchemaOpenapiGet()
 
 
 
@@ -101,9 +101,9 @@ This endpoint does not need any parameter.
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-<a name="v0MqsWorkflowsWorkflowIdMqGroupActivationPost"></a>
-# **v0MqsWorkflowsWorkflowIdMqGroupActivationPost**
-> MQGroupObjectAndProfiles v0MqsWorkflowsWorkflowIdMqGroupActivationPost(workflow\_id, body)
+<a name="v1MqsWorkflowsWorkflowIdMqGroupActivationPost"></a>
+# **v1MqsWorkflowsWorkflowIdMqGroupActivationPost**
+> MQGroupObjectAndProfiles v1MqsWorkflowsWorkflowIdMqGroupActivationPost(workflow\_id, body)
 
 
 
@@ -126,9 +126,9 @@ This endpoint does not need any parameter.
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-<a name="v0MqsWorkflowsWorkflowIdMqGroupGet"></a>
-# **v0MqsWorkflowsWorkflowIdMqGroupGet**
-> MQGroupObject v0MqsWorkflowsWorkflowIdMqGroupGet(workflow\_id)
+<a name="v1MqsWorkflowsWorkflowIdMqGroupGet"></a>
+# **v1MqsWorkflowsWorkflowIdMqGroupGet**
+> MQGroupObject v1MqsWorkflowsWorkflowIdMqGroupGet(workflow\_id)
 
 
 
@@ -150,9 +150,9 @@ This endpoint does not need any parameter.
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-<a name="v0MqsWorkflowsWorkflowIdMqGroupReservationPost"></a>
-# **v0MqsWorkflowsWorkflowIdMqGroupReservationPost**
-> MQGroupObjectAndProfiles v0MqsWorkflowsWorkflowIdMqGroupReservationPost(workflow\_id, body)
+<a name="v1MqsWorkflowsWorkflowIdMqGroupReservationPost"></a>
+# **v1MqsWorkflowsWorkflowIdMqGroupReservationPost**
+> MQGroupObjectAndProfiles v1MqsWorkflowsWorkflowIdMqGroupReservationPost(workflow\_id, body)
 
 
 
@@ -175,9 +175,9 @@ This endpoint does not need any parameter.
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-<a name="v0MqsWorkflowsWorkflowIdMqProfilesPublicGet"></a>
-# **v0MqsWorkflowsWorkflowIdMqProfilesPublicGet**
-> oas_any_type_not_mapped v0MqsWorkflowsWorkflowIdMqProfilesPublicGet(workflow\_id)
+<a name="v1MqsWorkflowsWorkflowIdMqProfilesPublicGet"></a>
+# **v1MqsWorkflowsWorkflowIdMqProfilesPublicGet**
+> oas_any_type_not_mapped v1MqsWorkflowsWorkflowIdMqProfilesPublicGet(workflow\_id)
 
 
 
