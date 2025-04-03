@@ -12,7 +12,7 @@
         "license": {
             "name": "MIT License"
         },
-        "version": "0.0.0"
+        "version": "1"
     },
     "components": {
         "parameters": {
@@ -197,7 +197,7 @@
                 }
             }
         },
-        "/v0/mqs": {
+        "/v1/mqs": {
             "parameters": [],
             "get": {
                 "responses": {
@@ -235,7 +235,7 @@
                 }
             }
         },
-        "/v0/mqs/mq-profiles/{mqid}": {
+        "/v1/mqs/mq-profiles/{mqid}": {
             "parameters": [
                 {
                     "name": "mqid",
@@ -312,7 +312,7 @@
                 }
             }
         },
-        "/v0/mqs/schema/openapi": {
+        "/v1/mqs/schema/openapi": {
             "parameters": [],
             "get": {
                 "responses": {
@@ -356,7 +356,7 @@
                 }
             }
         },
-        "/v0/mqs/workflows/{workflow_id}/mq-group": {
+        "/v1/mqs/workflows/{workflow_id}/mq-group": {
             "parameters": [
                 {
                     "$ref": "#/components/parameters/WorkflowIDParam"
@@ -427,7 +427,7 @@
                 }
             }
         },
-        "/v0/mqs/workflows/{workflow_id}/mq-group/activation": {
+        "/v1/mqs/workflows/{workflow_id}/mq-group/activation": {
             "parameters": [
                 {
                     "$ref": "#/components/parameters/WorkflowIDParam"
@@ -509,7 +509,7 @@
                 }
             }
         },
-        "/v0/mqs/workflows/{workflow_id}/mq-group/reservation": {
+        "/v1/mqs/workflows/{workflow_id}/mq-group/reservation": {
             "parameters": [
                 {
                     "$ref": "#/components/parameters/WorkflowIDParam"
@@ -604,7 +604,7 @@
                 }
             }
         },
-        "/v0/mqs/workflows/{workflow_id}/mq-profiles/public": {
+        "/v1/mqs/workflows/{workflow_id}/mq-profiles/public": {
             "parameters": [
                 {
                     "$ref": "#/components/parameters/WorkflowIDParam"

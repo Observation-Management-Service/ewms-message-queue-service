@@ -6,14 +6,14 @@
 
 | Class | Method | HTTP request | Description |
 |------------ | ------------- | ------------- | -------------|
-| *DefaultApi* | [**mqbrokerIssuerWellKnownJwksJsonGet**](Apis/DefaultApi.md#mqbrokerissuerwellknownjwksjsonget) | **GET** /mqbroker-issuer/.well-known/jwks.json |  |
-*DefaultApi* | [**v0MqsGet**](Apis/DefaultApi.md#v0mqsget) | **GET** /v0/mqs |  |
-*DefaultApi* | [**v0MqsMqProfilesMqidGet**](Apis/DefaultApi.md#v0mqsmqprofilesmqidget) | **GET** /v0/mqs/mq-profiles/{mqid} |  |
-*DefaultApi* | [**v0MqsSchemaOpenapiGet**](Apis/DefaultApi.md#v0mqsschemaopenapiget) | **GET** /v0/mqs/schema/openapi |  |
-*DefaultApi* | [**v0MqsWorkflowsWorkflowIdMqGroupActivationPost**](Apis/DefaultApi.md#v0mqsworkflowsworkflowidmqgroupactivationpost) | **POST** /v0/mqs/workflows/{workflow_id}/mq-group/activation |  |
-*DefaultApi* | [**v0MqsWorkflowsWorkflowIdMqGroupGet**](Apis/DefaultApi.md#v0mqsworkflowsworkflowidmqgroupget) | **GET** /v0/mqs/workflows/{workflow_id}/mq-group |  |
-*DefaultApi* | [**v0MqsWorkflowsWorkflowIdMqGroupReservationPost**](Apis/DefaultApi.md#v0mqsworkflowsworkflowidmqgroupreservationpost) | **POST** /v0/mqs/workflows/{workflow_id}/mq-group/reservation |  |
-*DefaultApi* | [**v0MqsWorkflowsWorkflowIdMqProfilesPublicGet**](Apis/DefaultApi.md#v0mqsworkflowsworkflowidmqprofilespublicget) | **GET** /v0/mqs/workflows/{workflow_id}/mq-profiles/public |  |
+| *DefaultApi* | [_details_](Apis/DefaultApi.md#get-mqbroker-issuer.well-knownjwks.json) | **GET** /mqbroker-issuer/.well-known/jwks.json |  |
+*DefaultApi* | [_details_](Apis/DefaultApi.md#get-v1mqs) | **GET** /v1/mqs |  |
+*DefaultApi* | [_details_](Apis/DefaultApi.md#get-v1mqsmq-profilesmqid) | **GET** /v1/mqs/mq-profiles/{mqid} |  |
+*DefaultApi* | [_details_](Apis/DefaultApi.md#get-v1mqsschemaopenapi) | **GET** /v1/mqs/schema/openapi |  |
+*DefaultApi* | [_details_](Apis/DefaultApi.md#post-v1mqsworkflowsworkflow_idmq-groupactivation) | **POST** /v1/mqs/workflows/{workflow_id}/mq-group/activation |  |
+*DefaultApi* | [_details_](Apis/DefaultApi.md#get-v1mqsworkflowsworkflow_idmq-group) | **GET** /v1/mqs/workflows/{workflow_id}/mq-group |  |
+*DefaultApi* | [_details_](Apis/DefaultApi.md#post-v1mqsworkflowsworkflow_idmq-groupreservation) | **POST** /v1/mqs/workflows/{workflow_id}/mq-group/reservation |  |
+*DefaultApi* | [_details_](Apis/DefaultApi.md#get-v1mqsworkflowsworkflow_idmq-profilespublic) | **GET** /v1/mqs/workflows/{workflow_id}/mq-profiles/public |  |
 
 
 <a name="documentation-for-models"></a>
