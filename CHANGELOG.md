@@ -2,6 +2,33 @@
 
 <!--next-version-placeholder-->
 
+## v1.0.0 (2025-04-03)
+
+### Breaking
+
+* * use `WIPACrepo/wipac-dev-json-schema-action@v2.0` ([`7c2f0ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7c2f0cab3c8f56a63a2d56eaba2e84fa09b3c88b))
+* * <ci> modify json schema and/or openapi file(s) ([`7c2f0ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7c2f0cab3c8f56a63a2d56eaba2e84fa09b3c88b))
+* * <ci> modify rest documentation ([`7c2f0ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7c2f0cab3c8f56a63a2d56eaba2e84fa09b3c88b))
+* * update README.md ([`7c2f0ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7c2f0cab3c8f56a63a2d56eaba2e84fa09b3c88b))
+* * test ([`7c2f0ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7c2f0cab3c8f56a63a2d56eaba2e84fa09b3c88b))
+* * <bot> update README.md ([`7c2f0ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7c2f0cab3c8f56a63a2d56eaba2e84fa09b3c88b))
+* * test - 2 ([`7c2f0ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7c2f0cab3c8f56a63a2d56eaba2e84fa09b3c88b))
+* * <bot> update dependencies*.log files(s) ([`7c2f0ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7c2f0cab3c8f56a63a2d56eaba2e84fa09b3c88b))
+* * try `WIPACrepo/wipac-dev-openapi-docs-action@main` ([`7c2f0ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7c2f0cab3c8f56a63a2d56eaba2e84fa09b3c88b))
+* * rm docs ([`7c2f0ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7c2f0cab3c8f56a63a2d56eaba2e84fa09b3c88b))
+* * <ci> modify openapi documentation ([`7c2f0ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7c2f0cab3c8f56a63a2d56eaba2e84fa09b3c88b))
+* * <ci> modify openapi documentation ([`7c2f0ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7c2f0cab3c8f56a63a2d56eaba2e84fa09b3c88b))
+* * use `WIPACrepo/wipac-dev-openapi-docs-action@v1.0` ([`7c2f0ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7c2f0cab3c8f56a63a2d56eaba2e84fa09b3c88b))
+* * call it `URL_V_PREFIX` ([`7c2f0ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7c2f0cab3c8f56a63a2d56eaba2e84fa09b3c88b))
+* * <bot> auto code format file(s) ([`7c2f0ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7c2f0cab3c8f56a63a2d56eaba2e84fa09b3c88b))
+* * <bot> update dependencies*.log files(s) ([`7c2f0ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7c2f0cab3c8f56a63a2d56eaba2e84fa09b3c88b))
+* --------- ([`7c2f0ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7c2f0cab3c8f56a63a2d56eaba2e84fa09b3c88b))
+* Co-authored-by: github-actions <github-actions@github.com> ([`7c2f0ca`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7c2f0cab3c8f56a63a2d56eaba2e84fa09b3c88b))
+
+### Other
+
+* <bot> update dependencies*.log files(s) ([`ae44b99`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/ae44b99e8881d380d2bf02bc3d366a11d9c99842))
+
 ## v0.1.20 (2025-02-05)
 
 ### Other
