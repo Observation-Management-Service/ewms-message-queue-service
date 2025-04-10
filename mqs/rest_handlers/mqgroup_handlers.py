@@ -101,7 +101,7 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
                 try:
                     mqgroup = await self.mqs_db.mqgroup_collection.find_one_and_update(
                         {"workflow_id": workflow_id},
-                        {"criteria": criteria},
+                        {"$set": {"criteria": criteria}},
                     )
                 except DocumentNotFoundException:
                     raise tornado.web.HTTPError(404, reason="MQGroup not found")
@@ -113,10 +113,12 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
                         mqp = await self.mqs_db.mqprofile_collection.find_one_and_update(
                             {"mqid": mqid},
                             {
-                                "is_activated": True,
-                                "auth_token": token,
-                                "broker_type": config.ENV.BROKER_TYPE,
-                                "broker_address": f"{config.ENV.BROKER_QUEUE_USERNAME}@{config.ENV.BROKER_URL}",
+                                "$set": {
+                                    "is_activated": True,
+                                    "auth_token": token,
+                                    "broker_type": config.ENV.BROKER_TYPE,
+                                    "broker_address": f"{config.ENV.BROKER_QUEUE_USERNAME}@{config.ENV.BROKER_URL}",
+                                }
                             },
                         )
                     except DocumentNotFoundException:
