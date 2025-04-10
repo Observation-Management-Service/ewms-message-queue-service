@@ -101,7 +101,11 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
                 try:
                     mqgroup = await self.mqs_db.mqgroup_collection.find_one_and_update(
                         {"workflow_id": workflow_id},
-                        {"$set": {"criteria": criteria}},
+                        {
+                            "$set": {
+                                "criteria": criteria,
+                            }
+                        },
                     )
                 except DocumentNotFoundException:
                     raise tornado.web.HTTPError(404, reason="MQGroup not found")
