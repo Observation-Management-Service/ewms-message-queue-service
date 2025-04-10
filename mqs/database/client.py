@@ -6,6 +6,7 @@ import jsonschema
 from motor.motor_asyncio import AsyncIOMotorClient
 from tornado import web
 from wipac_dev_tools.mongo_jsonschema_tools import (
+    DocumentNotFoundException,
     IllegalDotsNotationActionException,
     MongoJSONSchemaValidatedCollection,
 )
