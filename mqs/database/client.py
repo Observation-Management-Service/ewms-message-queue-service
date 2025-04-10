@@ -12,9 +12,9 @@ from wipac_dev_tools.mongo_jsonschema_tools import (
 )
 
 from .utils import (
+    _DB_NAME,
     MQGROUP_COLL_NAME,
     MQPROFILE_COLL_NAME,
-    _DB_NAME,
     get_jsonschema_spec_name,
 )
 from ..config import MONGO_COLLECTION_JSONSCHEMA_SPECS
