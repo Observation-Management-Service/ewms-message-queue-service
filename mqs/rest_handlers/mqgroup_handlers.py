@@ -53,10 +53,12 @@ class MQGroupReservationHandler(BaseMQSHandler):  # pylint: disable=W0223
         ]
 
         # put in db -- do last in case any exceptions above
-        async with await self.mqgroup_client.mongo_client.start_session() as s:
+        async with await self.mqs_db.mongo_client.start_session() as s:
             async with s.start_transaction():  # atomic
-                mqgroup = await self.mqgroup_client.insert_one(mqgroup)
-                mqprofiles = await self.mqprofile_client.insert_many(mqprofiles)
+                mqgroup = await self.mqs_db.mqgroup_collection.insert_one(mqgroup)
+                mqprofiles = await self.mqs_db.mqprofile_collection.insert_many(
+                    mqprofiles
+                )
 
         self.write(
             {
@@ -80,7 +82,9 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
         # TODO: use criteria to determine if group can be activated
 
         mqid_auth_tokens = {}
-        async for p in self.mqprofile_client.find_all({"workflow_id": workflow_id}, []):
+        async for p in self.mqs_db.mqprofile_collection.find_all(
+            {"workflow_id": workflow_id}, []
+        ):
             mqid_auth_tokens[p["mqid"]] = await self.mqbroker_auth.generate_jwt(
                 p["mqid"]
             )
@@ -90,12 +94,12 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
             )
 
         # put all into db -- atomically
-        async with await self.mqgroup_client.mongo_client.start_session() as s:
+        async with await self.mqs_db.mongo_client.start_session() as s:
             async with s.start_transaction():  # atomic
 
                 # update mqgroup
                 try:
-                    mqgroup = await self.mqgroup_client.find_one_and_update(
+                    mqgroup = await self.mqs_db.mqgroup_collection.find_one_and_update(
                         {"workflow_id": workflow_id},
                         {"criteria": criteria},
                     )
@@ -106,7 +110,7 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
                 mqprofiles = []
                 for mqid, token in mqid_auth_tokens.items():
                     try:
-                        mqp = await self.mqprofile_client.find_one_and_update(
+                        mqp = await self.mqs_db.mqprofile_collection.find_one_and_update(
                             {"mqid": mqid},
                             {
                                 "is_activated": True,
@@ -137,7 +141,9 @@ class MQGroupGetHandler(BaseMQSHandler):  # pylint: disable=W0223
     async def get(self, workflow_id: str) -> None:
         """Handle GET requests."""
         try:
-            mqgroup = await self.mqgroup_client.find_one({"workflow_id": workflow_id})
+            mqgroup = await self.mqs_db.mqgroup_collection.find_one(
+                {"workflow_id": workflow_id}
+            )
         except DocumentNotFoundException:
             raise tornado.web.HTTPError(404, reason="MQGroup not found")
 

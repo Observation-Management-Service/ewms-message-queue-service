@@ -23,7 +23,7 @@ class MQProfileIDHandler(BaseMQSHandler):  # pylint: disable=W0223
     async def get(self, mqid: str) -> None:
         """Handle GET requests."""
         try:
-            mqprofile = await self.mqprofile_client.find_one({"mqid": mqid})
+            mqprofile = await self.mqs_db.mqprofile_collection.find_one({"mqid": mqid})
         except DocumentNotFoundException:
             raise tornado.web.HTTPError(404, reason="MQProfile not found")
 
@@ -41,7 +41,7 @@ class MQProfilePublicGetHandler(BaseMQSHandler):  # pylint: disable=W0223
         """Handle GET requests."""
 
         mqprofiles = await utils.alist(
-            self.mqprofile_client.find_all(
+            self.mqs_db.mqprofile_collection.find_all(
                 {
                     "workflow_id": workflow_id,
                     "is_public": True,
