@@ -1,12 +1,9 @@
 """utils.py."""
 
 import logging
-from typing import Any
 from urllib.parse import quote_plus
 
-import jsonschema
 from motor.motor_asyncio import AsyncIOMotorClient
-from tornado import web
 
 from ..config import ENV
 
@@ -73,16 +70,3 @@ async def ensure_indexes(mongo_client: AsyncIOMotorClient) -> None:  # type: ign
     await make_index(_JWKS_DB_NAME, _JWKS_COLL_NAME, "kid", unique=True)
 
     LOGGER.info("Ensured indexes (may continue in background).")
-
-
-def web_jsonschema_validate(instance: Any, schema: dict) -> None:
-    """Wrap `jsonschema.validate` with `web.HTTPError` (500)."""
-    try:
-        jsonschema.validate(instance, schema)
-    except jsonschema.exceptions.ValidationError as e:
-        LOGGER.exception(e)
-        raise web.HTTPError(
-            status_code=500,
-            log_message=f"{e.__class__.__name__}: {e}",  # to stderr
-            reason="Attempted to insert invalid data into database",  # to client
-        )

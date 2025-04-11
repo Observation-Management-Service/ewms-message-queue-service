@@ -7,8 +7,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from rest_tools.server import RestHandler, validate_request
 
 from . import rest_auth
-from .. import config
-from .. import database as db
+from .. import config, database
 from ..jwks_auth import BrokerQueueAuth
 
 LOGGER = logging.getLogger(__name__)
@@ -27,14 +26,7 @@ class BaseMQSHandler(RestHandler):  # pylint: disable=W0223
         """Initialize a BaseMQSHandler object."""
         super().initialize(*args, **kwargs)  # type: ignore[no-untyped-call]
         # pylint: disable=W0201
-        self.mqprofile_client = db.client.JSONSchemaMongoClient(
-            mongo_client,
-            db.utils.MQPROFILE_COLL_NAME,
-        )
-        self.mqgroup_client = db.client.JSONSchemaMongoClient(
-            mongo_client,
-            db.utils.MQGROUP_COLL_NAME,
-        )
+        self.mqs_db = database.client.MQSMongoValidatedDatabase(mongo_client)
         self.mqbroker_auth = mqbroker_auth
 
 
