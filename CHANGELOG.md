@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v1.0.1 (2025-04-11)
+
+### Other
+
+* Use `wipac_dev_tools.mongo_jsonschema_tools` ([#15](https://github.com/Observation-Management-Service/ewms-message-queue-service/issues/15)) ([`1196098`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/1196098195ec4493efbedabcea6cf75f111b5f75))
+
 ## v1.0.0 (2025-04-03)
 
 ### Breaking
