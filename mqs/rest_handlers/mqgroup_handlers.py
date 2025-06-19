@@ -25,6 +25,9 @@ class MQGroupReservationHandler(BaseMQSHandler):  # pylint: disable=W0223
     @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
     async def post(self, workflow_id: str) -> None:
         """Handle POST requests."""
+
+        # NOTE: this endpoint is idempotent -- make sure it stays that way
+
         now = time.time()
 
         # insert mq group
@@ -103,6 +106,9 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
         criteria: dict[str, int] = self.get_argument("criteria")
 
         # TODO: use criteria to determine if group can be activated
+        #
+        # NOTE: this endpoint is idempotent -- make sure it stays that way.
+        #       the criteria may change on successive calls, which is okay
 
         mqid_auth_tokens = {}
         async for p in self.mqs_db.mqprofile_collection.find_all(
