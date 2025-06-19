@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v1.0.2 (2025-06-19)
+
+### Other
+
+* Add Failsafe for DB Restarts ([#16](https://github.com/Observation-Management-Service/ewms-message-queue-service/issues/16)) ([`6f20e5d`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/6f20e5d489c4fa9e22eafba8768cb58c49f858fa))
+* Ci: add dev image tag option ([`7e768e8`](https://github.com/Observation-Management-Service/ewms-message-queue-service/commit/7e768e856fff23351803b7c02c19a3e7a2058954))
+
 ## v1.0.1 (2025-04-11)
 
 ### Other
