@@ -7,4 +7,5 @@ Models/MQGroupObject_criteria_anyOf.md
 Models/MQProfileObject.md
 Models/_mqbroker_issuer__well_known_jwks_json_get_200_response.md
 Models/_mqbroker_issuer__well_known_jwks_json_get_400_response.md
+Models/_v1_mqs_get_400_response.md
 README.md
