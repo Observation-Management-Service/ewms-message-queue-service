@@ -5,6 +5,7 @@ import time
 
 import mqclient
 import tornado
+from pymongo.errors import DuplicateKeyError
 from rest_tools.server import validate_request
 
 from . import rest_auth
@@ -53,12 +54,34 @@ class MQGroupReservationHandler(BaseMQSHandler):  # pylint: disable=W0223
         ]
 
         # put in db -- do last in case any exceptions above
-        async with await self.mqs_db.mongo_client.start_session() as s:
-            async with s.start_transaction():  # atomic
-                mqgroup = await self.mqs_db.mqgroup_collection.insert_one(mqgroup)
-                mqprofiles = await self.mqs_db.mqprofile_collection.insert_many(
-                    mqprofiles
-                )
+        try:
+            async with await self.mqs_db.mongo_client.start_session() as s:
+                async with s.start_transaction():  # atomic
+                    mqgroup = await self.mqs_db.mqgroup_collection.insert_one(mqgroup)
+                    mqprofiles = await self.mqs_db.mqprofile_collection.insert_many(
+                        mqprofiles
+                    )
+        except DuplicateKeyError as e:
+            if not (
+                # criteria for this being caused by a duplicate 'workflow_id' value:
+                e.details
+                and "keyValue" in e.details
+                and "workflow_id" in e.details["keyValue"].keys()
+            ):
+                raise e
+            LOGGER.exception(e)
+            LOGGER.warning(
+                "Tried to reserve an existing MQ group (see exception above)"
+                " -- retrieving existing docs from database..."
+            )
+            mqgroup = await self.mqs_db.mqgroup_collection.find_one(
+                {"workflow_id": workflow_id}
+            )
+            mqprofiles = []
+            async for x in self.mqs_db.mqprofile_collection.find_all(
+                {"workflow_id": workflow_id}, projection=[]
+            ):
+                mqprofiles.append(x)
 
         self.write(
             {
