@@ -1,7 +1,13 @@
 name: wipac ci/cd
 
 
-on: [ push ]
+on:
+  # only on branch pushes
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
 
 
 env:
@@ -30,6 +36,8 @@ jobs:
       matrix: ${{ steps.versions.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
       - id: versions
         uses: WIPACrepo/wipac-dev-py-versions-action@v2.5
 
@@ -42,6 +50,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
       - uses: actions/setup-python@v5
       - uses: WIPACrepo/wipac-dev-flake8-action@v1.2
 
@@ -54,6 +64,8 @@ jobs:
         py3: ${{ fromJSON(needs.py-versions.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.py3 }}
@@ -74,7 +86,7 @@ jobs:
         # dependabot can't access normal secrets
         #   & don't run non-branch triggers (like tags)
         run: |
-          set -euo pipefail
+          set -euo pipefail; echo "now: $(date -u +"%Y-%m-%dT%H:%M:%S.%3N")"
           if [[ \
               ${{github.actor}} != 'dependabot[bot]' && \
               ${{github.ref_type}} == 'branch' \
@@ -94,6 +106,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          ref: ${{ github.ref }}  # dont lock to sha (action needs to push)
       - if: needs.writable-branch-detect.outputs.OKAY == 'true'
         uses: WIPACrepo/wipac-dev-py-setup-action@v3.1
         with:
@@ -107,6 +120,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          ref: ${{ github.ref }}  # dont lock to sha (action needs to push)
       - if: needs.writable-branch-detect.outputs.OKAY == 'true'
         uses: docker/setup-buildx-action@v2
       - if: needs.writable-branch-detect.outputs.OKAY == 'true'
@@ -131,26 +145,31 @@ jobs:
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # fyi, dependabot can't access normal secrets
+          ref: ${{ github.ref }}  # dont lock to sha (action needs to push)
       - name: git config
         if: github.actor != 'dependabot[bot]'
         run: |
+          set -euo pipefail; echo "now: $(date -u +"%Y-%m-%dT%H:%M:%S.%3N")"
           git config user.name github-actions
           git config user.email github-actions@github.com
       - name: ruff
         if: github.actor != 'dependabot[bot]'
         run: |
           # use literal collection syntax, see https://docs.astral.sh/ruff/rules/unnecessary-collection-call/
+          set -euo pipefail; echo "now: $(date -u +"%Y-%m-%dT%H:%M:%S.%3N")"
           pip install ruff
           ruff check --select C408 --fix . --unsafe-fixes
       - name: isort
         if: github.actor != 'dependabot[bot]'
         run: |
+          set -euo pipefail; echo "now: $(date -u +"%Y-%m-%dT%H:%M:%S.%3N")"
           pip install isort
           isort . --profile black -v --float-to-top --reverse-relative
       - name: push changes
         if: github.actor != 'dependabot[bot]'
         run: |
           # check git status
+          set -euo pipefail; echo "now: $(date -u +"%Y-%m-%dT%H:%M:%S.%3N")"
           git fetch
           if [[ $(git status -sb | grep behind) ]]; then
             echo "this commit is not the most recent on this branch -- changes won't be pushed"
@@ -173,6 +192,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # fyi, dependabot can't access normal secrets
+          ref: ${{ github.ref }}  # dont lock to sha (action needs to push)
       - uses: WIPACrepo/wipac-dev-json-schema-action@v2.0
         with:
           rest_openapi_paths_dir: "schema-precompiled/paths"
@@ -189,6 +209,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # fyi, dependabot can't access normal secrets
+          ref: ${{ github.ref }}  # dont lock to sha (action needs to push)
       - uses: WIPACrepo/wipac-dev-openapi-docs-action@v1.0
         with:
           openapi_fpath: "mqs/${{ env.REST_OPENAPI_SPEC_FPATH }}"
@@ -202,6 +223,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
       - uses: docker/setup-buildx-action@v2
       - uses: docker/build-push-action@v3
         with:
@@ -227,6 +250,8 @@ jobs:
           MONGODB_REPLICA_SET_MODE: primary
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.py3 }}
@@ -238,10 +263,13 @@ jobs:
           file: Dockerfile
           tags: ${{ env.CI_DOCKER_IMAGE_W_TAG }}
           load: true
-      - run: |
+      - name: "pip install .[tests]"
+        run: |
+          set -euo pipefail; echo "now: $(date -u +"%Y-%m-%dT%H:%M:%S.%3N")"
           pip install .[tests]
       - name: make mqbroker key file directories
         run: |
+          set -euo pipefail; echo "now: $(date -u +"%Y-%m-%dT%H:%M:%S.%3N")"
           set -ex
           sudo mkdir -p $(dirname ${{ env.BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE }})
           sudo chmod -R 777 $(dirname ${{ env.BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE }})
@@ -249,6 +277,7 @@ jobs:
           sudo chmod -R 777 $(dirname ${{ env.BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE }})
       - name: test (run rest server in background)
         run: |
+          set -euo pipefail; echo "now: $(date -u +"%Y-%m-%dT%H:%M:%S.%3N")"
           set -ex
           # this needs to be in the same step b/c shell exits when step is done
           docker run --network='host' --rm --name rest \
@@ -269,7 +298,9 @@ jobs:
           pytest -vvv --exitfirst tests/integration/
       #
       - if: always()
+        name: "docker logs rest || cat ./rest.out"
         run: |
+          set -euo pipefail; echo "now: $(date -u +"%Y-%m-%dT%H:%M:%S.%3N")"
           docker logs rest || cat ./rest.out
 
 
@@ -282,13 +313,18 @@ jobs:
         py3: ${{ fromJSON(needs.py-versions.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.py3 }}
-      - run: |
+      - name: "pip install .[tests]"
+        run: |
+          set -euo pipefail; echo "now: $(date -u +"%Y-%m-%dT%H:%M:%S.%3N")"
           pip install .[tests]
       - name: test
         run: |
+          set -euo pipefail; echo "now: $(date -u +"%Y-%m-%dT%H:%M:%S.%3N")"
           pytest -vvv tests/unit/
 
 
@@ -319,6 +355,7 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # fyi, dependabot can't access normal secrets
+          ref: ${{ github.ref }}  # dont lock to sha (action needs to push)
       - name: Python Semantic Release
         uses: python-semantic-release/python-semantic-release@v7.34.6
         with:
