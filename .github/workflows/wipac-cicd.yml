@@ -35,7 +35,7 @@ jobs:
     outputs:
       matrix: ${{ steps.versions.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
       - id: versions
@@ -54,7 +54,7 @@ jobs:
       matrix:
         py3: ${{ fromJSON(needs.py-versions.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
       - uses: actions/setup-python@v5
@@ -73,7 +73,7 @@ jobs:
       matrix:
         py3: ${{ fromJSON(needs.py-versions.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
           fetch-depth: 0  # setuptools-scm needs to access git tags
@@ -90,7 +90,7 @@ jobs:
   py-setup:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           ref: ${{ github.ref }}  # dont lock to sha (action needs to push)
@@ -106,7 +106,7 @@ jobs:
     needs: [ flake8 ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
           fetch-depth: 0  # setuptools-scm needs to access git tags
@@ -128,7 +128,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - if: github.actor != 'dependabot[bot]'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # fyi, dependabot can't access normal secrets
           ref: ${{ github.ref }}  # dont lock to sha (action needs to push)
@@ -175,7 +175,7 @@ jobs:
   schema-modifications:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # fyi, dependabot can't access normal secrets
           ref: ${{ github.ref }}  # dont lock to sha (action needs to push)
@@ -192,7 +192,7 @@ jobs:
     needs: [ schema-modifications ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # fyi, dependabot can't access normal secrets
           ref: ${{ github.ref }}  # dont lock to sha (action needs to push)
@@ -208,7 +208,7 @@ jobs:
   test-build-docker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
           fetch-depth: 0  # setuptools-scm needs to access git tags
@@ -236,7 +236,7 @@ jobs:
         env:
           MONGODB_REPLICA_SET_MODE: primary
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
           fetch-depth: 0  # setuptools-scm needs to access git tags
@@ -300,7 +300,7 @@ jobs:
       matrix:
         py3: ${{ fromJSON(needs.py-versions.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
           fetch-depth: 0  # setuptools-scm needs to access git tags
