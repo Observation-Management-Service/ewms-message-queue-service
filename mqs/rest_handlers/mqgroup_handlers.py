@@ -22,7 +22,7 @@ class MQGroupReservationHandler(BaseMQSHandler):  # pylint: disable=W0223
     ROUTE = rf"/{config.URL_V_PREFIX}/mqs/workflows/(?P<workflow_id>[\w-]+)/mq-group/reservation$"
 
     @rest_auth.service_account_auth(roles=[rest_auth.AuthAccounts.WMS])  # type: ignore
-    @validate_request(config.OPENAPI_SPEC)  # type: ignore[misc]
+    @validate_request(config.OPENAPI_SPEC)
     async def post(self, workflow_id: str) -> None:
         """Handle POST requests."""
 
@@ -100,7 +100,7 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
     ROUTE = rf"/{config.URL_V_PREFIX}/mqs/workflows/(?P<workflow_id>[\w-]+)/mq-group/activation$"
 
     @rest_auth.service_account_auth(roles=[rest_auth.AuthAccounts.WMS])  # type: ignore
-    @validate_request(config.OPENAPI_SPEC)  # type: ignore[misc]
+    @validate_request(config.OPENAPI_SPEC)
     async def post(self, workflow_id: str) -> None:
         """Handle POST requests."""
         criteria: dict[str, int] = self.get_argument("criteria")
@@ -172,7 +172,7 @@ class MQGroupGetHandler(BaseMQSHandler):  # pylint: disable=W0223
     ROUTE = rf"/{config.URL_V_PREFIX}/mqs/workflows/(?P<workflow_id>[\w-]+)/mq-group$"
 
     @rest_auth.service_account_auth(roles=[rest_auth.AuthAccounts.WMS])  # type: ignore
-    @validate_request(config.OPENAPI_SPEC)  # type: ignore[misc]
+    @validate_request(config.OPENAPI_SPEC)
     async def get(self, workflow_id: str) -> None:
         """Handle GET requests."""
         try:

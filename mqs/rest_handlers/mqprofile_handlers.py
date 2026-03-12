@@ -19,7 +19,7 @@ class MQProfileIDHandler(BaseMQSHandler):  # pylint: disable=W0223
     ROUTE = rf"/{config.URL_V_PREFIX}/mqs/mq-profiles/(?P<mqid>[\w-]+)$"
 
     @rest_auth.service_account_auth(roles=[rest_auth.AuthAccounts.WMS])  # type: ignore
-    @validate_request(config.OPENAPI_SPEC)  # type: ignore[misc]
+    @validate_request(config.OPENAPI_SPEC)
     async def get(self, mqid: str) -> None:
         """Handle GET requests."""
         try:
@@ -36,7 +36,7 @@ class MQProfilePublicGetHandler(BaseMQSHandler):  # pylint: disable=W0223
     ROUTE = rf"/{config.URL_V_PREFIX}/mqs/workflows/(?P<workflow_id>[\w-]+)/mq-profiles/public$"
 
     @rest_auth.service_account_auth(roles=[rest_auth.AuthAccounts.USER])  # type: ignore
-    @validate_request(config.OPENAPI_SPEC)  # type: ignore[misc]
+    @validate_request(config.OPENAPI_SPEC)
     async def get(self, workflow_id: str) -> None:
         """Handle GET requests."""
 
