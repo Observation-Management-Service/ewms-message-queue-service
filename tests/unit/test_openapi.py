@@ -4,8 +4,8 @@ import inspect
 import logging
 import re
 
-import openapi_core
 import tornado
+from openapi_core.templating.paths.exceptions import PathNotFound
 from openapi_core.templating.paths.finders import APICallPathFinder
 
 from mqs import server
@@ -53,7 +53,7 @@ def test_census_routes() -> None:
                     method,
                     route,
                 )
-            except openapi_core.templating.paths.exceptions.PathNotFound:
+            except PathNotFound:
                 missing.append((route, method))
                 LOGGER.info("----> not found")
             else:
