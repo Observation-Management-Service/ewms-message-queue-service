@@ -10,6 +10,7 @@ from jsonschema_path import SchemaPath
 from openapi_spec_validator import validate
 from openapi_spec_validator.readers import read_from_filename
 from wipac_dev_tools import from_environment_as_dataclass, logging_tools
+from wipac_dev_tools.logging_tools import LoggerLevel
 
 LOGGER = logging.getLogger(__name__)
 
@@ -58,9 +59,9 @@ class EnvConfig:
 
     # misc
     CI: bool = False  # github actions sets this to 'true'
-    LOG_LEVEL: str = "DEBUG"
-    LOG_LEVEL_THIRD_PARTY: str = "INFO"
-    LOG_LEVEL_REST_TOOLS: str = "DEBUG"
+    LOG_LEVEL: LoggerLevel = "DEBUG"
+    LOG_LEVEL_THIRD_PARTY: LoggerLevel = "INFO"
+    LOG_LEVEL_REST_TOOLS: LoggerLevel = "DEBUG"
 
     # backlog
     SKIP_BACKLOG_MIN_PRIORITY: int = 10
@@ -134,13 +135,13 @@ def config_logging() -> None:
     )
     logging.getLogger().addHandler(hand)
     logging_tools.set_level(
-        ENV.LOG_LEVEL,  # type: ignore[arg-type]
+        ENV.LOG_LEVEL,
         first_party_loggers=[__name__.split(".", maxsplit=1)[0]],
-        third_party_level=ENV.LOG_LEVEL_THIRD_PARTY,  # type: ignore[arg-type]
+        third_party_level=ENV.LOG_LEVEL_THIRD_PARTY,
         future_third_parties=[],
         specialty_loggers={
             "wipac-telemetry": "WARNING",
             "parse": "WARNING",  # from openapi
-            "rest_tools": ENV.LOG_LEVEL_REST_TOOLS,  # type: ignore
+            "rest_tools": ENV.LOG_LEVEL_REST_TOOLS,
         },
     )

@@ -2,12 +2,13 @@
 
 import logging
 import os
-from typing import AsyncIterator
+from typing import AsyncIterator, cast
 
 import pytest_asyncio
 from pymongo import MongoClient
 from rest_tools.client import RestClient
 from wipac_dev_tools import logging_tools
+from wipac_dev_tools.logging_tools import LoggerLevel
 
 from .utils import refresh_mqbroker_key_files
 
@@ -15,14 +16,14 @@ LOGGER = logging.getLogger(__name__)
 
 
 logging_tools.set_level(
-    os.getenv("LOG_LEVEL", "DEBUG"),  # type: ignore[arg-type]
+    cast(LoggerLevel, os.getenv("LOG_LEVEL", "DEBUG")),
     first_party_loggers=["mqs"],
-    third_party_level=os.getenv("LOG_LEVEL_THIRD_PARTY", "INFO"),  # type: ignore[arg-type]
+    third_party_level=cast(LoggerLevel, os.getenv("LOG_LEVEL_THIRD_PARTY", "INFO")),
     future_third_parties=[],
     specialty_loggers={
         "wipac-telemetry": "WARNING",
         "parse": "INFO",  # from openapi
-        "rest_tools": os.getenv("LOG_LEVEL_REST_TOOLS", "DEBUG"),  # type: ignore
+        "rest_tools": cast(LoggerLevel, os.getenv("LOG_LEVEL_REST_TOOLS", "DEBUG")),
     },
 )
 
