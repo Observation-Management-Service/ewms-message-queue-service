@@ -15,9 +15,9 @@ from wipac_dev_tools.mongo_jsonschema_tools import (
 
 from ..config import OPENAPI_DICT
 from .utils import (
+    _DB_NAME,
     MQGROUP_COLL_NAME,
     MQPROFILE_COLL_NAME,
-    _DB_NAME,
 )
 
 __all__ = [  # export
