@@ -17,11 +17,6 @@ _JWKS_DB_NAME = "JWK_DB"
 _JWKS_COLL_NAME = "JWKS_COLL"
 
 
-def get_jsonschema_spec_name(collection_name: str) -> str:
-    """Map between the two naming schemes."""
-    return collection_name.removesuffix("Coll")
-
-
 async def create_mongodb_client() -> AsyncIOMotorClient:  # type: ignore[valid-type]
     """Construct the MongoDB client."""
     auth_user = quote_plus(ENV.MONGODB_AUTH_USER)

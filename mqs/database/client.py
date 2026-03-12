@@ -1,6 +1,8 @@
 """Tools for interacting with the mongo database."""
 
+import copy
 import logging
+from typing import Any
 
 import jsonschema
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -12,16 +14,29 @@ from wipac_dev_tools.mongo_jsonschema_tools import (
 )
 
 from .utils import (
-    _DB_NAME,
     MQGROUP_COLL_NAME,
     MQPROFILE_COLL_NAME,
-    get_jsonschema_spec_name,
+    _DB_NAME,
 )
-from ..config import MONGO_COLLECTION_JSONSCHEMA_SPECS
+from ..config import OPENAPI_DICT
 
 __all__ = [  # export
     "DocumentNotFoundException",
 ]
+
+
+def get_jsonschema_subspec_from_openapi(object_name: str) -> dict[str, Any]:
+    """Get a deep-copy of the JSONSchema spec for an 'component.schemas' object.
+
+    Makes all root fields required.
+    """
+    try:
+        subspec = copy.deepcopy(OPENAPI_DICT["components"]["schemas"][object_name])
+    except KeyError as e:
+        raise ValueError(f"no JSONSchema spec found: {object_name}") from e
+
+    subspec["required"] = list(subspec["properties"].keys())
+    return subspec
 
 
 def _validation_exception_callback(exc: Exception) -> Exception:
@@ -54,17 +69,17 @@ class MQSMongoValidatedDatabase:
         self.mongo_client = mongo_client
         self.mqprofile_collection = MongoJSONSchemaValidatedCollection(
             mongo_client[_DB_NAME][MQPROFILE_COLL_NAME],
-            MONGO_COLLECTION_JSONSCHEMA_SPECS[
-                get_jsonschema_spec_name(MQPROFILE_COLL_NAME)
-            ],
+            get_jsonschema_subspec_from_openapi(
+                MQPROFILE_COLL_NAME.removesuffix("Coll") + "Object"
+            ),
             parent_logger,
             validation_exception_callback=_validation_exception_callback,
         )
         self.mqgroup_collection = MongoJSONSchemaValidatedCollection(
             mongo_client[_DB_NAME][MQGROUP_COLL_NAME],
-            MONGO_COLLECTION_JSONSCHEMA_SPECS[
-                get_jsonschema_spec_name(MQGROUP_COLL_NAME)
-            ],
+            get_jsonschema_subspec_from_openapi(
+                MQGROUP_COLL_NAME.removesuffix("Coll") + "Object"
+            ),
             parent_logger,
             validation_exception_callback=_validation_exception_callback,
         )

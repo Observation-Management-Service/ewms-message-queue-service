@@ -39,7 +39,7 @@ class MainHandler(BaseMQSHandler):  # pylint: disable=W0223
     ROUTE = rf"/{config.URL_V_PREFIX}/mqs$"
 
     @rest_auth.service_account_auth(roles=rest_auth.ALL_AUTH_ACCOUNTS)  # type: ignore
-    @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
+    @validate_request(config.OPENAPI_SPEC)  # type: ignore[misc]
     async def get(self) -> None:
         """Handle GET."""
         self.write({})
