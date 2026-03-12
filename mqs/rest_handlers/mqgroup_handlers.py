@@ -58,8 +58,8 @@ class MQGroupReservationHandler(BaseMQSHandler):  # pylint: disable=W0223
 
         # put in db -- do last in case any exceptions above
         try:
-            async with await self.mqs_db.mongo_client.start_session() as s:
-                async with s.start_transaction():  # atomic
+            async with self.mqs_db.mongo_client.start_session() as s:
+                async with await s.start_transaction():  # make update batch atomic
                     mqgroup = await self.mqs_db.mqgroup_collection.insert_one(mqgroup)
                     mqprofiles = await self.mqs_db.mqprofile_collection.insert_many(
                         mqprofiles
@@ -123,8 +123,8 @@ class MQGroupActivationHandler(BaseMQSHandler):  # pylint: disable=W0223
             )
 
         # put all into db -- atomically
-        async with await self.mqs_db.mongo_client.start_session() as s:
-            async with s.start_transaction():  # atomic
+        async with self.mqs_db.mongo_client.start_session() as s:
+            async with await s.start_transaction():  # make update batch atomic
 
                 # update mqgroup
                 try:

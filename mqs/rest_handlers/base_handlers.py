@@ -16,7 +16,7 @@ LOGGER = logging.getLogger(__name__)
 class BaseMQSHandler(RestHandler):  # pylint: disable=W0223
     """BaseMQSHandler is a RestHandler for all MQS routes."""
 
-    def initialize(
+    def initialize(  # ty: ignore[invalid-method-override]
         self,
         mongo_client: AsyncMongoClient,
         mqbroker_auth: BrokerQueueAuth,
