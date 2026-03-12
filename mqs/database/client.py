@@ -13,12 +13,12 @@ from wipac_dev_tools.mongo_jsonschema_tools import (
     MongoJSONSchemaValidatedCollection,
 )
 
+from ..config import OPENAPI_DICT
 from .utils import (
     MQGROUP_COLL_NAME,
     MQPROFILE_COLL_NAME,
     _DB_NAME,
 )
-from ..config import OPENAPI_DICT
 
 __all__ = [  # export
     "DocumentNotFoundException",
