@@ -117,54 +117,6 @@ jobs:
       - uses: WIPACrepo/wipac-dev-py-dependencies-action@v3.1
 
 
-  #############################################################################
-  # FORMATTER
-  #############################################################################
-
-  code-format:
-    runs-on: ubuntu-latest
-    steps:
-      - if: github.actor != 'dependabot[bot]'
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # fyi, dependabot can't access normal secrets
-          ref: ${{ github.ref }}  # dont lock to sha (action needs to push)
-      - name: git config
-        if: github.actor != 'dependabot[bot]'
-        run: |
-          set -euo pipefail
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-      - name: ruff
-        if: github.actor != 'dependabot[bot]'
-        run: |
-          # use literal collection syntax, see https://docs.astral.sh/ruff/rules/unnecessary-collection-call/
-          set -euo pipefail
-          pip install ruff
-          ruff check --select C408 --fix . --unsafe-fixes
-      - name: isort
-        if: github.actor != 'dependabot[bot]'
-        run: |
-          set -euo pipefail
-          pip install isort
-          isort . --profile black -v --float-to-top --reverse-relative
-      - name: push changes
-        if: github.actor != 'dependabot[bot]'
-        run: |
-          # check git status
-          set -euo pipefail
-          git fetch
-          if [[ $(git status -sb | grep behind) ]]; then
-            echo "this commit is not the most recent on this branch -- changes won't be pushed"
-            exit 0
-          else
-            # push
-            git add . || true
-            git commit -m "<bot> auto code format file(s)" || true
-            git push || true
-          fi
-
-
   ############################################################################
   # DOCS GENERATION
   #############################################################################
@@ -308,7 +260,6 @@ jobs:
       mypy,
       py-setup,
       py-dependencies,
-      code-format,
       api-documentation,
       test-build-docker,
       integration-tests,
