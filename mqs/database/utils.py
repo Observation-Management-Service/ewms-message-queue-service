@@ -27,8 +27,7 @@ async def create_mongodb_client() -> AsyncMongoClient:
     else:
         url = f"mongodb://{ENV.MONGODB_HOST}:{ENV.MONGODB_PORT}"
 
-    mongo_client = AsyncMongoClient(url)
-    return mongo_client
+    return AsyncMongoClient(url)
 
 
 def get_jwks_collection_obj(mongo_client: AsyncMongoClient):
