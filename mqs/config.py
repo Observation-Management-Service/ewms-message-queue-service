@@ -10,7 +10,7 @@ from jsonschema_path import SchemaPath
 from openapi_spec_validator import validate
 from openapi_spec_validator.readers import read_from_filename
 from wipac_dev_tools import from_environment_as_dataclass, logging_tools
-from wipac_dev_tools.logging_tools import LoggerLevel
+from wipac_dev_tools.logging_tools import LoggerLevel, WIPACDevToolsFormatter
 
 LOGGER = logging.getLogger(__name__)
 
@@ -126,14 +126,6 @@ def config_logging() -> None:
     This is separated into a function for consistency between app and
     testing environments.
     """
-    hand = logging.StreamHandler()
-    hand.setFormatter(
-        logging.Formatter(
-            "%(asctime)s.%(msecs)03d [%(levelname)8s] %(name)s[%(process)d] %(message)s <%(filename)s:%(lineno)s/%(funcName)s()>",
-            datefmt="%Y-%m-%d %H:%M:%S",
-        )
-    )
-    logging.getLogger().addHandler(hand)
     logging_tools.set_level(
         ENV.LOG_LEVEL,
         first_party_loggers=[__name__.split(".", maxsplit=1)[0]],
@@ -144,4 +136,5 @@ def config_logging() -> None:
             "parse": "WARNING",  # from openapi
             "rest_tools": ENV.LOG_LEVEL_REST_TOOLS,
         },
+        formatter=WIPACDevToolsFormatter(),
     )
