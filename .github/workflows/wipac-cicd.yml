@@ -23,9 +23,6 @@ env:
   BROKER_TYPE: rabbitmq
   BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE: /test-priv-keys/broker-queue-private.key  # root dir
   BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE: /test-pub-keys/broker-queue-public.key  # root dir
-  #
-  REST_OPENAPI_SPEC_FPATH: "schema/rest/openapi_spec.json"
-  DB_JSONSCHEMA_DIR: "schema/db"
 
 
 jobs:
@@ -181,7 +178,7 @@ jobs:
           ref: ${{ github.ref }}  # dont lock to sha (action needs to push)
       - uses: WIPACrepo/wipac-dev-openapi-docs-action@v1.0
         with:
-          openapi_fpath: "mqs/${{ env.REST_OPENAPI_SPEC_FPATH }}"
+          openapi_fpath: "mqs/openapi.json"
 
 
   ############################################################################
@@ -258,8 +255,6 @@ jobs:
             --env REST_HOST="${{ env.REST_HOST }}" \
             --env REST_PORT="${{ env.REST_PORT }}" \
             $(env | grep '^BROKER_' | awk '$0="--env "$0') \
-            --env REST_OPENAPI_SPEC_FPATH="${{ env.REST_OPENAPI_SPEC_FPATH }}" \
-            --env DB_JSONSCHEMA_DIR="${{ env.DB_JSONSCHEMA_DIR }}" \
             --env CI="true" \
             --mount type=bind,source=$(dirname ${{ env.BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE }}),target=$(dirname ${{ env.BROKER_QUEUE_AUTH_PRIVATE_KEY_FILE }}) \
             --mount type=bind,source=$(dirname ${{ env.BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE }}),target=$(dirname ${{ env.BROKER_QUEUE_AUTH_PUBLIC_KEY_FILE }}) \
