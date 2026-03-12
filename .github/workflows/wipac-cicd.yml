@@ -96,7 +96,6 @@ jobs:
         with:
           mode: PACKAGING
           python_min: 3.12
-          python_max: 3.12
           keywords_comma: "EWMS, task, Workflow Management Service, WIPAC, IceCube, Observation Management Service, Event Workflow Management System"
           auto_mypy_option: True
 
