@@ -8,8 +8,8 @@ import urllib.parse
 from datetime import datetime
 from pathlib import Path
 
-import motor.motor_asyncio
 from jwt.algorithms import RSAAlgorithm
+from pymongo import AsyncMongoClient
 from rest_tools.utils import Auth
 
 from . import config
@@ -39,7 +39,7 @@ class BrokerQueueAuth:
 
     def __init__(
         self,
-        mongo_client: motor.motor_asyncio.AsyncIOMotorClient,
+        mongo_client: AsyncMongoClient,
     ):
         self._mongo_coll = get_jwks_collection_obj(mongo_client)
         self._pub_key = b""

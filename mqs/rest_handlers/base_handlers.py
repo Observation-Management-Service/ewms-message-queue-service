@@ -3,7 +3,7 @@
 import logging
 from typing import Any
 
-from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo import AsyncMongoClient
 from rest_tools.server import RestHandler, validate_request
 
 from . import rest_auth
@@ -16,15 +16,15 @@ LOGGER = logging.getLogger(__name__)
 class BaseMQSHandler(RestHandler):  # pylint: disable=W0223
     """BaseMQSHandler is a RestHandler for all MQS routes."""
 
-    def initialize(  # type: ignore  # pylint: disable=W0221
+    def initialize(
         self,
-        mongo_client: AsyncIOMotorClient,  # type: ignore[valid-type]
+        mongo_client: AsyncMongoClient,
         mqbroker_auth: BrokerQueueAuth,
         *args: Any,
         **kwargs: Any,
     ) -> None:
         """Initialize a BaseMQSHandler object."""
-        super().initialize(*args, **kwargs)  # type: ignore[no-untyped-call]
+        super().initialize(*args, **kwargs)
         # pylint: disable=W0201
         self.mqs_db = database.client.MQSMongoValidatedDatabase(mongo_client)
         self.mqbroker_auth = mqbroker_auth
