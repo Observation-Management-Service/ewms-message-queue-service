@@ -8,9 +8,9 @@
 dependencies = [
     'PyJWT',
     'jsonschema',
-    'motor',
     'oms-mqclient[rabbitmq]',
     'openapi-core',
+    'pymongo',
     'wipac-dev-tools',
     'wipac-rest-tools[telemetry]',
 ]
