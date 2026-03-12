@@ -18,7 +18,7 @@ async def query_for_schema(rc: RestClient) -> openapi_core.OpenAPI:
     """Grab the openapi schema from the rest server and check that it matches the json file."""
     resp = await rc.request("GET", f"/{_URL_V_PREFIX}/mqs/schema/openapi")
     with open(
-        f'{os.environ["GITHUB_WORKSPACE"]}/mqs/{os.environ["REST_OPENAPI_SPEC_FPATH"]}',
+        f'{os.environ["GITHUB_WORKSPACE"]}/mqs/openapi.json',
         "rb",
     ) as f:
         assert json.load(f) == resp

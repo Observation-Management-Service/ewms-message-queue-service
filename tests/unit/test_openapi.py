@@ -2,24 +2,18 @@
 
 import inspect
 import logging
-import os
 import re
-from pathlib import Path
 
 import openapi_core
 import tornado
-from jsonschema_path import SchemaPath
 from openapi_core.templating.paths.finders import APICallPathFinder
 
 from mqs import server
+from mqs.config import REST_OPENAPI_SPEC
 
 LOGGER = logging.getLogger(__name__)
 
 logging.getLogger("parse").setLevel(logging.INFO)
-
-_OPENAPI_SPEC = SchemaPath.from_file_path(
-    str(Path(__file__).parent / "../../mqs/" / os.environ["REST_OPENAPI_SPEC_FPATH"])
-)
 
 
 def test_census_routes() -> None:
@@ -55,7 +49,7 @@ def test_census_routes() -> None:
             LOGGER.info(f"-> method: {method}")
 
             try:  # except error so we can see what all is missing w/o multiple test runs
-                APICallPathFinder(_OPENAPI_SPEC, base_url=None).find(
+                APICallPathFinder(REST_OPENAPI_SPEC.spec, base_url=None).find(
                     method,
                     route,
                 )
