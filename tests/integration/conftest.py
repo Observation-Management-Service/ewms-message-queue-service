@@ -2,7 +2,8 @@
 
 import logging
 import os
-from typing import AsyncIterator, cast
+from collections.abc import AsyncIterator
+from typing import cast
 
 import pytest_asyncio
 from pymongo import MongoClient
