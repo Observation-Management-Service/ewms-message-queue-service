@@ -1,4 +1,4 @@
-# Documentation for ewms-message-queue-service
+# Documentation for EWMS - Message Queue Service
 
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
