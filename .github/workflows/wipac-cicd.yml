@@ -49,7 +49,7 @@ jobs:
 
   lint:
     needs: [ py-versions ]
-    uses: WIPACrepo/wipac-dev-workflows/.github/workflows/lint-python.yml@v1.22
+    uses: WIPACrepo/wipac-dev-workflows/.github/workflows/lint-python.yml@v1.23
     with:
       py-matrix-json: ${{ needs.py-versions.outputs.matrix }}
       max-complexity: 10  # ideal is ~10-15
@@ -242,7 +242,7 @@ jobs:
       integration-tests,
       unit-tests
     ]
-    uses: WIPACrepo/wipac-dev-workflows/.github/workflows/tag-and-release.yml@v1.20
+    uses: WIPACrepo/wipac-dev-workflows/.github/workflows/tag-and-release.yml@v1.23
     permissions: # for GITHUB_TOKEN
       contents: write
     with:
