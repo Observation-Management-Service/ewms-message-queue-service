@@ -1,19 +1,16 @@
 """Config settings."""
 
 import dataclasses as dc
-import json
 import logging
 from pathlib import Path
-from typing import Any
 
-import jsonschema
-import openapi_core
-from jsonschema_path import SchemaPath
-from openapi_spec_validator import validate
-from openapi_spec_validator.readers import read_from_filename
+from rest_tools import openapi_tools
 from wipac_dev_tools import from_environment_as_dataclass, logging_tools
+from wipac_dev_tools.logging_tools import LoggerLevel, WIPACDevToolsFormatter
 
 LOGGER = logging.getLogger(__name__)
+
+OPENAPI_PATH = Path(__file__).parent / "openapi.json"
 
 
 # --------------------------------------------------------------------------------------
@@ -58,59 +55,24 @@ class EnvConfig:
 
     # misc
     CI: bool = False  # github actions sets this to 'true'
-    LOG_LEVEL: str = "DEBUG"
-    LOG_LEVEL_THIRD_PARTY: str = "INFO"
-    LOG_LEVEL_REST_TOOLS: str = "DEBUG"
+    LOG_LEVEL: LoggerLevel = "DEBUG"
+    LOG_LEVEL_THIRD_PARTY: LoggerLevel = "INFO"
+    LOG_LEVEL_REST_TOOLS: LoggerLevel = "DEBUG"
 
     # backlog
     SKIP_BACKLOG_MIN_PRIORITY: int = 10
     BACKLOG_RUNNER_SHORT_DELAY: int = 15
     BACKLOG_RUNNER_DELAY: int = 5 * 60
 
-    # schema
-    DB_JSONSCHEMA_DIR: str = "schema/db"
-    REST_OPENAPI_SPEC_FPATH: str = "schema/rest/openapi_spec.json"
-
 
 ENV = from_environment_as_dataclass(EnvConfig)
 
 
 # --------------------------------------------------------------------------------------
+# OpenAPI
 
-
-def _get_jsonschema_specs(dpath: Path) -> dict[str, dict[str, Any]]:
-    specs: dict[str, dict[str, Any]] = {}
-    for fpath in dpath.iterdir():
-        with open(fpath) as f:
-            specs[fpath.stem] = json.load(f)  # validates keys
-        LOGGER.info(f"validating JSON-schema spec for {fpath}")
-        jsonschema.protocols.Validator.check_schema(specs[fpath.stem])
-    return specs
-
-
-# keyed by the mongo collection name
-MONGO_COLLECTION_JSONSCHEMA_SPECS = _get_jsonschema_specs(
-    Path(__file__).parent / ENV.DB_JSONSCHEMA_DIR
-)
-
-
-# --------------------------------------------------------------------------------------
-
-
-def _get_openapi_spec(fpath: Path) -> openapi_core.OpenAPI:
-    spec_dict, base_uri = read_from_filename(str(fpath))
-    LOGGER.info(f"validating OpenAPI spec for {base_uri} ({fpath})")
-    validate(spec_dict)  # no exception -> spec is valid
-    return openapi_core.OpenAPI(SchemaPath.from_file_path(str(fpath)))
-
-
-REST_OPENAPI_SPEC: openapi_core.OpenAPI = _get_openapi_spec(
-    Path(__file__).parent / ENV.REST_OPENAPI_SPEC_FPATH
-)
-URL_V_PREFIX = (  # ex: v0
-    "v" + REST_OPENAPI_SPEC.spec.contents()["info"]["version"].split(".", maxsplit=1)[0]
-)
-
+OPENAPI_SPEC, OPENAPI_DICT = openapi_tools.load_openapi_spec(OPENAPI_PATH, "mqs")
+URL_V_PREFIX = openapi_tools.get_version_vmaj(OPENAPI_DICT)
 
 # --------------------------------------------------------------------------------------
 
@@ -146,22 +108,15 @@ def config_logging() -> None:
     This is separated into a function for consistency between app and
     testing environments.
     """
-    hand = logging.StreamHandler()
-    hand.setFormatter(
-        logging.Formatter(
-            "%(asctime)s.%(msecs)03d [%(levelname)8s] %(name)s[%(process)d] %(message)s <%(filename)s:%(lineno)s/%(funcName)s()>",
-            datefmt="%Y-%m-%d %H:%M:%S",
-        )
-    )
-    logging.getLogger().addHandler(hand)
     logging_tools.set_level(
-        ENV.LOG_LEVEL,  # type: ignore[arg-type]
+        ENV.LOG_LEVEL,
         first_party_loggers=[__name__.split(".", maxsplit=1)[0]],
-        third_party_level=ENV.LOG_LEVEL_THIRD_PARTY,  # type: ignore[arg-type]
+        third_party_level=ENV.LOG_LEVEL_THIRD_PARTY,
         future_third_parties=[],
         specialty_loggers={
             "wipac-telemetry": "WARNING",
             "parse": "WARNING",  # from openapi
-            "rest_tools": ENV.LOG_LEVEL_REST_TOOLS,  # type: ignore
+            "rest_tools": ENV.LOG_LEVEL_REST_TOOLS,
         },
+        formatter=WIPACDevToolsFormatter(),
     )

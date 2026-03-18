@@ -3,7 +3,7 @@
 import logging
 from urllib.parse import quote_plus
 
-from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo import AsyncMongoClient
 
 from ..config import ENV
 
@@ -17,12 +17,7 @@ _JWKS_DB_NAME = "JWK_DB"
 _JWKS_COLL_NAME = "JWKS_COLL"
 
 
-def get_jsonschema_spec_name(collection_name: str) -> str:
-    """Map between the two naming schemes."""
-    return collection_name.removesuffix("Coll")
-
-
-async def create_mongodb_client() -> AsyncIOMotorClient:  # type: ignore[valid-type]
+async def create_mongodb_client() -> AsyncMongoClient:
     """Construct the MongoDB client."""
     auth_user = quote_plus(ENV.MONGODB_AUTH_USER)
     auth_pass = quote_plus(ENV.MONGODB_AUTH_PASS)
@@ -32,16 +27,15 @@ async def create_mongodb_client() -> AsyncIOMotorClient:  # type: ignore[valid-t
     else:
         url = f"mongodb://{ENV.MONGODB_HOST}:{ENV.MONGODB_PORT}"
 
-    mongo_client = AsyncIOMotorClient(url)  # type: ignore[var-annotated]
-    return mongo_client
+    return AsyncMongoClient(url)
 
 
-def get_jwks_collection_obj(mongo_client: AsyncIOMotorClient):
+def get_jwks_collection_obj(mongo_client: AsyncMongoClient):
     """Get the JWKS mongo collection object."""
     return mongo_client[_JWKS_DB_NAME][_JWKS_COLL_NAME]
 
 
-async def ensure_indexes(mongo_client: AsyncIOMotorClient) -> None:  # type: ignore[valid-type]
+async def ensure_indexes(mongo_client: AsyncMongoClient) -> None:
     """Create indexes in collections.
 
     Call on server startup.
@@ -50,7 +44,7 @@ async def ensure_indexes(mongo_client: AsyncIOMotorClient) -> None:  # type: ign
 
     async def make_index(db: str, coll: str, attr: str, unique: bool = False) -> None:
         LOGGER.info(f"creating index for ({db=}, {coll=}, {attr=}, {unique=})...")
-        await mongo_client[db][coll].create_index(  # type: ignore[index]
+        await mongo_client[db][coll].create_index(
             attr,
             name=f"{attr.replace('.', '_')}_index",
             unique=unique,

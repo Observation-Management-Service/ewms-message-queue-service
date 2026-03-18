@@ -3,7 +3,7 @@
 import logging
 from typing import Any
 
-from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo import AsyncMongoClient
 from rest_tools.server import RestHandlerSetup, RestServer
 
 from . import rest_handlers
@@ -28,7 +28,7 @@ HANDLERS = [
 ]
 
 
-async def make(mongo_client: AsyncIOMotorClient) -> RestServer:  # type: ignore[valid-type]
+async def make(mongo_client: AsyncMongoClient) -> RestServer:
     """Make a MQS REST service (does not start up automatically)."""
     rhs_config: dict[str, Any] = {"debug": ENV.CI}
     if ENV.AUTH_OPENID_URL:

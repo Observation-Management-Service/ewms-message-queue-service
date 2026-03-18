@@ -23,7 +23,7 @@ class WellKnownJWKSDotJSONHandler(BaseMQSHandler):
     )
 
     # public endpoint
-    @validate_request(config.REST_OPENAPI_SPEC)  # type: ignore[misc]
+    @validate_request(config.OPENAPI_SPEC)
     async def get(self) -> None:
         """Handle GET."""
         self.write(

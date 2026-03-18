@@ -3,28 +3,42 @@
 import json
 import os
 import re
+from pathlib import Path
 
 import openapi_core
 import pytest
 import requests
 from jsonschema_path import SchemaPath
 from rest_tools.client import RestClient, utils
+from rest_tools.client.utils import request_and_validate
 
 _URL_V_PREFIX = "v1"
 BROKER_TYPE = "rabbitmq"
 
 
-async def query_for_schema(rc: RestClient) -> openapi_core.OpenAPI:
-    """Grab the openapi schema from the rest server and check that it matches the json file."""
-    resp = await rc.request("GET", f"/{_URL_V_PREFIX}/mqs/schema/openapi")
-    with open(
-        f'{os.environ["GITHUB_WORKSPACE"]}/mqs/{os.environ["REST_OPENAPI_SPEC_FPATH"]}',
-        "rb",
-    ) as f:
-        assert json.load(f) == resp
-    openapi_spec = openapi_core.OpenAPI(SchemaPath.from_dict(resp))
+_OPENAPI_JSON = Path(__file__).parent / "../../mqs/openapi.json"
 
-    return openapi_spec
+
+async def query_for_schema(rc: RestClient) -> openapi_core.OpenAPI:
+    """Get the OpenAPI schema."""
+    resp = await request_and_validate(  # here we are asserting the endpoint's response
+        rc,
+        # only read json file for this request
+        openapi_core.OpenAPI(SchemaPath.from_file_path(str(_OPENAPI_JSON))),
+        "GET",
+        "/v1/mqs/schema/openapi",
+    )
+    # check that the schema returned is the same as the one on disk
+    with open(_OPENAPI_JSON, "rb") as f:
+        for k in list(resp["info"].keys()):  # so to change size during iteration
+            # check that the schema was populated correctly
+            assert resp["info"][k], f"full info fields: {resp['info']!r}"
+            # don't include extra 'info' fields populated @ runtime
+            if k not in ("title", "version"):
+                resp["info"].pop(k)
+        # ...
+        assert json.load(f) == resp
+    return openapi_core.OpenAPI(SchemaPath.from_dict(resp))
 
 
 async def test_000(rc: RestClient) -> None:

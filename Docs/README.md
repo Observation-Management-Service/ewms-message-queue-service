@@ -1,4 +1,4 @@
-# Documentation for ewms-message-queue-service
+# Documentation for EWMS - Message Queue Service
 
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
@@ -22,7 +22,6 @@
  - [MQGroupObject](./Models/MQGroupObject.md)
  - [MQGroupObjectAndProfiles](./Models/MQGroupObjectAndProfiles.md)
  - [MQGroupObject_criteria](./Models/MQGroupObject_criteria.md)
- - [MQGroupObject_criteria_anyOf](./Models/MQGroupObject_criteria_anyOf.md)
  - [MQProfileObject](./Models/MQProfileObject.md)
  - [_mqbroker_issuer__well_known_jwks_json_get_200_response](./Models/_mqbroker_issuer__well_known_jwks_json_get_200_response.md)
  - [_mqbroker_issuer__well_known_jwks_json_get_400_response](./Models/_mqbroker_issuer__well_known_jwks_json_get_400_response.md)
