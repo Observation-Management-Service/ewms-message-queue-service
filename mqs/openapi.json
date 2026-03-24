@@ -1,7 +1,7 @@
 {
     "openapi": "3.1.0",
     "info": {
-        "title": "EWMS - Message Queue Service",
+        "title": "EWMS Message Queue Service",
         "version": "1"
     },
     "components": {
@@ -10,13 +10,36 @@
                 "name": "workflow_id",
                 "in": "path",
                 "required": true,
-                "description": "the id of the ewms workflow that maps to an mq group",
+                "description": "The ID of the EWMS workflow that maps to an MQ group.",
                 "schema": {
                     "type": "string"
                 }
             }
         },
         "schemas": {
+            "ErrorResponse": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "description": "HTTP error code.",
+                        "type": "integer"
+                    },
+                    "error": {
+                        "description": "HTTP error reason.",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "code",
+                    "error"
+                ],
+                "additionalProperties": false
+            },
+            "EmptyObject": {
+                "type": "object",
+                "description": "An empty JSON object.",
+                "additionalProperties": false
+            },
             "MQGroupObject": {
                 "type": "object",
                 "properties": {
@@ -108,11 +131,11 @@
                 "type": "object",
                 "properties": {
                     "mqgroup": {
-                        "description": "the created mq group object",
+                        "description": "The created MQ group object.",
                         "$ref": "#/components/schemas/MQGroupObject"
                     },
                     "mqprofiles": {
-                        "description": "a list of mq profiles",
+                        "description": "A list of MQ profiles.",
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/MQProfileObject"
@@ -125,6 +148,104 @@
                     "mqprofiles"
                 ],
                 "additionalProperties": false
+            },
+            "MQGroupActivationRequest": {
+                "type": "object",
+                "properties": {
+                    "criteria": {
+                        "$ref": "#/components/schemas/MQGroupObject/properties/criteria"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "MQGroupReservationRequest": {
+                "type": "object",
+                "properties": {
+                    "queue_aliases": {
+                        "description": "A list of requested queues, given by user-defined aliases.",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "minItems": 1
+                    },
+                    "public": {
+                        "description": "A list of queue aliases designated for public access outside EWMS.",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "minItems": 0
+                    }
+                },
+                "required": [
+                    "queue_aliases"
+                ],
+                "additionalProperties": false
+            },
+            "PublicMQProfilesResponse": {
+                "type": "object",
+                "properties": {
+                    "mqprofiles": {
+                        "description": "A list of MQ profiles.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MQProfileObject"
+                        },
+                        "minItems": 0
+                    }
+                },
+                "required": [
+                    "mqprofiles"
+                ],
+                "additionalProperties": false
+            },
+            "JWKSetResponse": {
+                "type": "object",
+                "properties": {
+                    "keys": {
+                        "description": "The JWKS keys.",
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "minProperties": 0,
+                            "additionalProperties": true
+                        },
+                        "minItems": 0
+                    }
+                },
+                "required": [
+                    "keys"
+                ],
+                "additionalProperties": false
+            },
+            "OpenAPISchemaObject": {
+                "type": "object",
+                "description": "The OpenAPI schema.",
+                "properties": {},
+                "additionalProperties": true
+            }
+        },
+        "responses": {
+            "BadRequest": {
+                "description": "Invalid request arguments.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "NotFound": {
+                "description": "Not found.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorResponse"
+                        }
+                    }
+                }
             }
         }
     },
@@ -134,55 +255,17 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "the JWKS keys",
+                        "description": "The JWKS keys.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "keys": {
-                                            "description": "the JWKS keys",
-                                            "type": "array",
-                                            "items": {
-                                                "type": "object",
-                                                "minProperties": 0,
-                                                "additionalProperties": true
-                                            },
-                                            "minItems": 0
-                                        }
-                                    },
-                                    "required": [
-                                        "keys"
-                                    ],
-                                    "additionalProperties": false
+                                    "$ref": "#/components/schemas/JWKSetResponse"
                                 }
                             }
                         }
                     },
                     "400": {
-                        "description": "invalid request arguments",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "description": "http error code",
-                                            "type": "integer"
-                                        },
-                                        "error": {
-                                            "description": "http error reason",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "code",
-                                        "error"
-                                    ],
-                                    "additionalProperties": false
-                                }
-                            }
-                        }
+                        "$ref": "#/components/responses/BadRequest"
                     }
                 }
             }
@@ -192,35 +275,17 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "an empty response",
-                        "content": {
-                            "application/json": {}
-                        }
-                    },
-                    "400": {
-                        "description": "invalid request arguments",
+                        "description": "An empty response.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "description": "http error code",
-                                            "type": "integer"
-                                        },
-                                        "error": {
-                                            "description": "http error reason",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "code",
-                                        "error"
-                                    ],
-                                    "additionalProperties": false
+                                    "$ref": "#/components/schemas/EmptyObject"
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
                     }
                 }
             }
@@ -231,7 +296,7 @@
                     "name": "mqid",
                     "in": "path",
                     "required": true,
-                    "description": "the id of the message queue (found in mq profile)",
+                    "description": "The ID of the message queue, as found in the MQ profile.",
                     "schema": {
                         "type": "string"
                     }
@@ -240,7 +305,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "the matching mq profile",
+                        "description": "The matching MQ profile.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -250,54 +315,10 @@
                         }
                     },
                     "400": {
-                        "description": "invalid request arguments",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "description": "http error code",
-                                            "type": "integer"
-                                        },
-                                        "error": {
-                                            "description": "http error reason",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "code",
-                                        "error"
-                                    ],
-                                    "additionalProperties": false
-                                }
-                            }
-                        }
+                        "$ref": "#/components/responses/BadRequest"
                     },
                     "404": {
-                        "description": "not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "description": "http error code",
-                                            "type": "integer"
-                                        },
-                                        "error": {
-                                            "description": "http error reason",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "code",
-                                        "error"
-                                    ],
-                                    "additionalProperties": false
-                                }
-                            }
-                        }
+                        "$ref": "#/components/responses/NotFound"
                     }
                 }
             }
@@ -307,41 +328,17 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "the openapi schema",
+                        "description": "The OpenAPI schema.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "properties": {},
-                                    "additionalProperties": true
+                                    "$ref": "#/components/schemas/OpenAPISchemaObject"
                                 }
                             }
                         }
                     },
                     "400": {
-                        "description": "invalid request arguments",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "description": "http error code",
-                                            "type": "integer"
-                                        },
-                                        "error": {
-                                            "description": "http error reason",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "code",
-                                        "error"
-                                    ],
-                                    "additionalProperties": false
-                                }
-                            }
-                        }
+                        "$ref": "#/components/responses/BadRequest"
                     }
                 }
             }
@@ -355,7 +352,7 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "the matching mq group object",
+                        "description": "The matching MQ group object.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -365,54 +362,10 @@
                         }
                     },
                     "400": {
-                        "description": "invalid request arguments",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "description": "http error code",
-                                            "type": "integer"
-                                        },
-                                        "error": {
-                                            "description": "http error reason",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "code",
-                                        "error"
-                                    ],
-                                    "additionalProperties": false
-                                }
-                            }
-                        }
+                        "$ref": "#/components/responses/BadRequest"
                     },
                     "404": {
-                        "description": "not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "description": "http error code",
-                                            "type": "integer"
-                                        },
-                                        "error": {
-                                            "description": "http error reason",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "code",
-                                        "error"
-                                    ],
-                                    "additionalProperties": false
-                                }
-                            }
-                        }
+                        "$ref": "#/components/responses/NotFound"
                     }
                 }
             }
@@ -425,19 +378,18 @@
             ],
             "post": {
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "criteria": {
-                                    "$ref": "#/components/schemas/MQGroupObject/properties/criteria"
-                                }
+                                "$ref": "#/components/schemas/MQGroupActivationRequest"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "an activated group of queues",
+                        "description": "An activated group of queues.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -447,54 +399,10 @@
                         }
                     },
                     "400": {
-                        "description": "invalid request arguments",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "description": "http error code",
-                                            "type": "integer"
-                                        },
-                                        "error": {
-                                            "description": "http error reason",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "code",
-                                        "error"
-                                    ],
-                                    "additionalProperties": false
-                                }
-                            }
-                        }
+                        "$ref": "#/components/responses/BadRequest"
                     },
                     "404": {
-                        "description": "not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "description": "http error code",
-                                            "type": "integer"
-                                        },
-                                        "error": {
-                                            "description": "http error reason",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "code",
-                                        "error"
-                                    ],
-                                    "additionalProperties": false
-                                }
-                            }
-                        }
+                        "$ref": "#/components/responses/NotFound"
                     }
                 }
             }
@@ -507,32 +415,18 @@
             ],
             "post": {
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "queue_aliases": {
-                                    "description": "a list of queues requested, given by user-defined aliases",
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    },
-                                    "minItems": 1
-                                },
-                                "public": {
-                                    "description": "a list of which queue aliases are deemed for public access (outside of EWMS)",
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    },
-                                    "minItems": 0
-                                }
+                                "$ref": "#/components/schemas/MQGroupReservationRequest"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "a successfully reserved (unactivated) group of queues",
+                        "description": "A successfully reserved, unactivated group of queues.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -542,54 +436,10 @@
                         }
                     },
                     "400": {
-                        "description": "invalid request arguments",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "description": "http error code",
-                                            "type": "integer"
-                                        },
-                                        "error": {
-                                            "description": "http error reason",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "code",
-                                        "error"
-                                    ],
-                                    "additionalProperties": false
-                                }
-                            }
-                        }
+                        "$ref": "#/components/responses/BadRequest"
                     },
                     "404": {
-                        "description": "not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "description": "http error code",
-                                            "type": "integer"
-                                        },
-                                        "error": {
-                                            "description": "http error reason",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "code",
-                                        "error"
-                                    ],
-                                    "additionalProperties": false
-                                }
-                            }
-                        }
+                        "$ref": "#/components/responses/NotFound"
                     }
                 }
             }
@@ -604,71 +454,20 @@
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "a successful result",
+                        "description": "The public MQ profiles for the workflow.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "mqprofiles": {
-                                        "description": "a list of mq profiles",
-                                        "type": "array",
-                                        "items": {
-                                            "$ref": "#/components/schemas/MQProfileObject"
-                                        },
-                                        "minItems": 0
-                                    }
+                                    "$ref": "#/components/schemas/PublicMQProfilesResponse"
                                 }
                             }
                         }
                     },
                     "400": {
-                        "description": "invalid request arguments",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "description": "http error code",
-                                            "type": "integer"
-                                        },
-                                        "error": {
-                                            "description": "http error reason",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "code",
-                                        "error"
-                                    ],
-                                    "additionalProperties": false
-                                }
-                            }
-                        }
+                        "$ref": "#/components/responses/BadRequest"
                     },
                     "404": {
-                        "description": "not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "code": {
-                                            "description": "http error code",
-                                            "type": "integer"
-                                        },
-                                        "error": {
-                                            "description": "http error reason",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "code",
-                                        "error"
-                                    ],
-                                    "additionalProperties": false
-                                }
-                            }
-                        }
+                        "$ref": "#/components/responses/NotFound"
                     }
                 }
             }
