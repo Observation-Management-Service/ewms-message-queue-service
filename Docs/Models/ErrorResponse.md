@@ -1,9 +1,10 @@
-# _mqbroker_issuer__well_known_jwks_json_get_200_response
+# ErrorResponse
 ## Properties
 
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
-| **keys** | [**List**](map.md) | the JWKS keys | [default to null] |
+| **code** | **Integer** | HTTP error code. | [default to null] |
+| **error** | **String** | HTTP error reason. | [default to null] |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

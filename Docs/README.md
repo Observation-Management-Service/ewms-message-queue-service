@@ -1,4 +1,4 @@
-# Documentation for EWMS - Message Queue Service
+# Documentation for EWMS Message Queue Service
 
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
@@ -19,13 +19,16 @@
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [ErrorResponse](./Models/ErrorResponse.md)
+ - [JWKSetResponse](./Models/JWKSetResponse.md)
+ - [MQGroupActivationRequest](./Models/MQGroupActivationRequest.md)
  - [MQGroupObject](./Models/MQGroupObject.md)
  - [MQGroupObjectAndProfiles](./Models/MQGroupObjectAndProfiles.md)
  - [MQGroupObject_criteria](./Models/MQGroupObject_criteria.md)
+ - [MQGroupReservationRequest](./Models/MQGroupReservationRequest.md)
  - [MQProfileObject](./Models/MQProfileObject.md)
- - [_mqbroker_issuer__well_known_jwks_json_get_200_response](./Models/_mqbroker_issuer__well_known_jwks_json_get_200_response.md)
- - [_mqbroker_issuer__well_known_jwks_json_get_400_response](./Models/_mqbroker_issuer__well_known_jwks_json_get_400_response.md)
- - [_v1_mqs_get_400_response](./Models/_v1_mqs_get_400_response.md)
+ - [PublicMQProfilesResponse](./Models/PublicMQProfilesResponse.md)
+ - [criteria](./Models/criteria.md)
 
 
 <a name="documentation-for-authorization"></a>

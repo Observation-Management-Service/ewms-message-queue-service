@@ -1,10 +1,9 @@
-# _mqbroker_issuer__well_known_jwks_json_get_400_response
+# MQGroupActivationRequest
 ## Properties
 
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
-| **code** | **Integer** | http error code | [default to null] |
-| **error** | **String** | http error reason | [default to null] |
+| **criteria** | [**MQGroupObject_criteria**](MQGroupObject_criteria.md) |  | [optional] [default to null] |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

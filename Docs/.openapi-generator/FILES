@@ -1,10 +1,13 @@
 .openapi-generator-ignore
 Apis/DefaultApi.md
+Models/ErrorResponse.md
+Models/JWKSetResponse.md
+Models/MQGroupActivationRequest.md
 Models/MQGroupObject.md
 Models/MQGroupObjectAndProfiles.md
 Models/MQGroupObject_criteria.md
+Models/MQGroupReservationRequest.md
 Models/MQProfileObject.md
-Models/_mqbroker_issuer__well_known_jwks_json_get_200_response.md
-Models/_mqbroker_issuer__well_known_jwks_json_get_400_response.md
-Models/_v1_mqs_get_400_response.md
+Models/PublicMQProfilesResponse.md
+Models/criteria.md
 README.md

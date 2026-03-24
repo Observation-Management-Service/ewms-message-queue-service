@@ -1,10 +1,9 @@
-# MQGroupObjectAndProfiles
+# criteria
 ## Properties
 
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
-| **mqgroup** | [**MQGroupObject**](MQGroupObject.md) | The created MQ group object. | [default to null] |
-| **mqprofiles** | [**List**](MQProfileObject.md) | A list of MQ profiles. | [default to null] |
+| **priority** | **Integer** |  | [default to null] |
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

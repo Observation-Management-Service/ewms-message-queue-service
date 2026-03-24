@@ -15,7 +15,7 @@
 
 <a name="GET /mqbroker-issuer/.well-known/jwks.json"></a>
 # **GET /mqbroker-issuer/.well-known/jwks.json**
-> _mqbroker_issuer__well_known_jwks_json_get_200_response GET /mqbroker-issuer/.well-known/jwks.json()
+> JWKSetResponse GET /mqbroker-issuer/.well-known/jwks.json()
 
 
 
@@ -24,7 +24,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**_mqbroker_issuer__well_known_jwks_json_get_200_response**](../Models/_mqbroker_issuer__well_known_jwks_json_get_200_response.md)
+[**JWKSetResponse**](../Models/JWKSetResponse.md)
 
 ### Authorization
 
@@ -36,7 +36,7 @@ This endpoint does not need any parameter.
 
 <a name="GET /v1/mqs"></a>
 # **GET /v1/mqs**
-> GET /v1/mqs()
+> Object GET /v1/mqs()
 
 
 
@@ -45,7 +45,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-null (empty response body)
+**Object**
 
 ### Authorization
 
@@ -65,7 +65,7 @@ null (empty response body)
 
 |Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **mqid** | **String**| the id of the message queue (found in mq profile) | [default to null] |
+| **mqid** | **String**| The ID of the message queue, as found in the MQ profile. | [default to null] |
 
 ### Return type
 
@@ -102,7 +102,7 @@ This endpoint does not need any parameter.
 
 <a name="POST /v1/mqs/workflows/{workflow_id}/mq-group/activation"></a>
 # **POST /v1/mqs/workflows/{workflow_id}/mq-group/activation**
-> MQGroupObjectAndProfiles POST /v1/mqs/workflows/{workflow_id}/mq-group/activation(workflow\_id, body)
+> MQGroupObjectAndProfiles POST /v1/mqs/workflows/{workflow_id}/mq-group/activation(workflow\_id, MQGroupActivationRequest)
 
 
 
@@ -110,8 +110,8 @@ This endpoint does not need any parameter.
 
 |Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **workflow\_id** | **String**| the id of the ewms workflow that maps to an mq group | [default to null] |
-| **body** | **oas_any_type_not_mapped**|  | [optional] |
+| **workflow\_id** | **String**| The ID of the EWMS workflow that maps to an MQ group. | [default to null] |
+| **MQGroupActivationRequest** | [**MQGroupActivationRequest**](../Models/MQGroupActivationRequest.md)|  | |
 
 ### Return type
 
@@ -135,7 +135,7 @@ This endpoint does not need any parameter.
 
 |Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **workflow\_id** | **String**| the id of the ewms workflow that maps to an mq group | [default to null] |
+| **workflow\_id** | **String**| The ID of the EWMS workflow that maps to an MQ group. | [default to null] |
 
 ### Return type
 
@@ -151,7 +151,7 @@ This endpoint does not need any parameter.
 
 <a name="POST /v1/mqs/workflows/{workflow_id}/mq-group/reservation"></a>
 # **POST /v1/mqs/workflows/{workflow_id}/mq-group/reservation**
-> MQGroupObjectAndProfiles POST /v1/mqs/workflows/{workflow_id}/mq-group/reservation(workflow\_id, body)
+> MQGroupObjectAndProfiles POST /v1/mqs/workflows/{workflow_id}/mq-group/reservation(workflow\_id, MQGroupReservationRequest)
 
 
 
@@ -159,8 +159,8 @@ This endpoint does not need any parameter.
 
 |Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **workflow\_id** | **String**| the id of the ewms workflow that maps to an mq group | [default to null] |
-| **body** | **oas_any_type_not_mapped**|  | [optional] |
+| **workflow\_id** | **String**| The ID of the EWMS workflow that maps to an MQ group. | [default to null] |
+| **MQGroupReservationRequest** | [**MQGroupReservationRequest**](../Models/MQGroupReservationRequest.md)|  | |
 
 ### Return type
 
@@ -176,7 +176,7 @@ This endpoint does not need any parameter.
 
 <a name="GET /v1/mqs/workflows/{workflow_id}/mq-profiles/public"></a>
 # **GET /v1/mqs/workflows/{workflow_id}/mq-profiles/public**
-> oas_any_type_not_mapped GET /v1/mqs/workflows/{workflow_id}/mq-profiles/public(workflow\_id)
+> PublicMQProfilesResponse GET /v1/mqs/workflows/{workflow_id}/mq-profiles/public(workflow\_id)
 
 
 
@@ -184,11 +184,11 @@ This endpoint does not need any parameter.
 
 |Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **workflow\_id** | **String**| the id of the ewms workflow that maps to an mq group | [default to null] |
+| **workflow\_id** | **String**| The ID of the EWMS workflow that maps to an MQ group. | [default to null] |
 
 ### Return type
 
-[**oas_any_type_not_mapped**](../Models/AnyType.md)
+[**PublicMQProfilesResponse**](../Models/PublicMQProfilesResponse.md)
 
 ### Authorization
 
