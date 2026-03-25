@@ -21,7 +21,7 @@ EWMS's Message Queue Service (MQS): The Interface to the DDS's Message Queue Bro
 
 ## API Documentation
 
-See [Docs/](./Docs)
+See [Docs](https://observation-management-service.github.io/ewms-docs/services/mqs.html)
 
 ## Queue Creation
 
