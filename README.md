@@ -13,7 +13,7 @@ EWMS's Message Queue Service (MQS): The Interface to the DDS's Message Queue Bro
     <dt><sub>Keywords</sub></dt>
     <dd><sub>EWMS&nbsp;&nbsp;·&nbsp;&nbsp;task&nbsp;&nbsp;·&nbsp;&nbsp;Workflow Management Service&nbsp;&nbsp;·&nbsp;&nbsp;WIPAC&nbsp;&nbsp;·&nbsp;&nbsp;IceCube&nbsp;&nbsp;·&nbsp;&nbsp;Observation Management Service&nbsp;&nbsp;·&nbsp;&nbsp;Event Workflow Management System</sub></dd>
     <dt><sub>URLs</sub></dt>
-    <dd><sub><a href='https://github.com/Observation-Management-Service/ewms-message-queue-service'>Homepage</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href='https://github.com/Observation-Management-Service/ewms-message-queue-service/issues'>Tracker</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href='https://github.com/Observation-Management-Service/ewms-message-queue-service'>Source</a></sub></dd>
+    <dd><sub><a href='https://github.com/Observation-Management-Service/ewms-message-queue-service'>Homepage</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href='https://github.com/Observation-Management-Service/ewms-message-queue-service/issues'>Tracker</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href='https://github.com/Observation-Management-Service/ewms-message-queue-service'>Source</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href='https://observation-management-service.github.io/ewms-docs/services/mqs.html'>Documentation</a></sub></dd>
 </dl>
 
 <br>
