@@ -27,3 +27,4 @@ See [Docs](https://observation-management-service.github.io/ewms-docs/services/m
 
 Queue creation (joined as a group of 1+ queues) has two distinct steps: reservation and activation. Queue groups must be
 reserved before activation.
+Also, see [EWMS Workflow Lifetime](https://observation-management-service.github.io/ewms-docs/services/wms.html#ewms-workflow-lifetime).
