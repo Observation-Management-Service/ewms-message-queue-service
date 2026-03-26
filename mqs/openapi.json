@@ -323,7 +323,7 @@
                     }
                 },
                 "tags": [
-                    "Endpoints: mq-profiles"
+                    "mq-profiles"
                 ],
                 "description": "See `MQProfileObject <https://observation-management-service.github.io/ewms-docs/apis/_generated/mqs-objects.html#mqprofileobject>`_."
             }
@@ -347,7 +347,7 @@
                     }
                 },
                 "tags": [
-                    "Endpoints: openapi"
+                    "openapi"
                 ]
             }
         },
@@ -377,7 +377,7 @@
                     }
                 },
                 "tags": [
-                    "Endpoints: mq-group"
+                    "mq-group"
                 ],
                 "description": "See `MQGroupObject <https://observation-management-service.github.io/ewms-docs/apis/_generated/mqs-objects.html#mqgroupobject>`_."
             }
@@ -418,7 +418,7 @@
                     }
                 },
                 "tags": [
-                    "Endpoints: mq-group"
+                    "mq-group"
                 ],
                 "description": "See `MQGroupActivationRequest <https://observation-management-service.github.io/ewms-docs/apis/_generated/mqs-objects.html#mqgroupactivationrequest>`_, `MQGroupObjectAndProfiles <https://observation-management-service.github.io/ewms-docs/apis/_generated/mqs-objects.html#mqgroupobjectandprofiles>`_."
             }
@@ -459,7 +459,7 @@
                     }
                 },
                 "tags": [
-                    "Endpoints: mq-group"
+                    "mq-group"
                 ],
                 "description": "See `MQGroupReservationRequest <https://observation-management-service.github.io/ewms-docs/apis/_generated/mqs-objects.html#mqgroupreservationrequest>`_, `MQGroupObjectAndProfiles <https://observation-management-service.github.io/ewms-docs/apis/_generated/mqs-objects.html#mqgroupobjectandprofiles>`_."
             }
@@ -491,7 +491,7 @@
                     }
                 },
                 "tags": [
-                    "Endpoints: mq-profiles"
+                    "mq-profiles"
                 ],
                 "description": "See `PublicMQProfilesResponse <https://observation-management-service.github.io/ewms-docs/apis/_generated/mqs-objects.html#publicmqprofilesresponse>`_."
             }
