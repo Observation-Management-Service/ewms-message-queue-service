@@ -267,7 +267,10 @@
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
                     }
-                }
+                },
+                "tags": [
+                    "misc"
+                ]
             }
         },
         "/v1/mqs": {
@@ -287,7 +290,10 @@
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
                     }
-                }
+                },
+                "tags": [
+                    "misc"
+                ]
             }
         },
         "/v1/mqs/mq-profiles/{mqid}": {
@@ -320,7 +326,10 @@
                     "404": {
                         "$ref": "#/components/responses/NotFound"
                     }
-                }
+                },
+                "tags": [
+                    "mq-profiles"
+                ]
             }
         },
         "/v1/mqs/schema/openapi": {
@@ -340,7 +349,10 @@
                     "400": {
                         "$ref": "#/components/responses/BadRequest"
                     }
-                }
+                },
+                "tags": [
+                    "misc"
+                ]
             }
         },
         "/v1/mqs/workflows/{workflow_id}/mq-group": {
@@ -367,7 +379,10 @@
                     "404": {
                         "$ref": "#/components/responses/NotFound"
                     }
-                }
+                },
+                "tags": [
+                    "mq-groups"
+                ]
             }
         },
         "/v1/mqs/workflows/{workflow_id}/mq-group/activation": {
@@ -404,7 +419,10 @@
                     "404": {
                         "$ref": "#/components/responses/NotFound"
                     }
-                }
+                },
+                "tags": [
+                    "mq-groups"
+                ]
             }
         },
         "/v1/mqs/workflows/{workflow_id}/mq-group/reservation": {
@@ -441,7 +459,10 @@
                     "404": {
                         "$ref": "#/components/responses/NotFound"
                     }
-                }
+                },
+                "tags": [
+                    "mq-groups"
+                ]
             }
         },
         "/v1/mqs/workflows/{workflow_id}/mq-profiles/public": {
@@ -469,7 +490,10 @@
                     "404": {
                         "$ref": "#/components/responses/NotFound"
                     }
-                }
+                },
+                "tags": [
+                    "mq-profiles"
+                ]
             }
         }
     }
