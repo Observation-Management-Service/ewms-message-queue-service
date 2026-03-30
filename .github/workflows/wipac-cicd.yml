@@ -83,7 +83,7 @@ jobs:
           ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
           fetch-depth: 0  # setuptools-scm needs to access git tags
       - uses: docker/setup-buildx-action@v3
-      - uses: docker/build-push-action@v6
+      - uses: docker/build-push-action@v7
         with:
           context: .
           file: Dockerfile
@@ -105,7 +105,7 @@ jobs:
           ref: ${{ github.sha }}  # lock to triggered commit (github.ref is dynamic)
           fetch-depth: 0  # setuptools-scm needs to access git tags
       - uses: docker/setup-buildx-action@v3
-      - uses: docker/build-push-action@v6
+      - uses: docker/build-push-action@v7
         with:
           context: .
           cache-from: type=gha
@@ -135,7 +135,7 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.py3 }}
-      - uses: docker/build-push-action@v6
+      - uses: docker/build-push-action@v7
         with:
           context: .
           cache-from: type=gha
